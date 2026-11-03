@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#061224">
+  <title>Delete your YoMart account</title>
+  <style>
+    :root { color-scheme: light dark; font: 16px/1.55 system-ui, sans-serif; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #071326; color: #eff6ff; }
+    main { width: min(100%, 480px); box-sizing: border-box; padding: 30px; border: 1px solid #263c5c; border-radius: 22px; background: #101f35; }
+    h1 { margin-top: 0; font-size: 1.6rem; }
+    p, li { color: #bdcbe0; }
+    label { display: block; margin: 16px 0 6px; font-weight: 650; }
+    input { width: 100%; box-sizing: border-box; padding: 13px; border: 1px solid #465a76; border-radius: 10px; background: #09172b; color: inherit; font: inherit; }
+    button { width: 100%; margin-top: 20px; padding: 14px; border: 0; border-radius: 12px; background: #0878f9; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+    button:disabled { opacity: .55; cursor: wait; }
+    #status { min-height: 1.5em; margin-bottom: 0; }
+    .warning { padding: 12px; border-radius: 10px; background: #332b1b; color: #ffdb9a; }
+  </style>
+  <script src="account-deletion-config.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Delete your YoMart account</h1>
+    <p>This page disables your YoMart customer account without reinstalling the app.</p>
+    <p>Sign-in, profile/contact details, delivery details, and reviews are removed. Order and payment evidence may be retained in anonymized form for business records and reconciliation. You will lose customer access to order history and receipts. The owner must confirm the final retention period and applicable legal requirements before publication.</p>
+    <form id="delete-form">
+      <label for="email">Account email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="password">Account password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button id="submit" type="submit">Permanently delete account</button>
+      <p id="status" role="status" aria-live="polite"></p>
+    </form>
+    <p class="warning">Order and payment evidence may be retained in anonymized form. Account deletion removes your access to order history and receipts. The final retention wording is pending owner and legal review.</p>
+  </main>
+  <script>
+    const form = document.querySelector('#delete-form');
+    const status = document.querySelector('#status');
+    const submit = document.querySelector('#submit');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const configuredApiBase = window.YOMART_API_BASE_URL;
+      const expectedSiteOrigin = window.YOMART_EXPECTED_SITE_ORIGIN;
+      let apiOrigin;
+      try {
+        if (!expectedSiteOrigin || window.location.origin !== expectedSiteOrigin) {
+          throw new Error('wrong site origin');
+        }
+        const parsedApi = new URL(configuredApiBase);
+        const loopback = ['localhost', '127.0.0.1', '[::1]'].includes(parsedApi.hostname) || parsedApi.hostname.endsWith('.localhost');
+        if (!['http:', 'https:'].includes(parsedApi.protocol) || parsedApi.username || parsedApi.password || parsedApi.pathname !== '/' || parsedApi.search || parsedApi.hash || (parsedApi.protocol !== 'https:' && !loopback)) {
+          throw new Error('invalid API origin');
+        }
+        apiOrigin = parsedApi.origin;
+      } catch (_) {
+        status.textContent = 'Account deletion is not configured yet. Please contact YoMart support.';
+        return;
+      }
+      submit.disabled = true;
+      status.textContent = 'Submitting secure deletion request…';
+      try {
+        const response = await fetch(`${apiOrigin}/users/account-deletion`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ email: form.email.value, password: form.password.value }),
+        });
+        const result = await response.json();
+        if (!response.ok || result.success !== true) throw new Error(result.message || 'Request failed.');
+        form.reset();
+        status.textContent = result.message;
+      } catch (error) {
+        status.textContent = error.message || 'We could not process the request. Please try again.';
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

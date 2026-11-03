@@ -1,0 +1,581 @@
+{
+  "welcome": "Hello",
+  "welcome_back": "Welcome back!",
+  "user": "User",
+  "get_something": "Let's get something!",
+  "get_now": "Get Now",
+  "about": "About",
+  "enter_username": "Enter username",
+  "enter_password": "Enter password",
+  "confirm_password": "Confirm password",
+  "passwords_dont_match": "Passwords do not match",
+  "login": "Login",
+  "register": "Register",
+  "dont_have_account": "Don't have an account? Register",
+  "already_have_account": "Already have an account? Login",
+  "total_amount": "Total Amount",
+  "discount": "Discount",
+  "grand_total": "Grand Total",
+  "apply": "Apply",
+  "complete_order": "Complete Order",
+  "buy_now": "Buy Now",
+  "enter_address": "Enter Address",
+  "payment_method": "Payment Method",
+  "sort_by_price": "Sort By Price",
+  "low_to_high": "Low To High",
+  "high_to_low": "High To Low",
+  "filter_by_brands": "Filter By Brands",
+  "available_stock": "Available stock",
+  "not_available": "Not available",
+  "add_to_cart": "Add to cart",
+  "no_favorite_items": "No favorite items yet",
+  "empty_cart": "Empty cart",
+  "my_account": "My Account",
+  "my_profile": "My Profile",
+  "edit_profile": "Edit Profile",
+  "delivery_information": "Destination Information",
+  "order_history": "Order History",
+  "my_orders": "My Orders",
+  "my_address": "My Address",
+  "my_favorites": "My Favorites",
+  "my_cart": "My Cart",
+  "member_since": "Member since",
+  "username": "Username",
+  "notifications": "Notifications",
+  "privacy_security": "Privacy & Security",
+  "about_app": "About App",
+  "help_support": "Help & Support",
+  "email_support": "Email Support",
+  "call_support": "Call Support",
+  "live_chat": "Live Chat",
+  "close": "Close",
+  "logout": "Logout",
+  "logout_confirmation": "Are you sure you want to logout?",
+  "delete_account": "Delete account",
+  "delete_account_confirmation": "This disables your account and removes profile, contact, delivery details, and reviews. Order and payment evidence may be retained in anonymized form for business records. Enter your password to confirm.",
+  "account_deleted_success": "Your account access and direct details were removed. Anonymized order and payment records are retained.",
+  "privacy_policy_not_configured": "Privacy policy is not configured for this build.",
+  "privacy_policy_open_failed": "Could not open the privacy policy. Please try again.",
+  "cancel": "Cancel",
+  "update_address": "Update Address",
+  "phone": "Phone",
+  "street": "Street",
+  "city": "City",
+  "state": "State",
+  "postal_code": "Postal Code (Optional)",
+  "country": "Country",
+  "please_enter_phone": "Please enter a phone number",
+  "please_enter_street": "Please enter a street",
+  "please_enter_city": "Please enter a city",
+  "please_enter_state": "Please enter a state",
+  "please_enter_code": "Please enter a code",
+  "please_enter_country": "Please enter a country",
+  "home": "Home",
+  "favorites": "Favorites",
+  "cart": "Cart",
+  "profile": "Profile",
+  "settings": "Settings",
+  "dark_mode": "Dark Mode",
+  "language": "Language",
+  "select_language": "Select Language",
+  "help": "HELP & SUPPORT",
+  "total": "Total",
+  "payment_successful": "Payment Successful!",
+  "payment_failed": "Payment failed",
+  "order_created": "Order created successfully!",
+  "address_stored": "Address stored successfully",
+  "item_added_to_cart": "Item added to cart",
+  "please_select_variant": "Please select a variant",
+  "search_hint": "Search...",
+  "available": "Available",
+  "options": "Options",
+  "please_fill_all_fields": "Please fill all fields",
+  "error": "Error",
+  "top_categories": "Top Categories",
+  "success": "Success",
+  "loading": "Loading...",
+  "track_order": "Track Order",
+  "discover_products": "Discover Amazing Products",
+  "products_heading": "Products",
+  "easy_shopping": "Easy & Secure Shopping",
+  "fast_delivery": "Fast Delivery",
+  "start_shopping": "Start Shopping Now!",
+  "skip": "Skip",
+  "next": "Next",
+  "get_started": "Get Started",
+  "customer_reviews": "Customer Reviews",
+  "change_password": "Change Password",
+  "current_password": "Current Password",
+  "new_password": "New Password",
+  "confirm_new_password": "Confirm New Password",
+  "profile_change_note": "Note: Changing email requires verification. Changing your username or password will sign you out.",
+  "email_not_verified": "Email not verified",
+  "cart_empty_message": "Your cart is empty",
+  "subtotal": "Subtotal",
+  "item_removed": "Item removed from cart",
+  "item_added": "Item added to cart",
+  "cart_updated": "Cart updated",
+  "cash_on_delivery": "Cash on Delivery",
+  "cbe_bank": "Commercial Bank of Ethiopia",
+  "telebirr": "Telebirr",
+  "order_processing": "Processing",
+  "order_shipped": "Shipped",
+  "order_delivered": "Delivered",
+  "order_cancelled": "Cancelled",
+  "save": "Save",
+  "edit": "Edit",
+  "delete": "Delete",
+  "confirm": "Confirm",
+  "continue_shopping": "Continue Shopping",
+  "view_orders": "View Orders",
+  "reviews": "Reviews",
+  "review": "Review",
+  "load_more_reviews": "Load More Reviews",
+  "no_reviews_yet": "No reviews yet. Be the first to review this product!",
+  "anonymous": "Anonymous",
+  "verified_purchase": "Verified Purchase",
+  "rate_this_product": "Rate this product",
+  "your_rating": "Your Rating",
+  "delete_rating": "Delete Rating",
+  "delete_rating_confirmation": "Are you sure you want to delete your rating?",
+  "submit": "Submit",
+  "update": "Update",
+  "review_optional": "Review (optional)",
+  "preferences": "Preferences",
+  "available_options": "Available options",
+  "product_details": "Product details",
+  "telegram_support": "Telegram Support",
+  "welcome_title": "Welcome",
+  "create_account": "Create your account",
+  "login_subtitle": "Sign in to continue your journey.",
+  "register_subtitle": "Join YoMart and start shopping.",
+  "email_address": "Email address",
+  "password_label": "Password",
+  "password_requirements": "Complete the password requirements below.",
+  "confirm_your_password": "Confirm your password.",
+  "sign_in": "Sign In",
+  "dont_have_account_prompt": "Don't have an account?",
+  "already_have_account_prompt": "Already have an account?",
+  "all_filter": "All",
+  "phones_filter": "Phones",
+  "brands_filter": "Brands",
+  "accessories_filter": "Accessories",
+  "search_catalog": "Search phones, brands, accessories...",
+  "clear_search": "Clear search",
+  "no_products_available": "No products are available yet.",
+  "no_search_matches": "No matches. Try another search.",
+  "trending": "Trending",
+  "see_all": "See all",
+  "try_again": "Try again",
+  "collections": "Collections",
+  "best_sellers": "Best Sellers",
+  "most_popular": "Most popular right now",
+  "new_arrivals": "New Arrivals",
+  "latest_models_trends": "Latest models and trends",
+  "student_deals": "Student Deals",
+  "special_offers_students": "Special offers for students",
+  "accessories_bundle": "Accessories Bundle",
+  "save_more_together": "Save more together",
+  "no_collection_products": "No products in this collection yet.",
+  "product": "Product",
+  "confirm_location": "Confirm location",
+  "delivery_location": "Delivery Location",
+  "delivery_pin": "Destination pin",
+  "choose_on_map": "Choose on map",
+  "phone_number": "Phone number",
+  "street_building": "Street and building",
+  "image_format_limit": "PNG, JPG (Max 5MB)",
+  "choose_different_image": "Choose a different image",
+  "processing_order": "Processing your order...",
+  "tracking_confirmation_pending": "Tracking will update after your order is confirmed.",
+  "payment_details": "Payment Details",
+  "payment_proof": "Payment proof",
+  "no_payment_proof": "No payment proof has been submitted yet.",
+  "product_details_unavailable": "Product details are unavailable.",
+  "product_details_unavailable_now": "Product details are unavailable right now.",
+  "profile_preferences_tooltip": "Theme and language settings",
+  "back": "Back",
+  "favorites_tooltip": "Favorites",
+  "go_back": "Go back",
+  "orders_tooltip": "Orders",
+  "refresh_cart": "Refresh cart",
+  "search_products": "Search products",
+  "address": "Address",
+  "upload_proof": "Upload Proof",
+  "confirm_payment": "Confirm Payment",
+  "cash_payment_title": "Cash on Delivery Payment",
+  "cbe_payment_title": "Commercial Bank of Ethiopia Payment",
+  "telebirr_payment_title": "Telebirr Payment",
+  "cbe_birr_app": "CBE Birr App",
+  "bank_transfer": "Bank Transfer",
+  "telebirr_app": "Telebirr App",
+  "catalog_refreshed": "Catalog refreshed.",
+  "favorites_refreshed": "Favorites refreshed.",
+  "could_not_launch_url": "Could not launch URL",
+  "please_wait": "Please wait…",
+  "user_not_found": "User not found",
+  "an_error_occurred": "An error occurred",
+  "username_required": "Username is required",
+  "current_password_required": "Current password is required for verification",
+  "new_password_required": "New password is required",
+  "passwords_do_not_match": "Passwords do not match",
+  "password_confirm_mismatch": "Passwords do not match.",
+  "password": "Password",
+  "try_another_category": "Try another category or brand.",
+  "no_products_match_filters": "No products match these filters",
+  "address_not_found": "Address not found",
+  "select_variant": "Please select a variant",
+  "failed_add_item": "Failed to add item to cart",
+  "submit_rating_failed": "Failed to submit rating",
+  "update_rating_failed": "Failed to update rating",
+  "delete_rating_failed": "Failed to delete rating",
+  "info": "Info",
+  "something_went_wrong": "Something went wrong",
+  "update_failed": "Update failed",
+  "delivery": "Delivery",
+  "checkout": "Checkout",
+  "place_order": "Place Order",
+  "order_status": "Order Status",
+  "payment_pending": "Payment Pending",
+  "delivery_address": "Destination",
+  "review_order": "Review Order",
+  "payment_proof_upload": "Please upload your payment proof.",
+  "upload_payment_proof": "Upload Proof",
+  "search": "Search",
+  "orders": "Orders",
+  "account": "Account",
+  "phones": "Phones",
+  "categories": "Categories",
+  "brands": "Brands",
+  "email_or_username": "Email or username",
+  "enter_a_username": "Enter a username.",
+  "username_min_length": "Use at least 3 characters for your username.",
+  "email_format_hint": "Use the format {example}.",
+  "enter_email_address": "Enter your email address.",
+  "invalid_email_format": "Enter an email in the format {example}.",
+  "password_requirements_below": "Complete the password requirements below.",
+  "passwords_do_not_match_hint": "Passwords do not match.",
+  "signing_in": "Signing in…",
+  "creating_account": "Creating account…",
+  "eight_characters_count": "8+ characters ({count}/8)",
+  "uppercase_and_lowercase": "uppercase and lowercase",
+  "number_requirement": "number",
+  "special_character_requirement": "special character",
+  "sign_in_to_continue": "Sign in to continue your journey.",
+  "join_and_shop": "Join YoMart and start shopping.",
+  "search_all": "All",
+  "search_phones": "Phones",
+  "search_brands": "Brands",
+  "search_accessories": "Accessories",
+  "orders_tab": "Orders",
+  "account_tab": "Account",
+  "email_example": "name@example.com",
+  "@email_format_hint": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "@invalid_email_format": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "@eight_characters_count": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "no_ratings_yet": "No ratings yet",
+  "saving": "Saving…",
+  "password_minimum_length": "Password must be at least 6 characters.",
+  "catalog_load_error": "Could not load the catalog. Check your connection and try again.",
+  "catalog_unavailable": "The catalog isn’t available right now",
+  "check_connection_retry": "Check your connection and try again.",
+  "order_number": "Order #{id}",
+  "placed_on": "Placed on {date}",
+  "submitted_on": "Submitted {date}",
+  "tracking_reference": "Tracking reference: {reference}",
+  "quantity": "Qty: {quantity}",
+  "stage_out_for_delivery": "At destination city",
+  "order_pending": "Pending",
+  "awaiting_payment": "Awaiting Payment",
+  "payment_verified": "Payment Verified",
+  "payment_paid": "Payment Paid",
+  "payment_failed_status": "Payment Failed",
+  "recently": "recently",
+  "rating_delete_title": "Delete Rating",
+  "rating_delete_confirmation": "Are you sure you want to delete your rating?",
+  "@order_number": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "@placed_on": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@submitted_on": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@tracking_reference": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "@quantity": {
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "orders_unavailable": "Orders aren’t available",
+  "no_orders_yet": "No orders yet",
+  "no_orders_for_filter": "No {status} orders",
+  "orders_empty_message": "Your purchases and their status will appear here.",
+  "@no_orders_for_filter": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "curated_for_you": "Curated for you",
+  "tablets": "Tablets",
+  "smartwatches": "Smartwatches",
+  "laptops": "Laptops",
+  "gaming": "Gaming",
+  "audio": "Audio",
+  "home_office": "Home & Office",
+  "accessories": "Accessories",
+  "category": "Category",
+  "categories_unavailable": "Categories will appear here when the catalog is available.",
+  "no_brands_available": "No brands are available yet.",
+  "brand": "Brand",
+  "no_brand_products": "No {brand} products are available yet.",
+  "your_cart": "Your Cart",
+  "cart_item_count": "{count} items",
+  "empty_cart_description": "Add a few things you love and they’ll show up here.",
+  "browse_products": "Browse products",
+  "select_delivery_location": "Select delivery location",
+  "map_pin_instruction": "Tap the map to place the pin at your delivery address.",
+  "choose_map_point": "Choose a point on the map",
+  "@no_brand_products": {
+    "placeholders": {
+      "brand": {
+        "type": "String"
+      }
+    }
+  },
+  "@cart_item_count": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "favorites_refresh_failed": "Could not refresh favorites. Check your connection and try again.",
+  "favorites_empty_description": "Your favorite items will appear here.",
+  "view_product_details": "View product details",
+  "edit_your_rating": "Edit your rating",
+  "full_name": "Full name",
+  "account_name": "Account name",
+  "map_location_selected": "Map location selected · {coordinates}",
+  "please_enter_field": "Please enter {field}.",
+  "pay_with_bank_transfer": "Pay with bank transfer",
+  "pay_with_telebirr": "Pay with Telebirr",
+  "pay_when_received": "Pay when you receive your order",
+  "upload_receipt_instruction": "Please upload your payment receipt or screenshot.",
+  "uploading": "Uploading…",
+  "tap_to_upload": "Tap to upload",
+  "continue_to_review": "Continue to Review",
+  "continue_to_payment": "Continue to Payment",
+  "continue_to_payment_proof": "Continue to Payment Proof",
+  "@map_location_selected": {
+    "placeholders": {
+      "coordinates": {
+        "type": "String"
+      }
+    }
+  },
+  "@please_enter_field": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "cbe_payment_instruction": "Please complete your payment using one of the methods below and upload the transaction proof:",
+  "open_payments_or_send_money": "2. Go to Payments or Send Money",
+  "scan_qr_or_merchant": "3. Scan the QR code or enter merchant details",
+  "after_payment_upload": "After payment, upload the screenshot and select Confirm Payment.",
+  "telebirr_payment_instruction": "Complete your payment using Telebirr and upload the transaction proof:",
+  "send_money_or_payments": "2. Go to Send Money or Payments",
+  "no_proof_uploaded": "No proof uploaded yet",
+  "open_payment_app": "1. Open {app}",
+  "amount_birr": "Amount: Birr {amount}",
+  "account_name_value": "Account Name: {value}",
+  "account_number_value": "Account Number: {value}",
+  "bank_value": "Bank: {value}",
+  "reference_value": "Reference: {value}",
+  "merchant_number_value": "3. Enter merchant number: {value}",
+  "@open_payment_app": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "@amount_birr": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@account_name_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@account_number_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@bank_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@reference_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@merchant_number_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "bank_transfer_or_cbe_birr": "Bank transfer or CBE Birr",
+  "mobile_money_payment": "Mobile money payment",
+  "order_placed_title": "Order Placed!",
+  "order_submitted_message": "Your order has been successfully submitted.",
+  "view_order_details": "View Order Details",
+  "continue_shopping_action": "Continue Shopping",
+  "order_details_loading": "Order details are still loading. Try again from My Orders.",
+  "total_birr": "Total: Birr {amount}",
+  "brand_tagline": "Better Phones. Brighter Days.",
+  "@total_birr": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "failed_update_cart": "Could not update the cart. Please try again.",
+  "cart_cleared": "Cart cleared",
+  "payment_proof_selected": "Payment proof image selected",
+  "payment_proof_removed": "Payment proof removed",
+  "payment_proof_required": "Please select a payment proof image.",
+  "upload_failed": "Could not upload the payment proof. Please try again.",
+  "login_required": "Please sign in to place an order.",
+  "order_create_failed": "Could not create the order. Please try again.",
+  "address_fields_required": "Please fill all address fields.",
+  "welcome_user": "Welcome back, {name}!",
+  "logged_out": "Logged out successfully.",
+  "profile_updated": "Profile updated successfully.",
+  "password_changed": "Password changed",
+  "password_updated_relogin": "Password updated successfully. Please sign in again.",
+  "rating_submitted": "Your rating was submitted.",
+  "rating_updated": "Your rating was updated.",
+  "rating_deleted": "Your rating was deleted.",
+  "@welcome_user": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wrong_credentials": "Wrong username or password. Please try again.",
+  "email_already_registered": "This email already has an account. Sign in or use a different email.",
+  "verification_code_expired": "That code has expired. Request a new one and try again.",
+  "too_many_code_attempts": "There were too many attempts. Wait a little, request a new code, and try again.",
+  "resend_verification": "We couldn’t send the code. Tap Resend code to try again. If it keeps failing, contact support.",
+  "verification_code_mismatch": "That code does not match. Check the email and try again.",
+  "wait_before_resend": "Please wait a minute before asking for another code.",
+  "verification_email_unavailable": "We can’t send a verification email right now. Please try again later.",
+  "too_many_incorrect_codes": "There were too many incorrect codes. Request a new one and try again.",
+  "verify_email_first": "Please verify your email address before creating your account.",
+  "server_error_retry": "Something went wrong on our side. Please try again in a moment.",
+  "username_taken": "This username is already taken. Please choose another one.",
+  "connection_error": "Cannot connect to the server. Check your internet connection.",
+  "request_timeout": "The request timed out. Please try again.",
+  "server_not_responding": "The server is not responding. Please try again later.",
+  "both_credentials_required": "Enter both your username and password.",
+  "password_required": "Password is required.",
+  "general_retry": "We could not complete that. Please try again.",
+  "current_password_incorrect": "Your current password is incorrect. Please try again.",
+  "enter_current_password": "Enter your current password to make changes.",
+  "username_cannot_empty": "Username cannot be empty.",
+  "choose_different_username": "This username is already taken. Please choose a different one.",
+  "profile_picture_updated": "Profile picture updated successfully.",
+  "profile_image_failed": "Could not update the profile picture. Please try again.",
+  "delivery_addresses": "Saved Destinations",
+  "default_label": "Default",
+  "add_new_address": "Add New Address",
+  "address_name": "Address name",
+  "home_address": "Home",
+  "office_address": "Office",
+  "save_address": "Save Address",
+  "edit_address": "Edit Address",
+  "saved_addresses_empty": "Add an address so it’s ready at checkout.",
+  "map_address": "Choose on map",
+  "remove_address": "Remove address",
+  "address_saved": "Address saved.",
+  "language_changed": "Language changed to {language}.",
+  "@language_changed": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "support_contact_unavailable": "Support contact details are not available yet.",
+  "destination_information": "Destination Information",
+  "destination_city": "Destination city",
+  "area_landmark_optional": "Area or landmark (optional)",
+  "collection_explanation": "Your destination helps coordinate transport. YoMart staff will agree a collection point with you.",
+  "collection_point": "Agreed collection point",
+  "collection_point_not_agreed": "The collection point has not been agreed yet.",
+  "ready_for_collection": "Ready for Collection",
+  "collected": "Collected"
+}

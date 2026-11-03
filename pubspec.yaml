@@ -1,0 +1,62 @@
+name: e_commerce_flutter
+description: YoMart Flutter client for shopping, cart, favorites, and order management
+publish_to: 'none'
+version: 1.0.0+5
+
+homepage: https://github.com/kalaabalb/yomart-mobile
+repository: https://github.com/kalaabalb/yomart-mobile
+issue_tracker: https://github.com/kalaabalb/yomart-mobile/issues
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  http: ^1.5.0
+  crypto: ^3.0.6
+  path_provider: ^2.1.5
+  get: ^4.6.6
+  provider: ^6.1.2
+  smooth_page_indicator: ^1.1.0
+  flutter_rating_bar: ^4.0.1
+  dropdown_button2: ^2.3.9
+  flutter_svg: ^2.0.9
+  get_storage: ^2.1.1
+  flutter_cart: ^0.0.9
+  url_launcher: ^6.2.2
+  image_picker: ^1.0.4
+  cached_network_image: ^3.4.1
+  onesignal_flutter: ^5.1.6
+  shimmer: ^3.0.0
+  geocoding: ^2.1.1
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
+  video_player: ^2.14.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
+  video_player_platform_interface: ^6.9.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "assets/images/logo_rounded.png"
+  adaptive_icon_background: "#071426"
+  adaptive_icon_foreground: "assets/images/launcher_foreground.png"
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/images/brands/
+    - assets/images/logo_rounded.png
+    - assets/images/splash_phones_reference.png
+    - assets/images/login_phones_reference.png
+    - assets/images/register_phone_reference.png
+    - assets/images/yomart_gold_mark.png

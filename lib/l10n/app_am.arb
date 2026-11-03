@@ -1,0 +1,581 @@
+{
+  "welcome": "ሰላም",
+  "customer_reviews": "የደንበኞች ግምገማዎች",
+  "reviews": "ግምገማዎች",
+  "review": "ግምገማ",
+  "load_more_reviews": "ተጨማሪ አስተያየቶችን አስገባ",
+  "no_reviews_yet": "እስካሁን አስተያየት የለም። ይህን ምርት ለመገምገም የመጀመሪያው ይሁኑ!",
+  "anonymous": "ስም የለሽ",
+  "verified_purchase": "የተረጋገጠ ግዢ",
+  "rate_this_product": "ይህን ምርት ይገምግሙ",
+  "your_rating": "የእርስዎ ደረጃ",
+  "edit": "አርትዕ",
+  "delete": "ሰርዝ",
+  "delete_rating": "ደረጃ ሰርዝ",
+  "delete_rating_confirmation": "ደረጃዎን ለማስወገድ እርግጠኛ ነዎት?",
+  "submit": "አስገባ",
+  "update": "አዘምን",
+  "cancel": "ተው",
+  "review_optional": "ግምገማ (አማራጭ)",
+  "welcome_back": "እንኳን ደህና መጡ!",
+  "user": "ተጠቃሚ",
+  "get_something": "አንድ ነገር እንፈልግ!",
+  "get_now": "አሁን ያግኙ",
+  "about": "ስለ",
+  "change_password": "የይለፍ ቃል ይቀይሩ",
+  "current_password": "የአሁኑ የይለፍ ቃል",
+  "new_password": "አዲስ የይለፍ ቃል",
+  "confirm_new_password": "አዲሱን የይለፍ ቃል ያረጋግጡ",
+  "profile_change_note": "ኢሜይልን ለመቀየር ማረጋገጫ ያስፈልጋል። የተጠቃሚ ስምን ወይም የይለፍ ቃልን መቀየር ከመለያዎ ያስወጣዎታል።",
+  "email_not_verified": "ኢሜይሉ አልተረጋገጠም",
+  "member_since": "አባል ከ",
+  "product_details": "የምርት ዝርዝሮች",
+  "available_stock": "የሚገኝ ክምችት",
+  "not_available": "አይገኝም",
+  "available_options": "የሚገኙ ምርጫዎች",
+  "empty_cart": "ባዶ ጋሪ",
+  "cart_empty_message": "ጋሪዎ ባዶ ነው",
+  "subtotal": "ንዑስ ድምር",
+  "item_removed": "ነገር ከጋሪ ተወግዷል",
+  "item_added": "እቃው ወደ ጋሪ ታክሏል",
+  "cart_updated": "ጋሪ ተዘምኗል",
+  "cash_on_delivery": "በማድረስ ጊዜ ይክፈሉ",
+  "cbe_bank": "የኢትዮጵያ ንግድ ባንክ",
+  "telebirr": "ቴሌብር",
+  "order_processing": "በሂደት ላይ",
+  "order_shipped": "ተልኳል",
+  "order_delivered": "ደርሷል",
+  "order_cancelled": "ተሰርዟል",
+  "save": "አስቀምጥ",
+  "confirm": "አረጋግጥ",
+  "continue_shopping": "ግዢውን ይቀጥሉ",
+  "view_orders": "ትዕዛዞችን ይመልከቱ",
+  "enter_username": "የተጠቃሚ ስም ያስገቡ",
+  "enter_password": "የይለፍ ቃል ያስገቡ",
+  "confirm_password": "የይለፍ ቃልን ያረጋግጡ",
+  "passwords_dont_match": "የይለፍ ቃሎች አይዛመዱም",
+  "login": "ግባ",
+  "register": "ተመዝገብ",
+  "dont_have_account": "መለያ የሎትም? ይመዝገቡ",
+  "already_have_account": "ቀድሞ መለያ አለዎት? ይግቡ",
+  "total_amount": "ጠቅላላ መጠን",
+  "discount": "ቅናሽ",
+  "grand_total": "አጠቃላይ ድምር",
+  "apply": "አስገባ",
+  "complete_order": "ትዕዛዝን ያጠናቅቁ",
+  "buy_now": "አሁን ግዛ",
+  "enter_address": "አድራሻ ያስገቡ",
+  "payment_method": "የክፍያ ዘዴ",
+  "sort_by_price": "በዋጋ ያስቀምጡ",
+  "low_to_high": "ከዝቅ ወደ ከፍታ",
+  "high_to_low": "ከከፍታ ወደ ዝቅታ",
+  "filter_by_brands": "በምርት ስም አጣራ",
+  "add_to_cart": "ወደ ጋሪ ጨምር",
+  "no_favorite_items": "እስካሁን የሚወዷቸው ነገሮች የሉም",
+  "my_account": "መለያዬ",
+  "my_profile": "መለያዬ",
+  "edit_profile": "መገለጫን ያርትዑ",
+  "delivery_information": "የመድረሻ መረጃ",
+  "order_history": "የትዕዛዝ ታሪክ",
+  "my_orders": "ትዕዛዞቼ",
+  "my_address": "አድራሻዬ",
+  "my_favorites": "የሚወዷቸው",
+  "my_cart": "ጋሪዬ",
+  "username": "የተጠቃሚ ስም",
+  "notifications": "ማሳወቂያዎች",
+  "privacy_security": "ግላዊነት እና ደህንነት",
+  "about_app": "ስለ መተግበሪያው",
+  "help_support": "እገዛ እና ድጋፍ",
+  "email_support": "ኢሜይል ድጋፍ",
+  "call_support": "የስልክ ድጋፍ",
+  "live_chat": "ቀጥታ ውይይት",
+  "close": "ዝጋ",
+  "logout": "ውጣ",
+  "logout_confirmation": "ከመተግበሪያው መውጣት እፈልጋለሁ?",
+  "delete_account": "መለያን ሰርዝ",
+  "delete_account_confirmation": "መለያዎ ይዘጋል፤ የመገለጫ፣ የእውቂያና የማድረሻ መረጃዎች እና ግምገማዎች ይወገዳሉ። የትዕዛዝና የክፍያ ማስረጃ በስም ባልተገለጸ መልኩ ለንግድ መዝገብ ሊቆይ ይችላል። ለማረጋገጥ የይለፍ ቃልዎን ያስገቡ።",
+  "account_deleted_success": "የመለያ መዳረሻና ቀጥተኛ መረጃዎች ተወግደዋል። የትዕዛዝና የክፍያ መዝገቦች በስም ባልተገለጸ መልኩ ይቆያሉ።",
+  "privacy_policy_not_configured": "የግላዊነት መመሪያው ለዚህ ግንባታ አልተዋቀረም።",
+  "privacy_policy_open_failed": "የግላዊነት መመሪያውን መክፈት አልተቻለም። እንደገና ይሞክሩ።",
+  "update_address": "አድራሻን ያዘምኑ",
+  "phone": "ስልክ",
+  "street": "መንገድ",
+  "city": "ከተማ",
+  "state": "ክልል",
+  "postal_code": "የፖስታ ኮድ (አማራጭ)",
+  "country": "አገር",
+  "please_enter_phone": "እባክዎ ስልክ ቁጥር ያስገቡ",
+  "please_enter_street": "እባክዎ መንገድ ያስገቡ",
+  "please_enter_city": "እባክዎ ከተማ ያስገቡ",
+  "please_enter_state": "እባክዎ ክልል ያስገቡ",
+  "please_enter_code": "እባክዎ ኮድ ያስገቡ",
+  "please_enter_country": "እባክዎ አገር ያስገቡ",
+  "home": "መነሻ",
+  "favorites": "ተወዳጆች",
+  "cart": "ጋሪ",
+  "profile": "መገለጫ",
+  "settings": "ቅንብሮች",
+  "dark_mode": "ጨለማ ሁነታ",
+  "language": "ቋንቋ",
+  "select_language": "ቋንቋ ይምረጡ",
+  "help": "እገዛ",
+  "total": "ጠቅላላ",
+  "payment_successful": "ክፍያው ተሳክቷል!",
+  "payment_failed": "ክፍያው አልተሳካም",
+  "order_created": "ትዕዛዝ በተሳካ ሁኔታ ተፈጥሯል!",
+  "address_stored": "አድራሻ በተሳካ ሁኔታ ተቀምጧል",
+  "item_added_to_cart": "ነገር ወደ ጋሪ ታክሏል",
+  "please_select_variant": "እባክዎ ልዩነት ይምረጡ",
+  "search_hint": "ፈልግ...",
+  "available": "የሚገኝ",
+  "options": "ልዩነቶች",
+  "please_fill_all_fields": "እባክዎ ሁሉንም ቦታዎች ይሙሉ",
+  "error": "ስህተት",
+  "top_categories": "ዋና ዋና ምድቦች",
+  "success": "ተሳክቷል",
+  "loading": "በመጫን ላይ...",
+  "track_order": "ትዕዛዝን ይከታተሉ",
+  "discover_products": "አስደናቂ ምርቶችን ይፈልጉ",
+  "products_heading": "ምርቶች",
+  "easy_shopping": "ቀላል እና ደህንነቱ የተጠበቀ ግዢ",
+  "fast_delivery": "ፈጣን አቅርቦት",
+  "start_shopping": "አሁን ይግዙ!",
+  "skip": "ዝለል",
+  "next": "ቀጣይ",
+  "get_started": "ጀምር",
+  "preferences": "ምርጫዎች",
+  "telegram_support": "የቴሌግራም ድጋፍ",
+  "welcome_title": "እንኳን ደህና መጡ",
+  "create_account": "መለያዎን ይፍጠሩ",
+  "login_subtitle": "ለመቀጠል ይግቡ።",
+  "register_subtitle": "ወደ YoMart ይቀላቀሉ እና መግዛት ይጀምሩ።",
+  "email_address": "የኢሜይል አድራሻ",
+  "password_label": "የይለፍ ቃል",
+  "password_requirements": "ከታች ያሉትን የይለፍ ቃል መስፈርቶች ያሟሉ።",
+  "confirm_your_password": "እባክዎ የይለፍ ቃልዎን ያረጋግጡ።",
+  "sign_in": "ግባ",
+  "dont_have_account_prompt": "መለያ የለዎትም?",
+  "already_have_account_prompt": "አስቀድመው መለያ አለዎት?",
+  "all_filter": "ሁሉም",
+  "phones_filter": "ስልኮች",
+  "brands_filter": "ብራንዶች",
+  "accessories_filter": "መለዋወጫዎች",
+  "search_catalog": "ስልኮችን፣ ብራንዶችን እና መለዋወጫዎችን ፈልግ...",
+  "clear_search": "ፍለጋን አጽዳ",
+  "no_products_available": "እስካሁን ምርቶች የሉም።",
+  "no_search_matches": "ውጤት የለም። ሌላ ፍለጋ ይሞክሩ።",
+  "trending": "ተወዳጅ",
+  "see_all": "ሁሉንም ይመልከቱ",
+  "try_again": "እንደገና ይሞክሩ",
+  "collections": "ስብስቦች",
+  "best_sellers": "በጣም የተሸጡ",
+  "most_popular": "አሁን በጣም ተወዳጅ",
+  "new_arrivals": "አዲስ የገቡ",
+  "latest_models_trends": "የቅርብ ሞዴሎች እና አዝማሚያዎች",
+  "student_deals": "የተማሪ ቅናሾች",
+  "special_offers_students": "ለተማሪዎች ልዩ ቅናሾች",
+  "accessories_bundle": "የመለዋወጫ ጥቅል",
+  "save_more_together": "በአንድነት ተጨማሪ ይቆጥቡ",
+  "no_collection_products": "በዚህ ስብስብ ውስጥ እስካሁን ምርት የለም።",
+  "product": "ምርት",
+  "confirm_location": "ቦታውን ያረጋግጡ",
+  "delivery_location": "የማድረሻ ቦታ",
+  "delivery_pin": "የመድረሻ ፒን",
+  "choose_on_map": "በካርታ ላይ ይምረጡ",
+  "phone_number": "ስልክ ቁጥር",
+  "street_building": "መንገድ እና ሕንፃ",
+  "image_format_limit": "PNG፣ JPG (ከፍተኛው 5MB)",
+  "choose_different_image": "ሌላ ምስል ይምረጡ",
+  "processing_order": "ትዕዛዝዎን በማስኬድ ላይ...",
+  "tracking_confirmation_pending": "ትዕዛዝዎ ከተረጋገጠ በኋላ ክትትሉ ይዘምናል።",
+  "payment_details": "የክፍያ ዝርዝሮች",
+  "payment_proof": "የክፍያ ማረጋገጫ",
+  "no_payment_proof": "እስካሁን የክፍያ ማረጋገጫ አልተላከም።",
+  "product_details_unavailable": "የምርት ዝርዝሮች አልተገኙም።",
+  "product_details_unavailable_now": "የምርት ዝርዝሮች አሁን አልተገኙም።",
+  "profile_preferences_tooltip": "የገጽታ እና ቋንቋ ቅንብሮች",
+  "back": "ተመለስ",
+  "favorites_tooltip": "ተወዳጆች",
+  "go_back": "ወደ ኋላ ይመለሱ",
+  "orders_tooltip": "ትዕዛዞች",
+  "refresh_cart": "ጋሪውን ያድሱ",
+  "search_products": "ምርቶችን ፈልግ",
+  "address": "አድራሻ",
+  "upload_proof": "ማረጋገጫ ይስቀሉ",
+  "confirm_payment": "ክፍያውን ያረጋግጡ",
+  "cash_payment_title": "በማድረስ ጊዜ የሚከፈል ክፍያ",
+  "cbe_payment_title": "የኢትዮጵያ ንግድ ባንክ ክፍያ",
+  "telebirr_payment_title": "የቴሌብር ክፍያ",
+  "cbe_birr_app": "CBE Birr መተግበሪያ",
+  "bank_transfer": "የባንክ ማስተላለፍ",
+  "telebirr_app": "የቴሌብር መተግበሪያ",
+  "catalog_refreshed": "ካታሎጉ ታድሷል።",
+  "favorites_refreshed": "ተወዳጆች ታድሰዋል።",
+  "could_not_launch_url": "አገናኙን መክፈት አልተቻለም",
+  "please_wait": "እባክዎ ይጠብቁ…",
+  "user_not_found": "ተጠቃሚው አልተገኘም",
+  "an_error_occurred": "ስህተት ተፈጥሯል",
+  "username_required": "የተጠቃሚ ስም ያስፈልጋል",
+  "current_password_required": "ለማረጋገጫ የአሁኑ የይለፍ ቃል ያስፈልጋል",
+  "new_password_required": "አዲስ የይለፍ ቃል ያስፈልጋል",
+  "passwords_do_not_match": "የይለፍ ቃሎቹ አይዛመዱም",
+  "password_confirm_mismatch": "የይለፍ ቃሎቹ አይዛመዱም።",
+  "password": "የይለፍ ቃል",
+  "try_another_category": "ሌላ ምድብ ወይም ብራንድ ይሞክሩ።",
+  "no_products_match_filters": "ከእነዚህ ማጣሪያዎች ጋር የሚዛመድ ምርት የለም",
+  "address_not_found": "አድራሻ አልተገኘም",
+  "select_variant": "እባክዎ አማራጭ ይምረጡ",
+  "failed_add_item": "እቃውን ወደ ጋሪ ማከል አልተቻለም",
+  "submit_rating_failed": "ግምገማውን ማስገባት አልተቻለም",
+  "update_rating_failed": "ግምገማውን ማዘመን አልተቻለም",
+  "delete_rating_failed": "ግምገማውን መሰረዝ አልተቻለም",
+  "info": "መረጃ",
+  "something_went_wrong": "ችግር ተፈጥሯል",
+  "update_failed": "ማዘመን አልተሳካም",
+  "delivery": "ማድረስ",
+  "checkout": "ክፍያ ይፈጽሙ",
+  "place_order": "ትዕዛዝ ያስገቡ",
+  "order_status": "የትዕዛዝ ሁኔታ",
+  "payment_pending": "ክፍያ በመጠባበቅ ላይ",
+  "delivery_address": "መድረሻ",
+  "review_order": "ትዕዛዝን ይገምግሙ",
+  "payment_proof_upload": "እባክዎ የክፍያ ማረጋገጫዎን ይጫኑ።",
+  "upload_payment_proof": "ማረጋገጫ ይስቀሉ",
+  "search": "ፈልግ",
+  "orders": "ትዕዛዞች",
+  "account": "መለያ",
+  "phones": "ስልኮች",
+  "categories": "ምድቦች",
+  "brands": "ብራንዶች",
+  "email_or_username": "ኢሜይል ወይም የተጠቃሚ ስም",
+  "enter_a_username": "እባክዎ የተጠቃሚ ስም ያስገቡ።",
+  "username_min_length": "የተጠቃሚ ስሙ ቢያንስ 3 ቁምፊዎች ይኑሩት።",
+  "email_format_hint": "ይህን ቅርጸት ይጠቀሙ፦ {example}።",
+  "enter_email_address": "እባክዎ የኢሜይል አድራሻ ያስገቡ።",
+  "invalid_email_format": "እባክዎ በዚህ ቅርጸት ኢሜይል ያስገቡ፦ {example}።",
+  "password_requirements_below": "ከታች ያሉትን የይለፍ ቃል መስፈርቶች ያሟሉ።",
+  "passwords_do_not_match_hint": "የይለፍ ቃሎቹ አይዛመዱም።",
+  "signing_in": "በመግባት ላይ…",
+  "creating_account": "መለያ በመፍጠር ላይ…",
+  "eight_characters_count": "8 ወይም ከዚያ በላይ ({count}/8)",
+  "uppercase_and_lowercase": "ትልቅ እና ትንሽ ፊደል",
+  "number_requirement": "ቁጥር",
+  "special_character_requirement": "ልዩ ምልክት",
+  "sign_in_to_continue": "ለመቀጠል ይግቡ።",
+  "join_and_shop": "ወደ YoMart ይቀላቀሉ እና መግዛት ይጀምሩ።",
+  "search_all": "ሁሉም",
+  "search_phones": "ስልኮች",
+  "search_brands": "ብራንዶች",
+  "search_accessories": "መለዋወጫዎች",
+  "orders_tab": "ትዕዛዞች",
+  "account_tab": "መለያ",
+  "email_example": "name@example.com",
+  "@email_format_hint": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "@invalid_email_format": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "@eight_characters_count": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "no_ratings_yet": "ገና ደረጃ አልተሰጠም",
+  "saving": "በማስቀመጥ ላይ…",
+  "password_minimum_length": "የይለፍ ቃሉ ቢያንስ 6 ቁምፊዎች ሊኖሩት ይገባል።",
+  "catalog_load_error": "ካታሎጉን መጫን አልተቻለም። ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።",
+  "catalog_unavailable": "ካታሎጉ አሁን አይገኝም",
+  "check_connection_retry": "ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።",
+  "order_number": "ትዕዛዝ #{id}",
+  "placed_on": "የተገዛበት {date}",
+  "submitted_on": "የተላከበት {date}",
+  "tracking_reference": "የመከታተያ ማጣቀሻ፦ {reference}",
+  "quantity": "ብዛት፦ {quantity}",
+  "stage_out_for_delivery": "በመድረሻ ከተማ",
+  "order_pending": "በመጠባበቅ ላይ",
+  "awaiting_payment": "ክፍያ በመጠባበቅ ላይ",
+  "payment_verified": "ክፍያ ተረጋግጧል",
+  "payment_paid": "ክፍያ ተከፍሏል",
+  "payment_failed_status": "ክፍያ አልተሳካም",
+  "recently": "በቅርቡ",
+  "rating_delete_title": "ግምገማን ሰርዝ",
+  "rating_delete_confirmation": "ግምገማዎን መሰረዝ ይፈልጋሉ?",
+  "@order_number": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "@placed_on": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@submitted_on": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@tracking_reference": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "@quantity": {
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "orders_unavailable": "ትዕዛዞች አልተገኙም",
+  "no_orders_yet": "ገና ትዕዛዝ የለም",
+  "no_orders_for_filter": "{status} ትዕዛዞች የሉም",
+  "orders_empty_message": "ግዢዎችዎ እና ሁኔታቸው እዚህ ይታያሉ።",
+  "@no_orders_for_filter": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "curated_for_you": "ለእርስዎ ተዘጋጅቷል",
+  "tablets": "ታብሌቶች",
+  "smartwatches": "ስማርት ሰዓቶች",
+  "laptops": "ላፕቶፖች",
+  "gaming": "ጌሚንግ",
+  "audio": "ድምጽ",
+  "home_office": "ቤት እና ቢሮ",
+  "accessories": "መለዋወጫዎች",
+  "category": "ምድብ",
+  "categories_unavailable": "ካታሎጉ ሲገኝ ምድቦች እዚህ ይታያሉ።",
+  "no_brands_available": "እስካሁን ምንም ብራንዶች የሉም።",
+  "brand": "ብራንድ",
+  "no_brand_products": "የ{brand} ምርቶች እስካሁን የሉም።",
+  "your_cart": "ጋሪዎ",
+  "cart_item_count": "{count} እቃዎች",
+  "empty_cart_description": "የሚወዷቸውን እቃዎች ይጨምሩ፤ እዚህ ይታያሉ።",
+  "browse_products": "ምርቶችን ይመልከቱ",
+  "select_delivery_location": "የማድረሻ ቦታ ይምረጡ",
+  "map_pin_instruction": "የማድረሻ ቦታዎን ምልክት ለማድረግ ካርታውን ይንኩ።",
+  "choose_map_point": "በካርታው ላይ ነጥብ ይምረጡ",
+  "@no_brand_products": {
+    "placeholders": {
+      "brand": {
+        "type": "String"
+      }
+    }
+  },
+  "@cart_item_count": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "favorites_refresh_failed": "ተወዳጆችን ማደስ አልተቻለም። ግንኙነትዎን ያረጋግጡና እንደገና ይሞክሩ።",
+  "favorites_empty_description": "ተወዳጅ እቃዎችዎ እዚህ ይታያሉ።",
+  "view_product_details": "የምርቱን ዝርዝር ይመልከቱ",
+  "edit_your_rating": "ደረጃ አሰጣጥዎን ያርትዑ",
+  "full_name": "ሙሉ ስም",
+  "account_name": "የመለያ ስም",
+  "map_location_selected": "የካርታ ቦታ ተመርጧል · {coordinates}",
+  "please_enter_field": "እባክዎ {field} ያስገቡ።",
+  "pay_with_bank_transfer": "በባንክ ማስተላለፍ ይክፈሉ",
+  "pay_with_telebirr": "በቴሌብር ይክፈሉ",
+  "pay_when_received": "ትዕዛዝዎን ሲቀበሉ ይክፈሉ",
+  "upload_receipt_instruction": "የክፍያ ደረሰኝዎን ወይም ስክሪንሾት ይስቀሉ።",
+  "uploading": "በመስቀል ላይ…",
+  "tap_to_upload": "ለመስቀል ይንኩ",
+  "continue_to_review": "ወደ ግምገማ ይቀጥሉ",
+  "continue_to_payment": "ወደ ክፍያ ይቀጥሉ",
+  "continue_to_payment_proof": "ወደ የክፍያ ማረጋገጫ ይቀጥሉ",
+  "@map_location_selected": {
+    "placeholders": {
+      "coordinates": {
+        "type": "String"
+      }
+    }
+  },
+  "@please_enter_field": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "cbe_payment_instruction": "ከታች ካሉት ዘዴዎች በአንዱ ክፍያዎን ይፈጽሙና የግብይት ማረጋገጫውን ይስቀሉ።",
+  "open_payments_or_send_money": "2. ወደ ክፍያዎች ወይም ገንዘብ ላክ ይሂዱ",
+  "scan_qr_or_merchant": "3. QR ኮዱን ይቃኙ ወይም የነጋዴውን ዝርዝር ያስገቡ",
+  "after_payment_upload": "ከክፍያ በኋላ ስክሪንሾቱን ይስቀሉና ክፍያን ያረጋግጡን ይምረጡ።",
+  "telebirr_payment_instruction": "ክፍያዎን በቴሌብር ይፈጽሙና የግብይት ማረጋገጫውን ይስቀሉ።",
+  "send_money_or_payments": "2. ወደ ገንዘብ ላክ ወይም ክፍያዎች ይሂዱ",
+  "no_proof_uploaded": "ማረጋገጫ አልተሰቀለም",
+  "open_payment_app": "1. {app} ይክፈቱ",
+  "amount_birr": "መጠን፦ ብር {amount}",
+  "account_name_value": "የሂሳብ ስም፦ {value}",
+  "account_number_value": "የሂሳብ ቁጥር፦ {value}",
+  "bank_value": "ባንክ፦ {value}",
+  "reference_value": "ማጣቀሻ፦ {value}",
+  "merchant_number_value": "3. የነጋዴ ቁጥር ያስገቡ፦ {value}",
+  "@open_payment_app": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "@amount_birr": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@account_name_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@account_number_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@bank_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@reference_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@merchant_number_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "bank_transfer_or_cbe_birr": "የባንክ ማስተላለፍ ወይም CBE ብር",
+  "mobile_money_payment": "የሞባይል ገንዘብ ክፍያ",
+  "order_placed_title": "ትዕዛዝ ተልኳል!",
+  "order_submitted_message": "ትዕዛዝዎ በተሳካ ሁኔታ ተልኳል።",
+  "view_order_details": "የትዕዛዝ ዝርዝር ይመልከቱ",
+  "continue_shopping_action": "ግዢውን ይቀጥሉ",
+  "order_details_loading": "የትዕዛዝ ዝርዝሩ ገና እየተጫነ ነው። ከትዕዛዞቼ ገጽ እንደገና ይሞክሩ።",
+  "total_birr": "ጠቅላላ፦ ብር {amount}",
+  "brand_tagline": "የተሻሉ ስልኮች። ደማቅ ቀናት።",
+  "@total_birr": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "failed_update_cart": "ጋሪውን ማዘመን አልተቻለም። እንደገና ይሞክሩ።",
+  "cart_cleared": "ጋሪው ተወግዷል",
+  "payment_proof_selected": "የክፍያ ማረጋገጫ ምስል ተመርጧል",
+  "payment_proof_removed": "የክፍያ ማረጋገጫው ተወግዷል",
+  "payment_proof_required": "እባክዎ የክፍያ ማረጋገጫ ምስል ይምረጡ።",
+  "upload_failed": "የክፍያ ማረጋገጫውን መስቀል አልተቻለም። እንደገና ይሞክሩ።",
+  "login_required": "ትዕዛዝ ለመስጠት እባክዎ ይግቡ።",
+  "order_create_failed": "ትዕዛዙን መፍጠር አልተቻለም። እንደገና ይሞክሩ።",
+  "address_fields_required": "እባክዎ ሁሉንም የአድራሻ መስኮች ይሙሉ።",
+  "welcome_user": "እንኳን በደህና መጡ፣ {name}!",
+  "logged_out": "በተሳካ ሁኔታ ወጥተዋል።",
+  "profile_updated": "መገለጫው በተሳካ ሁኔታ ተዘምኗል።",
+  "password_changed": "የይለፍ ቃል ተቀይሯል",
+  "password_updated_relogin": "የይለፍ ቃሉ ተዘምኗል። እባክዎ እንደገና ይግቡ።",
+  "rating_submitted": "ደረጃ አሰጣጥዎ ተልኳል።",
+  "rating_updated": "ደረጃ አሰጣጥዎ ተዘምኗል።",
+  "rating_deleted": "ደረጃ አሰጣጥዎ ተሰርዟል።",
+  "@welcome_user": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wrong_credentials": "የተጠቃሚ ስም ወይም የይለፍ ቃል ትክክል አይደለም። እንደገና ይሞክሩ።",
+  "email_already_registered": "ይህ ኢሜይል መለያ አለው። ይግቡ ወይም ሌላ ኢሜይል ይጠቀሙ።",
+  "verification_code_expired": "የማረጋገጫ ኮዱ ጊዜው አልፏል። አዲስ ኮድ ጠይቀው እንደገና ይሞክሩ።",
+  "too_many_code_attempts": "ብዙ ጊዜ ሞክረዋል። ትንሽ ይጠብቁና አዲስ ኮድ ይጠይቁ።",
+  "resend_verification": "ኮዱን መላክ አልተቻለም። እንደገና ለመሞከር እንደገና ላክን ይምረጡ።",
+  "verification_code_mismatch": "ኮዱ አይዛመድም። ኢሜይሉን ያረጋግጡና እንደገና ይሞክሩ።",
+  "wait_before_resend": "ሌላ ኮድ ከመጠየቅዎ በፊት አንድ ደቂቃ ይጠብቁ።",
+  "verification_email_unavailable": "አሁን የማረጋገጫ ኢሜይል መላክ አልተቻለም። ቆይተው ይሞክሩ።",
+  "too_many_incorrect_codes": "ብዙ የተሳሳቱ ኮዶች ገብተዋል። አዲስ ኮድ ይጠይቁ።",
+  "verify_email_first": "መለያ ከመፍጠርዎ በፊት ኢሜይልዎን ያረጋግጡ።",
+  "server_error_retry": "በእኛ በኩል ችግር ተፈጥሯል። እባክዎ ቆይተው ይሞክሩ።",
+  "username_taken": "ይህ የተጠቃሚ ስም ተይዟል። ሌላ ይምረጡ።",
+  "connection_error": "ከአገልጋዩ ጋር መገናኘት አልተቻለም። ኢንተርኔትዎን ያረጋግጡ።",
+  "request_timeout": "ጥያቄው ጊዜ ወስዷል። እንደገና ይሞክሩ።",
+  "server_not_responding": "አገልጋዩ ምላሽ አይሰጥም። ቆይተው ይሞክሩ።",
+  "both_credentials_required": "የተጠቃሚ ስምዎንና የይለፍ ቃልዎን ያስገቡ።",
+  "password_required": "የይለፍ ቃል ያስፈልጋል።",
+  "general_retry": "ይህን ማጠናቀቅ አልተቻለም። እንደገና ይሞክሩ።",
+  "current_password_incorrect": "የአሁኑ የይለፍ ቃል ትክክል አይደለም። እንደገና ይሞክሩ።",
+  "enter_current_password": "ለውጦች ለማድረግ የአሁኑን የይለፍ ቃል ያስገቡ።",
+  "username_cannot_empty": "የተጠቃሚ ስም ባዶ መሆን የለበትም።",
+  "choose_different_username": "ይህ የተጠቃሚ ስም ተይዟል። ሌላ ይምረጡ.",
+  "profile_picture_updated": "የመገለጫ ምስሉ ተዘምኗል።",
+  "profile_image_failed": "የመገለጫ ምስሉን ማዘመን አልተቻለም። እንደገና ይሞክሩ።",
+  "delivery_addresses": "የተቀመጡ መድረሻዎች",
+  "default_label": "ነባሪ",
+  "add_new_address": "አዲስ አድራሻ ጨምር",
+  "address_name": "የአድራሻ ስም",
+  "home_address": "ቤት",
+  "office_address": "ቢሮ",
+  "save_address": "አድራሻውን አስቀምጥ",
+  "edit_address": "አድራሻ አርትዕ",
+  "saved_addresses_empty": "በክፍያ ጊዜ ለመጠቀም አድራሻ ያክሉ።",
+  "map_address": "በካርታ ላይ ይምረጡ",
+  "remove_address": "አድራሻ አስወግድ",
+  "address_saved": "አድራሻው ተቀምጧል።",
+  "language_changed": "ቋንቋው ወደ {language} ተቀይሯል።",
+  "@language_changed": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "support_contact_unavailable": "የድጋፍ መገናኛ መረጃ ገና አልተገኘም።",
+  "destination_information": "የመድረሻ መረጃ",
+  "destination_city": "የመድረሻ ከተማ",
+  "area_landmark_optional": "አካባቢ ወይም ምልክት (አማራጭ)",
+  "collection_explanation": "መድረሻዎ መጓጓዣን ለማቀናጀት ይረዳል። ዮማርት ሰራተኞች የመሰብሰቢያ ቦታን ከእርስዎ ጋር ያስማማሉ።",
+  "collection_point": "የተስማማ መሰብሰቢያ ቦታ",
+  "collection_point_not_agreed": "የመሰብሰቢያ ቦታው ገና አልተስማማም።",
+  "ready_for_collection": "ለመሰብሰብ ዝግጁ",
+  "collected": "ተሰብስቧል"
+}

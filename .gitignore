@@ -1,0 +1,160 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+Thumbs.db
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code related
+.vscode/
+
+# Local environment and signing secrets
+.env
+.env.*
+!.env.example
+!.env.template
+**/key.properties
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Android related
+**/android/.gradle/
+**/android/captures/
+**/android/local.properties
+**/android/key.properties
+**/android/app/*.jks
+**/android/app/*.keystore
+**/android/**/GeneratedPluginRegistrant.java
+**/android/app/src/main/java/io/flutter/plugins/
+**/android/app/src/main/res/drawable-*/
+**/android/app/src/main/res/drawable-*-v31/
+**/android/app/src/main/res/mipmap-anydpi-*/
+**/android/app/src/main/res/values-*-v31/
+
+# iOS related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/Flutter/Maps.xcconfig
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/GeneratedPluginRegistrant.*
+
+# Windows related
+**/windows/flutter/generated_plugin_registrant.*
+**/windows/flutter/generated_plugins.cmake
+
+# Linux related
+**/linux/flutter/generated_plugin_registrant.*
+**/linux/flutter/generated_plugins.cmake
+
+# macOS related
+**/macos/Flutter/GeneratedPluginRegistrant.*
+
+# Web related
+**/web/splash/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Exclude large media files and generated assets
+/assets/images/raw/
+
+# Exclude backup files
+*.backup
+*.bak
+*.orig
+*.old
+*~
+*_backup.txt
+server_backup_*.txt
+pubspec_old.yaml
+pubspec.yaml.bak
+
+# Exclude extracted code files
+all_code*.txt
+clientfinal.txt
+
+# Exclude script files used for processing
+extract_and_replace.py
+
+# Exclude native splash configuration
+flutter_native_splash.yaml
+
+# Temporary files
+*.tmp
+*.temp
+
+# Accidental duplicate asset tree
+assets/assets/
+
+# Admin panel files (separate project)
+../admin_panal_start/
+
+**/flutter/ephemeral/
+
+# Required YoMart Android adaptive launcher and Android 12+ splash resources.
+# These generated resources are referenced by the manifest and theme styles.
+!android/app/src/main/res/drawable-hdpi/
+!android/app/src/main/res/drawable-hdpi/ic_launcher_foreground.png
+!android/app/src/main/res/drawable-mdpi/
+!android/app/src/main/res/drawable-mdpi/ic_launcher_foreground.png
+!android/app/src/main/res/drawable-xhdpi/
+!android/app/src/main/res/drawable-xhdpi/ic_launcher_foreground.png
+!android/app/src/main/res/drawable-xxhdpi/
+!android/app/src/main/res/drawable-xxhdpi/ic_launcher_foreground.png
+!android/app/src/main/res/drawable-xxxhdpi/
+!android/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png
+!android/app/src/main/res/mipmap-anydpi-v26/
+!android/app/src/main/res/mipmap-anydpi-v26/launcher_icon.xml
+!android/app/src/main/res/values-v31/
+!android/app/src/main/res/values-v31/styles.xml
+!android/app/src/main/res/values-night-v31/
+!android/app/src/main/res/values-night-v31/styles.xml
+
+# Personal editor configuration
+.cursor/

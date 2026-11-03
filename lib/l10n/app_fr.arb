@@ -1,0 +1,581 @@
+{
+  "welcome": "Bonjour",
+  "welcome_back": "Bon retour!",
+  "user": "Utilisateur",
+  "get_something": "Allons chercher quelque chose!",
+  "get_now": "Obtenir Maintenant",
+  "about": "À propos",
+  "enter_username": "Entrez le nom d'utilisateur",
+  "enter_password": "Entrez le mot de passe",
+  "confirm_password": "Confirmer le mot de passe",
+  "passwords_dont_match": "Les mots de passe ne correspondent pas",
+  "login": "Connexion",
+  "register": "S'inscrire",
+  "dont_have_account": "Vous n'avez pas de compte? Inscrivez-vous",
+  "already_have_account": "Vous avez déjà un compte? Connectez-vous",
+  "total_amount": "Montant total",
+  "discount": "Remise",
+  "grand_total": "Total général",
+  "apply": "Appliquer",
+  "complete_order": "Finaliser la commande",
+  "buy_now": "Acheter Maintenant",
+  "enter_address": "Saisir l’adresse",
+  "payment_method": "Mode de paiement",
+  "sort_by_price": "Trier par Prix",
+  "low_to_high": "Bas à Haut",
+  "high_to_low": "Haut à Bas",
+  "filter_by_brands": "Filtrer par Marques",
+  "available_stock": "Stock disponible",
+  "not_available": "Non disponible",
+  "add_to_cart": "Ajouter au panier",
+  "no_favorite_items": "Aucun favori pour le moment",
+  "empty_cart": "Panier vide",
+  "my_account": "Mon Compte",
+  "my_profile": "Mon Profil",
+  "edit_profile": "Modifier le profil",
+  "delivery_information": "Informations sur la destination",
+  "order_history": "Historique des commandes",
+  "my_orders": "Mes commandes",
+  "my_address": "Mon adresse",
+  "my_favorites": "Mes Favoris",
+  "my_cart": "Mon Panier",
+  "member_since": "Membre depuis",
+  "username": "Nom d’utilisateur",
+  "notifications": "Notifications",
+  "privacy_security": "Confidentialité et Sécurité",
+  "about_app": "À propos de l'App",
+  "help_support": "Aide et assistance",
+  "email_support": "Support Email",
+  "call_support": "Support Téléphonique",
+  "live_chat": "Chat en Direct",
+  "close": "Fermer",
+  "logout": "Déconnexion",
+  "logout_confirmation": "Êtes-vous sûr de vouloir vous déconnecter?",
+  "delete_account": "Supprimer le compte",
+  "delete_account_confirmation": "Votre compte sera désactivé et votre profil, vos coordonnées, vos informations de livraison et vos avis seront supprimés. Les commandes et preuves de paiement peuvent être conservées sous forme anonymisée pour les dossiers commerciaux. Saisissez votre mot de passe pour confirmer.",
+  "account_deleted_success": "L’accès au compte et les coordonnées directes ont été supprimés. Les commandes et paiements sont conservés sous forme anonymisée.",
+  "privacy_policy_not_configured": "La politique de confidentialité n’est pas configurée pour cette version.",
+  "privacy_policy_open_failed": "Impossible d’ouvrir la politique de confidentialité. Réessayez.",
+  "cancel": "Annuler",
+  "update_address": "Mettre à jour l’adresse",
+  "phone": "Téléphone",
+  "street": "Rue",
+  "city": "Ville",
+  "state": "Région",
+  "postal_code": "Code postal (facultatif)",
+  "country": "Pays",
+  "please_enter_phone": "Veuillez saisir un numéro de téléphone",
+  "please_enter_street": "Veuillez saisir une rue",
+  "please_enter_city": "Veuillez saisir une ville",
+  "please_enter_state": "Veuillez saisir une région",
+  "please_enter_code": "Veuillez entrer un code",
+  "please_enter_country": "Veuillez saisir un pays",
+  "home": "Accueil",
+  "favorites": "Favoris",
+  "cart": "Panier",
+  "profile": "Profil",
+  "settings": "PARAMÈTRES",
+  "dark_mode": "Mode sombre",
+  "language": "Langue",
+  "select_language": "Choisir la langue",
+  "help": "AIDE ET SUPPORT",
+  "total": "Total",
+  "payment_successful": "Paiement réussi !",
+  "payment_failed": "Échec du paiement",
+  "order_created": "Commande créée avec succès!",
+  "address_stored": "Adresse enregistrée avec succès",
+  "item_added_to_cart": "Article ajouté au panier",
+  "please_select_variant": "Veuillez sélectionner une variante",
+  "search_hint": "Rechercher...",
+  "available": "Disponible",
+  "options": "Options",
+  "please_fill_all_fields": "Veuillez remplir tous les champs",
+  "error": "Erreur",
+  "top_categories": "Catégories principales",
+  "success": "Réussi",
+  "loading": "Chargement...",
+  "track_order": "Suivre la commande",
+  "discover_products": "Découvrez des Produits Incroyables",
+  "products_heading": "Produits",
+  "easy_shopping": "Achats Faciles et Sécurisés",
+  "fast_delivery": "Livraison Rapide",
+  "start_shopping": "Commencez à Magasiner Maintenant!",
+  "skip": "Passer",
+  "next": "Suivant",
+  "get_started": "Commencer",
+  "preferences": "Préférences",
+  "available_options": "Options disponibles",
+  "product_details": "Détails du produit",
+  "customer_reviews": "Avis clients",
+  "change_password": "Modifier le mot de passe",
+  "current_password": "Mot de passe actuel",
+  "new_password": "Nouveau mot de passe",
+  "confirm_new_password": "Confirmer le nouveau mot de passe",
+  "profile_change_note": "La modification de l’adresse e-mail nécessite une vérification. Modifier le nom d’utilisateur ou le mot de passe vous déconnectera.",
+  "email_not_verified": "Adresse e-mail non vérifiée",
+  "cart_empty_message": "Votre panier est vide",
+  "subtotal": "Sous-total",
+  "item_removed": "Article retiré du panier",
+  "item_added": "Article ajouté au panier",
+  "cart_updated": "Panier mis à jour",
+  "cash_on_delivery": "Paiement à la livraison",
+  "cbe_bank": "Commercial Bank of Ethiopia",
+  "telebirr": "Telebirr",
+  "order_processing": "En cours de traitement",
+  "order_shipped": "Expédiée",
+  "order_delivered": "Livrée",
+  "order_cancelled": "Annulée",
+  "save": "Enregistrer",
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "confirm": "Confirmer",
+  "continue_shopping": "Continuer les achats",
+  "view_orders": "Voir les commandes",
+  "reviews": "Avis",
+  "review": "Avis",
+  "load_more_reviews": "Afficher plus d’avis",
+  "no_reviews_yet": "Aucun avis pour le moment. Soyez le premier à évaluer ce produit !",
+  "anonymous": "Anonyme",
+  "verified_purchase": "Achat vérifié",
+  "rate_this_product": "Évaluer ce produit",
+  "your_rating": "Votre note",
+  "delete_rating": "Supprimer l’avis",
+  "delete_rating_confirmation": "Voulez-vous vraiment supprimer votre avis ?",
+  "submit": "Envoyer",
+  "update": "Mettre à jour",
+  "review_optional": "Avis (facultatif)",
+  "telegram_support": "Assistance Telegram",
+  "welcome_title": "Bienvenue",
+  "create_account": "Créer votre compte",
+  "login_subtitle": "Connectez-vous pour continuer.",
+  "register_subtitle": "Rejoignez YoMart et commencez vos achats.",
+  "email_address": "Adresse e-mail",
+  "password_label": "Mot de passe",
+  "password_requirements": "Respectez les critères du mot de passe ci-dessous.",
+  "confirm_your_password": "Confirmez votre mot de passe.",
+  "sign_in": "Se connecter",
+  "dont_have_account_prompt": "Vous n’avez pas de compte ?",
+  "already_have_account_prompt": "Vous avez déjà un compte ?",
+  "all_filter": "Tout",
+  "phones_filter": "Téléphones",
+  "brands_filter": "Marques",
+  "accessories_filter": "Accessoires",
+  "search_catalog": "Rechercher des téléphones, marques, accessoires...",
+  "clear_search": "Effacer la recherche",
+  "no_products_available": "Aucun produit disponible pour le moment.",
+  "no_search_matches": "Aucun résultat. Essayez une autre recherche.",
+  "trending": "Tendances",
+  "see_all": "Tout voir",
+  "try_again": "Réessayer",
+  "collections": "Collections",
+  "best_sellers": "Meilleures ventes",
+  "most_popular": "Les plus populaires",
+  "new_arrivals": "Nouveautés",
+  "latest_models_trends": "Derniers modèles et tendances",
+  "student_deals": "Offres étudiantes",
+  "special_offers_students": "Offres spéciales pour les étudiants",
+  "accessories_bundle": "Pack d’accessoires",
+  "save_more_together": "Économisez davantage ensemble",
+  "no_collection_products": "Aucun produit dans cette collection pour le moment.",
+  "product": "Produit",
+  "confirm_location": "Confirmer le lieu",
+  "delivery_location": "Lieu de livraison",
+  "delivery_pin": "Repère de destination",
+  "choose_on_map": "Choisir sur la carte",
+  "phone_number": "Numéro de téléphone",
+  "street_building": "Rue et bâtiment",
+  "image_format_limit": "PNG, JPG (5 Mo max.)",
+  "choose_different_image": "Choisir une autre image",
+  "processing_order": "Traitement de votre commande...",
+  "tracking_confirmation_pending": "Le suivi sera mis à jour après la confirmation de votre commande.",
+  "payment_details": "Détails du paiement",
+  "payment_proof": "Justificatif de paiement",
+  "no_payment_proof": "Aucun justificatif de paiement envoyé pour le moment.",
+  "product_details_unavailable": "Les détails du produit sont indisponibles.",
+  "product_details_unavailable_now": "Les détails du produit sont momentanément indisponibles.",
+  "profile_preferences_tooltip": "Paramètres du thème et de la langue",
+  "back": "Retour",
+  "favorites_tooltip": "Favoris",
+  "go_back": "Revenir",
+  "orders_tooltip": "Commandes",
+  "refresh_cart": "Actualiser le panier",
+  "search_products": "Rechercher des produits",
+  "address": "Adresse",
+  "upload_proof": "Téléverser le justificatif",
+  "confirm_payment": "Confirmer le paiement",
+  "cash_payment_title": "Paiement à la livraison",
+  "cbe_payment_title": "Paiement Commercial Bank of Ethiopia",
+  "telebirr_payment_title": "Paiement Telebirr",
+  "cbe_birr_app": "Application CBE Birr",
+  "bank_transfer": "Virement bancaire",
+  "telebirr_app": "Application Telebirr",
+  "catalog_refreshed": "Catalogue actualisé.",
+  "favorites_refreshed": "Favoris actualisés.",
+  "could_not_launch_url": "Impossible d’ouvrir le lien",
+  "please_wait": "Veuillez patienter…",
+  "user_not_found": "Utilisateur introuvable",
+  "an_error_occurred": "Une erreur est survenue",
+  "username_required": "Le nom d’utilisateur est obligatoire",
+  "current_password_required": "Le mot de passe actuel est requis pour la vérification",
+  "new_password_required": "Le nouveau mot de passe est obligatoire",
+  "passwords_do_not_match": "Les mots de passe ne correspondent pas",
+  "password_confirm_mismatch": "Les mots de passe ne correspondent pas.",
+  "password": "Mot de passe",
+  "try_another_category": "Essayez une autre catégorie ou marque.",
+  "no_products_match_filters": "Aucun produit ne correspond à ces filtres",
+  "address_not_found": "Adresse introuvable",
+  "select_variant": "Veuillez sélectionner une variante",
+  "failed_add_item": "Impossible d’ajouter l’article au panier",
+  "submit_rating_failed": "Impossible d’envoyer la note",
+  "update_rating_failed": "Impossible de modifier la note",
+  "delete_rating_failed": "Impossible de supprimer la note",
+  "info": "Information",
+  "something_went_wrong": "Une erreur est survenue",
+  "update_failed": "Échec de la mise à jour",
+  "delivery": "Livraison",
+  "checkout": "Commander",
+  "place_order": "Passer la commande",
+  "order_status": "État de la commande",
+  "payment_pending": "Paiement en attente",
+  "delivery_address": "Destination",
+  "review_order": "Vérifier la commande",
+  "payment_proof_upload": "Veuillez téléverser votre justificatif de paiement.",
+  "upload_payment_proof": "Téléverser le justificatif",
+  "search": "Rechercher",
+  "orders": "Commandes",
+  "account": "Compte",
+  "phones": "Téléphones",
+  "categories": "Catégories",
+  "brands": "Marques",
+  "email_or_username": "E-mail ou nom d’utilisateur",
+  "enter_a_username": "Veuillez saisir un nom d’utilisateur.",
+  "username_min_length": "Le nom d’utilisateur doit contenir au moins 3 caractères.",
+  "email_format_hint": "Utilisez le format {example}.",
+  "enter_email_address": "Veuillez saisir votre adresse e-mail.",
+  "invalid_email_format": "Saisissez une adresse au format {example}.",
+  "password_requirements_below": "Respectez les critères du mot de passe ci-dessous.",
+  "passwords_do_not_match_hint": "Les mots de passe ne correspondent pas.",
+  "signing_in": "Connexion en cours…",
+  "creating_account": "Création du compte…",
+  "eight_characters_count": "8 caractères ou plus ({count}/8)",
+  "uppercase_and_lowercase": "majuscules et minuscules",
+  "number_requirement": "chiffre",
+  "special_character_requirement": "caractère spécial",
+  "sign_in_to_continue": "Connectez-vous pour continuer.",
+  "join_and_shop": "Rejoignez YoMart et commencez vos achats.",
+  "search_all": "Tout",
+  "search_phones": "Téléphones",
+  "search_brands": "Marques",
+  "search_accessories": "Accessoires",
+  "orders_tab": "Commandes",
+  "account_tab": "Compte",
+  "email_example": "name@example.com",
+  "@email_format_hint": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "@invalid_email_format": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "@eight_characters_count": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "no_ratings_yet": "Aucune note pour le moment",
+  "saving": "Enregistrement…",
+  "password_minimum_length": "Le mot de passe doit contenir au moins 6 caractères.",
+  "catalog_load_error": "Impossible de charger le catalogue. Vérifiez votre connexion et réessayez.",
+  "catalog_unavailable": "Le catalogue est indisponible pour le moment",
+  "check_connection_retry": "Vérifiez votre connexion et réessayez.",
+  "order_number": "Commande n° {id}",
+  "placed_on": "Passée le {date}",
+  "submitted_on": "Envoyé le {date}",
+  "tracking_reference": "Référence de suivi : {reference}",
+  "quantity": "Qté : {quantity}",
+  "stage_out_for_delivery": "Dans la ville de destination",
+  "order_pending": "En attente",
+  "awaiting_payment": "En attente de paiement",
+  "payment_verified": "Paiement vérifié",
+  "payment_paid": "Payé",
+  "payment_failed_status": "Échec du paiement",
+  "recently": "récemment",
+  "rating_delete_title": "Supprimer l’avis",
+  "rating_delete_confirmation": "Voulez-vous vraiment supprimer votre avis ?",
+  "@order_number": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "@placed_on": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@submitted_on": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@tracking_reference": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "@quantity": {
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "orders_unavailable": "Commandes indisponibles",
+  "no_orders_yet": "Aucune commande pour le moment",
+  "no_orders_for_filter": "Aucune commande : {status}",
+  "orders_empty_message": "Vos achats et leur état apparaîtront ici.",
+  "@no_orders_for_filter": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "curated_for_you": "Sélectionné pour vous",
+  "tablets": "Tablettes",
+  "smartwatches": "Montres connectées",
+  "laptops": "Ordinateurs portables",
+  "gaming": "Jeux vidéo",
+  "audio": "Audio",
+  "home_office": "Maison et bureau",
+  "accessories": "Accessoires",
+  "category": "Catégorie",
+  "categories_unavailable": "Les catégories apparaîtront ici lorsque le catalogue sera disponible.",
+  "no_brands_available": "Aucune marque disponible pour le moment.",
+  "brand": "Marque",
+  "no_brand_products": "Aucun produit {brand} disponible pour le moment.",
+  "your_cart": "Votre panier",
+  "cart_item_count": "{count} articles",
+  "empty_cart_description": "Ajoutez quelques articles que vous aimez : ils apparaîtront ici.",
+  "browse_products": "Voir les produits",
+  "select_delivery_location": "Choisir le lieu de livraison",
+  "map_pin_instruction": "Touchez la carte pour placer le repère à votre adresse de livraison.",
+  "choose_map_point": "Choisir un point sur la carte",
+  "@no_brand_products": {
+    "placeholders": {
+      "brand": {
+        "type": "String"
+      }
+    }
+  },
+  "@cart_item_count": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "favorites_refresh_failed": "Impossible d’actualiser les favoris. Vérifiez votre connexion et réessayez.",
+  "favorites_empty_description": "Vos articles favoris apparaîtront ici.",
+  "view_product_details": "Voir les détails du produit",
+  "edit_your_rating": "Modifier votre note",
+  "full_name": "Nom complet",
+  "account_name": "Nom du compte",
+  "map_location_selected": "Lieu sélectionné sur la carte · {coordinates}",
+  "please_enter_field": "Veuillez saisir {field}.",
+  "pay_with_bank_transfer": "Payer par virement bancaire",
+  "pay_with_telebirr": "Payer avec Telebirr",
+  "pay_when_received": "Payez à la réception de votre commande",
+  "upload_receipt_instruction": "Veuillez téléverser votre reçu de paiement ou une capture d’écran.",
+  "uploading": "Téléversement…",
+  "tap_to_upload": "Touchez pour téléverser",
+  "continue_to_review": "Continuer vers la vérification",
+  "continue_to_payment": "Continuer vers le paiement",
+  "continue_to_payment_proof": "Continuer vers le justificatif de paiement",
+  "@map_location_selected": {
+    "placeholders": {
+      "coordinates": {
+        "type": "String"
+      }
+    }
+  },
+  "@please_enter_field": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "cbe_payment_instruction": "Effectuez le paiement avec l’une des méthodes ci-dessous et téléversez le justificatif de transaction :",
+  "open_payments_or_send_money": "2. Ouvrez Paiements ou Envoyer de l’argent",
+  "scan_qr_or_merchant": "3. Scannez le code QR ou saisissez les informations du commerçant",
+  "after_payment_upload": "Après le paiement, téléversez la capture et sélectionnez Confirmer le paiement.",
+  "telebirr_payment_instruction": "Effectuez le paiement avec Telebirr et téléversez le justificatif de transaction :",
+  "send_money_or_payments": "2. Ouvrez Envoyer de l’argent ou Paiements",
+  "no_proof_uploaded": "Aucun justificatif téléversé",
+  "open_payment_app": "1. Ouvrez {app}",
+  "amount_birr": "Montant : Birr {amount}",
+  "account_name_value": "Titulaire : {value}",
+  "account_number_value": "Numéro de compte : {value}",
+  "bank_value": "Banque : {value}",
+  "reference_value": "Référence : {value}",
+  "merchant_number_value": "3. Saisissez le numéro du commerçant : {value}",
+  "@open_payment_app": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "@amount_birr": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@account_name_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@account_number_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@bank_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@reference_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@merchant_number_value": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "bank_transfer_or_cbe_birr": "Virement bancaire ou CBE Birr",
+  "mobile_money_payment": "Paiement mobile",
+  "order_placed_title": "Commande passée !",
+  "order_submitted_message": "Votre commande a bien été envoyée.",
+  "view_order_details": "Voir les détails de la commande",
+  "continue_shopping_action": "Continuer les achats",
+  "order_details_loading": "Les détails sont en cours de chargement. Réessayez depuis Mes commandes.",
+  "total_birr": "Total : Birr {amount}",
+  "brand_tagline": "De meilleurs téléphones. Des jours plus lumineux.",
+  "@total_birr": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "failed_update_cart": "Impossible de mettre à jour le panier. Veuillez réessayer.",
+  "cart_cleared": "Panier vidé",
+  "payment_proof_selected": "Image du justificatif sélectionnée",
+  "payment_proof_removed": "Justificatif de paiement supprimé",
+  "payment_proof_required": "Veuillez sélectionner une image du justificatif de paiement.",
+  "upload_failed": "Impossible de téléverser le justificatif. Veuillez réessayer.",
+  "login_required": "Veuillez vous connecter pour passer une commande.",
+  "order_create_failed": "Impossible de créer la commande. Veuillez réessayer.",
+  "address_fields_required": "Veuillez remplir tous les champs de l’adresse.",
+  "welcome_user": "Bienvenue, {name} !",
+  "logged_out": "Vous êtes déconnecté.",
+  "profile_updated": "Profil mis à jour.",
+  "password_changed": "Mot de passe modifié",
+  "password_updated_relogin": "Mot de passe mis à jour. Veuillez vous reconnecter.",
+  "rating_submitted": "Votre note a été envoyée.",
+  "rating_updated": "Votre note a été mise à jour.",
+  "rating_deleted": "Votre note a été supprimée.",
+  "@welcome_user": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wrong_credentials": "Nom d’utilisateur ou mot de passe incorrect. Veuillez réessayer.",
+  "email_already_registered": "Cette adresse e-mail a déjà un compte. Connectez-vous ou utilisez une autre adresse.",
+  "verification_code_expired": "Le code a expiré. Demandez-en un nouveau et réessayez.",
+  "too_many_code_attempts": "Trop de tentatives. Attendez un peu puis demandez un nouveau code.",
+  "resend_verification": "Impossible d’envoyer le code. Appuyez sur Renvoyer le code pour réessayer.",
+  "verification_code_mismatch": "Le code ne correspond pas. Vérifiez l’e-mail et réessayez.",
+  "wait_before_resend": "Veuillez attendre une minute avant de demander un autre code.",
+  "verification_email_unavailable": "Impossible d’envoyer un e-mail de vérification pour le moment. Réessayez plus tard.",
+  "too_many_incorrect_codes": "Trop de codes incorrects. Demandez-en un nouveau.",
+  "verify_email_first": "Veuillez vérifier votre adresse e-mail avant de créer votre compte.",
+  "server_error_retry": "Un problème est survenu. Veuillez réessayer dans un instant.",
+  "username_taken": "Ce nom d’utilisateur est déjà pris. Veuillez en choisir un autre.",
+  "connection_error": "Impossible de joindre le serveur. Vérifiez votre connexion Internet.",
+  "request_timeout": "La requête a expiré. Veuillez réessayer.",
+  "server_not_responding": "Le serveur ne répond pas. Veuillez réessayer plus tard.",
+  "both_credentials_required": "Saisissez votre nom d’utilisateur et votre mot de passe.",
+  "password_required": "Le mot de passe est obligatoire.",
+  "general_retry": "Impossible de terminer cette action. Veuillez réessayer.",
+  "current_password_incorrect": "Votre mot de passe actuel est incorrect. Veuillez réessayer.",
+  "enter_current_password": "Saisissez votre mot de passe actuel pour effectuer des modifications.",
+  "username_cannot_empty": "Le nom d’utilisateur ne peut pas être vide.",
+  "choose_different_username": "Ce nom d’utilisateur est déjà pris. Veuillez en choisir un autre.",
+  "profile_picture_updated": "La photo de profil a été mise à jour.",
+  "profile_image_failed": "Impossible de mettre à jour la photo de profil. Veuillez réessayer.",
+  "delivery_addresses": "Destinations enregistrées",
+  "default_label": "Par défaut",
+  "add_new_address": "Ajouter une adresse",
+  "address_name": "Nom de l’adresse",
+  "home_address": "Domicile",
+  "office_address": "Bureau",
+  "save_address": "Enregistrer l’adresse",
+  "edit_address": "Modifier l’adresse",
+  "saved_addresses_empty": "Ajoutez une adresse pour la retrouver au paiement.",
+  "map_address": "Choisir sur la carte",
+  "remove_address": "Supprimer l’adresse",
+  "address_saved": "Adresse enregistrée.",
+  "language_changed": "La langue est maintenant {language}.",
+  "@language_changed": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "support_contact_unavailable": "Les coordonnées du support ne sont pas encore disponibles.",
+  "destination_information": "Informations sur la destination",
+  "destination_city": "Ville de destination",
+  "area_landmark_optional": "Quartier ou repère (facultatif)",
+  "collection_explanation": "Votre destination aide à coordonner le transport. Le personnel de YoMart conviendra avec vous d’un point de retrait.",
+  "collection_point": "Point de retrait convenu",
+  "collection_point_not_agreed": "Le point de retrait n’a pas encore été convenu.",
+  "ready_for_collection": "Prêt à être retiré",
+  "collected": "Retiré"
+}

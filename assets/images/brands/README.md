@@ -1,0 +1,1 @@
+Brand marks are SVG files from the Simple Icons project (https://simpleicons.org/), downloaded from its public CDN and embedded locally for offline rendering. Simple Icons is distributed under CC0 1.0. Brand names and marks remain the property of their respective owners.
