@@ -28,7 +28,7 @@ dependencies:
   get_storage: ^2.1.1
   flutter_cart: ^0.0.9
   url_launcher: ^6.2.2
-  image_picker: ^1.0.4
+  image_picker: ^1.2.4
   cached_network_image: ^3.4.1
   onesignal_flutter: ^5.1.6
   shimmer: ^3.0.0
