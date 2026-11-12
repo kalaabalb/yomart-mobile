@@ -80,6 +80,8 @@ jobs:
           disable-animations: true
           script: |
             adb install -r build/app/outputs/flutter-apk/app-debug.apk
+            set -euo pipefail
+            adb install -r build/app/outputs/flutter-apk/app-debug.apk
             adb shell monkey -p com.yomobiles.client 1
             mkdir -p artifacts/android
             sleep 1
