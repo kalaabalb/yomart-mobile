@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 
 const _previewCatalogNotice = bool.fromEnvironment(
   'YOMART_PREVIEW_CATALOG',
-  defaultValue: true,
+  defaultValue: false,
 );
 
 class HomeScreen extends StatefulWidget {
