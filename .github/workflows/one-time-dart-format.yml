@@ -1,0 +1,37 @@
+name: One-time Dart formatting repair
+
+on:
+  push:
+    branches:
+      - ux/empty-cart-variant-safety
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.44.9"
+          cache: true
+      - name: Format the checkout compatibility fix
+        run: |
+          dart format lib/screen/product_cart_screen/checkout_flow_screen.dart lib/screen/product_cart_screen/provider/cart_provider.dart
+      - name: Commit formatter output
+        run: |
+          if git diff --quiet; then
+            echo "Formatter made no changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/screen/product_cart_screen/checkout_flow_screen.dart lib/screen/product_cart_screen/provider/cart_provider.dart
+          git commit -m "Format checkout compatibility fix"
+          git push
