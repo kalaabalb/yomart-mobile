@@ -90,7 +90,7 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
                       size: 38,
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Checkout is not available yet',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -100,7 +100,7 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
                       ),
                     ),
                     const SizedBox(height: 9),
-                    Text(
+                    const Text(
                       'YoMart is confirming product prices and availability. No orders or payments can be submitted during this preview.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
