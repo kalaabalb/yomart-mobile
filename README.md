@@ -55,18 +55,20 @@ flutter test
 flutter build apk --debug --dart-define=YOMART_PREVIEW_CATALOG=true
 ```
 
-The CI preview APK build explicitly uses the production API and privacy URL with YOMART_PREVIEW_CATALOG=true. The current split-ABI build is [run 43234715460](https://github.com/kalaabalb/yomart-mobile/actions/runs/43234715460): formatting, analysis and Flutter tests passed; APK build is in progress. It is configured to publish separate arm32, arm64 and x86_64 debug APKs. A separate Android emulator screenshot job has a 10-minute limit and cannot hold up the source/test/APK verification job indefinitely.
+The CI preview APK build explicitly uses the production API and privacy URL with YOMART_PREVIEW_CATALOG=true. [Run 43234715460](https://github.com/kalaabalb/yomart-mobile/actions/runs/43234715460) passed formatting, analysis, Flutter tests and split-ABI APK builds. Artifact 13951718520 contains arm32, arm64 and x86_64 debug APKs. The arm64 APK is suitable for most modern Android phones.
 
-A previous production-connected all-ABI debug APK is available from [run 43232961622](https://github.com/kalaabalb/yomart-mobile/actions/runs/43232961622), artifact 13950889093. It is usable for sideload testing but is larger than the split-ABI build. Do not distribute the older artifact from run 43229794520; that one used the local API default.
+The separate emulator screenshot job in run 43234715460 failed because the GitHub-hosted Android emulator never reported sys.boot_completed; no Android screenshot artifact was produced. This did not fail the code/test/APK verification job. Use a physical Android device for visual acceptance and screenshots.
+
+A previous production-connected all-ABI debug APK is also available from [run 43232961622](https://github.com/kalaabalb/yomart-mobile/actions/runs/43232961622), artifact 13950889093. Do not distribute the older artifact from run 43229794520; that one used the local API default.
 
 ## Visual evidence
 
-Real deployed React storefront/admin screenshots at desktop and mobile sizes are captured by the web repository's GitHub Actions workflow. Android emulator screenshot capture is part of the Flutter CI workflow. The admin screenshots currently show sign-in only; authenticated dashboard screens require owner login. Do not treat screenshots of an unauthenticated app as proof that checkout/orders work.
+Real deployed React storefront/admin screenshots at desktop and mobile sizes are captured by the web repository's GitHub Actions workflow. The web screenshot pack does not include an authenticated admin dashboard. Android emulator screenshot capture failed because the hosted emulator did not boot; capture app screens on a physical device after owner sign-in. Do not treat screenshots of an unauthenticated app as proof that checkout/orders work.
 
 ## Owner inputs still required for Play
 
 - Final privacy policy and account-deletion URLs with legal publisher/support details and approved retention language
 - Android signing secrets and certificate match against the friend's Play Console upload key
 - Play Console package/version availability and developer-account testing eligibility
-- Physical Android device acceptance and final store listing assets
+- Physical Android device acceptance and genuine app screenshots
 - Approved ETB price/stock and product specification for each product before public sales (not required for preview-only closed testing)
