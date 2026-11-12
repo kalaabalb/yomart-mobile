@@ -4,6 +4,7 @@ import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../../utility/marketplace_design.dart';
+import '../../utility/preview_catalog.dart';
 import '../../utility/snack_bar_helper.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -239,6 +240,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               SizedBox(height: _isLogin ? 14 : 4),
+                              if (isPreviewCatalog && _isLogin) ...[
+                                Container(
+                                  padding: const EdgeInsets.all(11),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFFF6E3),
+                                    border: Border.all(
+                                      color: const Color(0xFFE7D4A6),
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: const Text(
+                                    'Preview catalogue. Prices and availability are being confirmed; ordering is temporarily unavailable.',
+                                    style: TextStyle(
+                                      color: Color(0xFF684C1D),
+                                      fontSize: 11,
+                                      height: 1.4,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                              ],
                               // Title
                               Text(
                                 _isLogin
