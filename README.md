@@ -72,29 +72,13 @@ High-level responsibilities:
 - The backend lives in the sibling repository [YoMart API](https://github.com/kalaabalb/yomart-api).
 - The customer app connects to the YoMart API; the admin dashboard is maintained as a separate application.
 
-## Screenshots and Demo Evidence
+## Visual QA and screenshots
 
-Production screenshots are organized under [`docs/screenshots/`](docs/screenshots/README.md).
+The repository does not currently contain the screenshot files referenced by earlier documentation. Do not treat those historical paths as available evidence.
 
-Representative captures currently checked in:
+A current release evidence set still needs to be captured from the actual app on physical Android devices or a verified emulator, with the build commit/version and device/OS recorded. Required screens include splash, home, categories/brands, product details, cart, checkout, payment method, proof submission where applicable, order confirmation, order list/details/tracking, profile, and important loading/empty/error states.
 
-- `docs/screenshots/authentication/login.jpg`
-- `docs/screenshots/authentication/register.jpg`
-- `docs/screenshots/authentication/forgot_password.jpg`
-- `docs/screenshots/core/home.jpg`
-- `docs/screenshots/core/language_selection.jpg`
-- `docs/screenshots/core/navigation_drawer.jpg`
-- `docs/screenshots/shopping/product_details.jpg`
-- `docs/screenshots/shopping/category_products.jpg`
-- `docs/screenshots/shopping/cart.jpg`
-- `docs/screenshots/shopping/favorites.jpg`
-- `docs/screenshots/orders/order_form.jpg`
-- `docs/screenshots/orders/order_confirmation_dialog.jpg`
-- `docs/screenshots/orders/orders.jpg`
-- `docs/screenshots/orders/order_details.jpg`
-- `docs/screenshots/orders/payment_upload_form.jpg`
-- `docs/screenshots/account/profile.jpg`
-- `docs/screenshots/account/addresses.jpg`
+For web/admin, capture desktop and narrow mobile/tablet layouts after the live staging journeys have been exercised. Redact names, emails, phone numbers, addresses, order identifiers, receipts, tokens, and other personal information before sharing. See the shared [closed-testing playbook](https://github.com/kalaabalb/yomart-docs/blob/main/docs/launch/closed-testing-playbook.md) for the evidence checklist.
 
 ## Local Setup
 
