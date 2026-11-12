@@ -21,6 +21,8 @@ jobs:
           channel: stable
           flutter-version: "3.44.9"
           cache: true
+      - name: Resolve Dart package configuration
+        run: flutter pub get
       - name: Format checkout compatibility files
         run: dart format lib/screen/product_cart_screen/checkout_flow_screen.dart lib/screen/product_cart_screen/provider/cart_provider.dart
       - name: Commit formatter output
