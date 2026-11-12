@@ -13,6 +13,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Check out repository
@@ -69,30 +70,36 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      # Screenshot capture is useful evidence, but emulator startup must never
+      # hold up the source/test/debug-APK verification job indefinitely.
       - name: Capture real Android emulator startup screenshot
+        id: android-screenshots
+        continue-on-error: true
+        timeout-minutes: 8
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
           target: google_apis
           arch: x86_64
           profile: pixel_6
-          emulator-options: -no-window -no-audio -no-boot-anim -gpu off -no-snapshot -wipe-data
+          emulator-boot-timeout: 300
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot -wipe-data
           disable-animations: true
           script: |
-            adb install -r build/app/outputs/flutter-apk/app-debug.apk
             set -euo pipefail
             adb install -r build/app/outputs/flutter-apk/app-debug.apk
             adb shell monkey -p com.yomobiles.client 1
             mkdir -p artifacts/android
-            sleep 1
+            sleep 4
             adb exec-out screencap -p > artifacts/android/android-app-startup.png
-            sleep 12
+            sleep 8
             adb exec-out screencap -p > artifacts/android/android-app-login.png
 
       - name: Upload genuine Android emulator screenshot
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: yomart-android-emulator-screenshots
           path: artifacts/android/*.png
-          if-no-files-found: error
+          if-no-files-found: ignore
           retention-days: 30
