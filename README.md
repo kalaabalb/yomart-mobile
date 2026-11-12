@@ -53,7 +53,7 @@ flutter test
 flutter build apk --debug --dart-define=YOMART_PREVIEW_CATALOG=true
 ```
 
-GitHub Actions also builds a debug APK and captures genuine Android emulator startup/login screenshots. Latest preview-mode CI is tracked in [the Actions page](https://github.com/kalaabalb/yomart-mobile/actions).
+GitHub Actions also builds a debug APK and captures genuine Android emulator startup/login screenshots. A debug APK artifact (83.2 MB) is available from [run 43226005733](https://github.com/kalaabalb/yomart-mobile/actions/runs/43226005733). The latest workflow after emulator stabilization is [run 43227362300](https://github.com/kalaabalb/yomart-mobile/actions/runs/43227362300); its screenshot step must complete before an Android screenshot artifact is claimed.
 
 ## Visual evidence
 
