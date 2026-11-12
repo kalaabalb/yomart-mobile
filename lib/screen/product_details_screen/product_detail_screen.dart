@@ -5,6 +5,7 @@ import 'package:e_commerce_flutter/screen/product_favorite_screen/provider/favor
 import 'package:e_commerce_flutter/core/data/data_provider.dart';
 import 'package:e_commerce_flutter/widget/custom_network_image.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:e_commerce_flutter/utility/preview_catalog.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:e_commerce_flutter/utility/retailer_contact_uri.dart';
 import 'package:flutter/material.dart';
@@ -115,14 +116,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               Row(
                                 children: [
                                   Text(
-                                    'Birr ${_formatPrice(price)}',
+                                    isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatPrice(price)}',
                                     style: const TextStyle(
                                       color: Color(0xFFFFA34A),
                                       fontWeight: FontWeight.w800,
                                       fontSize: 18,
                                     ),
                                   ),
-                                  if (hasDiscount) ...[
+                                  if (!isPreviewCatalog && hasDiscount) ...[
                                     const SizedBox(width: 9),
                                     Text(
                                       'Birr ${_formatPrice(oldPrice)}',
@@ -138,6 +139,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ],
                                 ],
                               ),
+                              if (isPreviewCatalog) ...[
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Preview catalogue. Price and availability are being confirmed; ordering is temporarily unavailable.',
+                                  style: TextStyle(
+                                    color: _muted,
+                                    fontSize: 12,
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ],
                               const SizedBox(height: 11),
                               _buildColorChoices(),
                               if (variants.isNotEmpty) ...[
@@ -486,7 +498,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildAddToCart() {
-    final unavailable = (widget.product.quantity ?? 0) <= 0;
+    final unavailable = isPreviewCatalog || (widget.product.quantity ?? 0) <= 0;
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 10, 18, 12),
       decoration: BoxDecoration(
@@ -533,7 +545,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 borderRadius: BorderRadius.circular(15),
                 child: Center(
                   child: Text(
-                    unavailable ? 'Out of stock' : 'Add to Cart',
+                    isPreviewCatalog
+                        ? 'Ordering unavailable'
+                        : unavailable
+                            ? 'Out of stock'
+                            : 'Add to Cart',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
