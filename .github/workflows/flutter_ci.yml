@@ -59,39 +59,50 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Build Android preview APK against production API
+      - name: Build Android preview APKs against production API
         run: |
-          flutter build apk --debug \
+          flutter build apk --debug --split-per-abi --target-platform android-arm,android-arm64,android-x64 \
             --dart-define=MAIN_URL=https://yomart-api.onrender.com \
             --dart-define=PRIVACY_POLICY_URL=https://yomart.onrender.com/privacy-policy.html \
             --dart-define=YOMART_PREVIEW_CATALOG=true
 
-      - name: Upload debug APK artifact
+      - name: Upload Android preview APKs
         uses: actions/upload-artifact@v4
         with:
-          name: yomart-android-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: yomart-android-debug-apks
+          path: |
+            build/app/outputs/flutter-apk/app-armeabi-v7a-debug.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-debug.apk
+            build/app/outputs/flutter-apk/app-x86_64-debug.apk
           if-no-files-found: error
           retention-days: 7
 
-      # Screenshot capture is useful evidence, but emulator startup must never
-      # hold up the source/test/debug-APK verification job indefinitely.
+  android-emulator-screenshots:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+
+    steps:
+      - name: Download x86_64 preview APK
+        uses: actions/download-artifact@v4
+        with:
+          name: yomart-android-debug-apks
+          path: artifacts/apk
+
       - name: Capture real Android emulator startup screenshot
-        id: android-screenshots
-        continue-on-error: true
-        timeout-minutes: 8
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
           target: google_apis
           arch: x86_64
           profile: pixel_6
-          emulator-boot-timeout: 300
+          emulator-boot-timeout: 240
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot -wipe-data
           disable-animations: true
           script: |
             set -euo pipefail
-            adb install -r build/app/outputs/flutter-apk/app-debug.apk
+            adb install -r artifacts/apk/app-x86_64-debug.apk
             adb shell monkey -p com.yomobiles.client 1
             mkdir -p artifacts/android
             sleep 4
