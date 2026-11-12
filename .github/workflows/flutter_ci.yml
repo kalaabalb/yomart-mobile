@@ -64,3 +64,27 @@ jobs:
           path: build/app/outputs/flutter-apk/app-debug.apk
           if-no-files-found: error
           retention-days: 7
+
+      - name: Capture real Android emulator startup screenshot
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect
+          disable-animations: true
+          script: |
+            adb install -r build/app/outputs/flutter-apk/app-debug.apk
+            adb shell monkey -p com.yomobiles.client 1
+            sleep 15
+            mkdir -p artifacts/android
+            adb exec-out screencap -p > artifacts/android/android-app-startup.png
+
+      - name: Upload genuine Android emulator screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: yomart-android-emulator-screenshots
+          path: artifacts/android/*.png
+          if-no-files-found: error
+          retention-days: 30
