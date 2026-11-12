@@ -151,8 +151,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 ),
                               ],
                               const SizedBox(height: 11),
-                              _buildColorChoices(),
-                              if (variants.isNotEmpty) ...[
+                              if (!isPreviewCatalog) _buildColorChoices(),
+                              if (!isPreviewCatalog && variants.isNotEmpty) ...[
                                 const SizedBox(height: 13),
                                 Text(
                                   widget.product.proVariantTypeId?.type ??
