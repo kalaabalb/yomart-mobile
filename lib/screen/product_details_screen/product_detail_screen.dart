@@ -116,7 +116,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               Row(
                                 children: [
                                   Text(
-                                    isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatPrice(price)}',
+                                    isPreviewCatalog
+                                        ? 'Price to be confirmed'
+                                        : 'Birr ${_formatPrice(price)}',
                                     style: const TextStyle(
                                       color: Color(0xFFFFA34A),
                                       fontWeight: FontWeight.w800,
