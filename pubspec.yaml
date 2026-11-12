@@ -46,7 +46,7 @@ dev_dependencies:
 
 flutter_launcher_icons:
   android: "launcher_icon"
-  image_path: "assets/images/logo_rounded.png"
+  image_path: "assets/images/yomart_gold_mark.png"
   adaptive_icon_background: "#071426"
   adaptive_icon_foreground: "assets/images/launcher_foreground.png"
 
@@ -55,8 +55,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/brands/
-    - assets/images/logo_rounded.png
-    - assets/images/splash_phones_reference.png
     - assets/images/login_phones_reference.png
     - assets/images/register_phone_reference.png
     - assets/images/yomart_gold_mark.png
