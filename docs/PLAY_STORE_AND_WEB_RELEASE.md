@@ -16,15 +16,15 @@ This checklist prepares the Flutter customer app for Android distribution and br
 
 ## Before building a production release
 
-1. Deploy the API and database to production with HTTPS, durable database backups, durable image storage, a strong unique JWT secret, correct CORS origins, rate limits, and monitoring. Never point a store build at localhost or a development database.
+1. The API is already running in production on the existing MongoDB Atlas Free cluster, with Cloudinary image storage and authenticated private payment-proof storage. Live health and CORS smoke checks pass. The Free tier does not provide paid-tier backup/availability guarantees; export data regularly. Production checkout is intentionally disabled until real prices and stock are owner-approved. There is currently no separate staging API or storefront origin.
 2. Host this web build on a public HTTPS domain. Use that domain for the privacy policy and account deletion resources.
-3. Do not edit `web/account-deletion-config.js`; it is intentionally fail-closed. The Android app's release startup validates explicit environment/API defines. Configure the backend CORS allowlist to include the exact public web origin.
+3. Do not edit `web/account-deletion-config.js`; it is intentionally fail-closed. The Android app's release startup validates explicit environment/API defines. Since the former staging API was converted to production and no separate staging site exists, production release builds must explicitly set `YOMART_NO_STAGING_API=true` and `YOMART_NO_STAGING_SITE=true`; the app rejects combining either flag with a nonempty corresponding staging-origin list. If separate staging services are created later, remove these flags and provide exact staging-origin denylists. Configure backend CORS with the exact public web origins.
 4. Replace all `REPLACE BEFORE PUBLICATION` content in `web/privacy-policy.html` with the legal publisher name, working support email, and real service-provider details. Reconcile the text against the deployed database, image, push, hosting, and logging providers and their retention settings. Owner/legal approval is still required for the stated anonymized retention of order/payment evidence and its final retention period; do not describe this implementation as erasing all order records.
 5. In Play Console, use the same working public URLs:
    - Privacy policy: `https://<web-domain>/privacy-policy.html`
    - Account deletion: `https://<web-domain>/account-deletion.html`
 6. Increment `version` in `pubspec.yaml` for every Play upload. `versionName` is the part before `+`; `versionCode` is the integer after `+` and must increase on every release.
-7. Accept Android SDK license terms on the build machine using the Android SDK owner’s account. Verify the release keystore with its owner; do not use the example key or commit key files/passwords.
+7. Accept Android SDK license terms on the build machine using the Android SDK owner’s account. Verify the release keystore with its owner and compare its certificate to the Play Console upload certificate; do not use the example key or commit key files/passwords.
 
 ## Android App Bundle
 
@@ -35,20 +35,19 @@ flutter pub get
 flutter analyze
 flutter test
 : "${PRODUCTION_API_ORIGIN:?Set the verified production API origin}"
-: "${STAGING_API_ORIGINS:?Set the verified staging API origin list}"
 : "${PRODUCTION_SITE_ORIGIN:?Set the verified production storefront origin}"
-: "${STAGING_SITE_ORIGINS:?Set the verified staging storefront origin list}"
 : "${PRIVACY_POLICY_URL:?Set the final public privacy policy URL}"
 flutter build appbundle --release \
   --dart-define=MAIN_URL="$PRODUCTION_API_ORIGIN" \
   --dart-define=PRIVACY_POLICY_URL="$PRIVACY_POLICY_URL" \
   --dart-define=YOMART_BUILD_ENV=production \
   --dart-define=YOMART_EXPECTED_API_ORIGIN="$PRODUCTION_API_ORIGIN" \
-  --dart-define=YOMART_STAGING_API_ORIGINS="$STAGING_API_ORIGINS" \
-  --dart-define=YOMART_STAGING_SITE_ORIGINS="$STAGING_SITE_ORIGINS"
+  --dart-define=YOMART_NO_STAGING_API=true \
+  --dart-define=YOMART_NO_STAGING_SITE=true \
+  --dart-define=YOMART_PREVIEW_CATALOG=true
 ```
 
-The upload artifact is `build/app/outputs/bundle/release/app-release.aab`. Android release signing requires ignored `android/key.properties` and its referenced keystore. Local ignored signing files exist, but their contents must stay out of chat and source control. The OneSignal app ID is optional only if production push is intentionally disabled; without it, SDK initialization is skipped. Do not upload a build that uses the local preview API, placeholder URLs, or test credentials. Use Play Console’s internal track first and test install, registration/login, browsing, checkout, order history, account deletion, deep links, notifications (if enabled), and tablet/large-screen layouts before production rollout.
+The upload artifact is `build/app/outputs/bundle/release/app-release.aab`. The `YOMART_PREVIEW_CATALOG=true` define is for closed testing while the live catalogue is still being approved; use `false` for a fully approved public-sales release. The production API currently blocks order creation independently of the client banner. Android release signing requires ignored `android/key.properties` and its referenced keystore. Local ignored signing files exist, but their contents must stay out of chat and source control. The OneSignal app ID is optional only if production push is intentionally disabled; without it, SDK initialization is skipped. Do not upload a build that uses the local preview API, placeholder URLs, or test credentials. Use Play Console’s internal track first and test install, registration/login, browsing, checkout, order history, account deletion, deep links, notifications (if enabled), and tablet/large-screen layouts before production rollout.
 
 The app manifest explicitly declares `INTERNET`; review the merged manifest from the final artifact because Flutter plugins may contribute permissions. Image selection uses the platform picker. Data Safety must account for account/contact/address data, optional delivery coordinates, orders and payment-proof images, and push identifiers if OneSignal is enabled, plus disclosures from the actual hosting/storage providers and SDK versions.
 
