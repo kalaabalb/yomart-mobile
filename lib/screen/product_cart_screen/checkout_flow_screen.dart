@@ -61,7 +61,9 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         (method) => method.enabled && method.code == cart.selectedPaymentOption,
       );
       if (selected.isEmpty ||
-          (selected.first.requiresProof && !cart.isPaymentProofReady)) return;
+          (selected.first.requiresProof && !cart.isPaymentProofReady)) {
+        return;
+      }
       cart.addOrder(context);
       return;
     }
