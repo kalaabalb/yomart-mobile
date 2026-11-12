@@ -12,7 +12,7 @@ This checklist prepares the Flutter customer app for Android distribution and br
 - Submit an Android App Bundle (`.aab`) to Play Console. Enable Play App Signing in the Console and keep a secure offline backup of the upload keystore and its passwords.
 - iOS is not part of this release plan.
 - Flutter 3.44.9 / Dart 3.12.2 is the toolchain observed locally during this audit. The repository does not pin a Flutter SDK version, so reproducible release builds require selecting and pinning an SDK (for example with FVM or CI setup) before release. Static hosting receives built files; it does not compile the Flutter source by itself.
-- A local `.aab` exists under the ignored build output, but it predates the latest client source changes and is stale; no current release bundle is ready. No Play Console screenshot set was found. Launcher icon assets are present, but listing images must still be reviewed and uploaded by the owner.
+- Current source includes the merged older-cart checkout compatibility fix (merge commit `69c91510c4b26d5c976a46727f28252319e7a109`). Main-branch GitHub Actions run `43207373086` passed format, analysis, Flutter tests, and Android debug APK build; it uploaded `yomart-android-debug-apk`. This artifact is a debug APK, not a signed release AAB. No current release AAB or Play Console screenshot set has been verified. Launcher icon assets are present, but listing images must still be reviewed and uploaded by the owner.
 
 ## Before building a production release
 
