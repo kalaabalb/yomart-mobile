@@ -334,7 +334,8 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         : [item.variants.first.color, item.variants.first.size]
             .where((value) => value?.isNotEmpty == true)
             .join(' · ');
-    final unitPrice = item.variants.isEmpty ? null : item.variants.first.price;
+    final unitPrice =
+        item.variants.isEmpty ? null : item.variants.first.price;
     return Container(
       margin: const EdgeInsets.only(bottom: 9),
       padding: const EdgeInsets.all(10),
