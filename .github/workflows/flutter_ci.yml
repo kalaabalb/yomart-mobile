@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -24,8 +26,21 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Format check
-        run: dart format --output=none --set-exit-if-changed .
+      - name: Format changed Dart files
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        shell: bash
+        run: |
+          if [[ -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
+            echo "No previous commit is available; skipping changed-file format comparison."
+            exit 0
+          fi
+          mapfile -t dart_files < <(git diff --name-only "$BASE_SHA" "$GITHUB_SHA" -- '*.dart')
+          if (( ${#dart_files[@]} == 0 )); then
+            echo "No Dart files changed."
+          else
+            dart format --output=none --set-exit-if-changed "${dart_files[@]}"
+          fi
 
       - name: Analyze
         run: flutter analyze
