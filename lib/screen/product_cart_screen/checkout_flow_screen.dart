@@ -355,6 +355,7 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
             item.variants.first.color,
             item.variants.first.size,
           ].where((value) => value?.isNotEmpty == true).join(' · ');
+    // Older saved carts may lack variant pricing; the API confirms the price at checkout.
     final unitPrice = item.variants.isEmpty ? null : item.variants.first.price;
     return Container(
       margin: const EdgeInsets.only(bottom: 9),
