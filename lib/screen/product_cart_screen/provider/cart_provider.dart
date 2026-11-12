@@ -408,9 +408,8 @@ class CartProvider extends ChangeNotifier {
         previousFingerprint: previousAttempt is Map
             ? previousAttempt['fingerprint']?.toString()
             : null,
-        previousKey: previousAttempt is Map
-            ? previousAttempt['key']?.toString()
-            : null,
+        previousKey:
+            previousAttempt is Map ? previousAttempt['key']?.toString() : null,
       );
       box.write('order_idempotency_attempt', {
         'fingerprint': orderRequestFingerprint(order),
@@ -596,8 +595,8 @@ class CartProvider extends ChangeNotifier {
             builder: (context, cartProvider, _) => TextButton(
               onPressed:
                   !method.requiresProof || cartProvider.isPaymentProofReady
-                  ? () => Navigator.of(dialogContext).pop(true)
-                  : null,
+                      ? () => Navigator.of(dialogContext).pop(true)
+                      : null,
               style: TextButton.styleFrom(
                 foregroundColor: MarketPalette.blueDeep,
               ),
@@ -612,8 +611,7 @@ class CartProvider extends ChangeNotifier {
   Widget _buildPaymentProofUploadSection() {
     return Consumer<CartProvider>(
       builder: (context, cartProvider, child) {
-        final hasProof =
-            cartProvider.paymentProofImage != null ||
+        final hasProof = cartProvider.paymentProofImage != null ||
             (cartProvider.paymentProofRecordId != null &&
                 cartProvider.paymentProofRecordId!.isNotEmpty);
 
@@ -630,9 +628,8 @@ class CartProvider extends ChangeNotifier {
               decoration: BoxDecoration(
                 color: MarketPalette.field,
                 border: Border.all(
-                  color: hasProof
-                      ? MarketPalette.success
-                      : MarketPalette.border,
+                  color:
+                      hasProof ? MarketPalette.success : MarketPalette.border,
                   width: hasProof ? 2 : 1,
                 ),
                 borderRadius: BorderRadius.circular(8),

@@ -21,11 +21,11 @@ class CheckoutFlowScreen extends StatefulWidget {
 class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
   int _step = 0;
   List<String> _titles(BuildContext context) => [
-    context.l10n.destination_information,
-    context.l10n.review_order,
-    context.l10n.payment_method,
-    context.l10n.payment_proof,
-  ];
+        context.l10n.destination_information,
+        context.l10n.review_order,
+        context.l10n.payment_method,
+        context.l10n.payment_proof,
+      ];
 
   void _back() {
     if (_step == 0) {
@@ -61,8 +61,7 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         (method) => method.enabled && method.code == cart.selectedPaymentOption,
       );
       if (selected.isEmpty ||
-          (selected.first.requiresProof && !cart.isPaymentProofReady))
-        return;
+          (selected.first.requiresProof && !cart.isPaymentProofReady)) return;
       cart.addOrder(context);
       return;
     }
@@ -90,13 +89,13 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
                           0 => _deliveryStep(cart),
                           1 => _reviewStep(cart, data.hasLoadedStoreSettings),
                           2 => _paymentStep(
-                            cart,
-                            data.storeSettings.paymentMethods,
-                          ),
+                              cart,
+                              data.storeSettings.paymentMethods,
+                            ),
                           _ => _proofStep(
-                            cart,
-                            data.storeSettings.paymentMethods,
-                          ),
+                              cart,
+                              data.storeSettings.paymentMethods,
+                            ),
                         },
                       ),
                     ),
@@ -272,38 +271,40 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
     required TextEditingController controller,
     TextInputType keyboardType = TextInputType.text,
     bool required = true,
-  }) => CustomTextField(
-    controller: controller,
-    labelText: label,
-    inputType: keyboardType,
-    marketStyle: true,
-    validator: (value) => required && (value == null || value.trim().isEmpty)
-        ? context.l10n.please_enter_field(label)
-        : null,
-  );
+  }) =>
+      CustomTextField(
+        controller: controller,
+        labelText: label,
+        inputType: keyboardType,
+        marketStyle: true,
+        validator: (value) =>
+            required && (value == null || value.trim().isEmpty)
+                ? context.l10n.please_enter_field(label)
+                : null,
+      );
 
   Widget _fieldLabel(String label) => Padding(
-    padding: const EdgeInsets.only(bottom: 5),
-    child: Text(
-      label,
-      style: const TextStyle(
-        color: MarketPalette.muted,
-        fontSize: 12,
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-  );
+        padding: const EdgeInsets.only(bottom: 5),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: MarketPalette.muted,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
 
   Widget _readOnlyField(String value) => Container(
-    width: double.infinity,
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
-    decoration: BoxDecoration(
-      color: Colors.white.withValues(alpha: .65),
-      borderRadius: BorderRadius.circular(13),
-      border: Border.all(color: MarketPalette.border),
-    ),
-    child: Text(value, style: const TextStyle(color: MarketPalette.ink)),
-  );
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: .65),
+          borderRadius: BorderRadius.circular(13),
+          border: Border.all(color: MarketPalette.border),
+        ),
+        child: Text(value, style: const TextStyle(color: MarketPalette.ink)),
+      );
 
   Widget _reviewStep(CartProvider cart, bool hasLoadedStoreSettings) {
     final subtotal = cart.getCartSubTotal();
@@ -344,8 +345,7 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
 
   Widget _reviewItem(CartModel item, List products) {
     final catalogProduct = products.where((p) => p.sId == item.productId);
-    final image =
-        item.productImages?.firstOrNull ??
+    final image = item.productImages?.firstOrNull ??
         (catalogProduct.isEmpty
             ? ''
             : catalogProduct.first.images?.firstOrNull?.url ?? '');
@@ -563,54 +563,54 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
   }
 
   Widget _paymentMethodDetails(StorePaymentMethod method) => Container(
-    width: double.infinity,
-    margin: const EdgeInsets.only(top: 4),
-    padding: const EdgeInsets.all(14),
-    decoration: BoxDecoration(
-      color: Colors.white.withValues(alpha: .5),
-      borderRadius: BorderRadius.circular(14),
-      border: Border.all(color: MarketPalette.border),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (method.providerName.isNotEmpty)
-          _paymentDetail('Provider', method.providerName),
-        if (method.accountHolder.isNotEmpty)
-          _paymentDetail('Recipient', method.accountHolder),
-        if (method.accountIdentifier.isNotEmpty)
-          _paymentDetail('Payment identifier', method.accountIdentifier),
-        if (method.additionalDetails.isNotEmpty)
-          _paymentDetail('Details', method.additionalDetails),
-        if (method.instructions.isNotEmpty) ...[
-          if (method.providerName.isNotEmpty ||
-              method.accountIdentifier.isNotEmpty)
-            const SizedBox(height: 6),
-          Text(
-            method.instructions,
-            style: const TextStyle(color: MarketPalette.muted, height: 1.4),
-          ),
-        ],
-        Text(
-          method.requiresProof
-              ? 'A payment receipt is required.'
-              : 'No payment receipt is required.',
-          style: const TextStyle(color: MarketPalette.muted, fontSize: 11),
+        width: double.infinity,
+        margin: const EdgeInsets.only(top: 4),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: .5),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: MarketPalette.border),
         ),
-      ],
-    ),
-  );
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (method.providerName.isNotEmpty)
+              _paymentDetail('Provider', method.providerName),
+            if (method.accountHolder.isNotEmpty)
+              _paymentDetail('Recipient', method.accountHolder),
+            if (method.accountIdentifier.isNotEmpty)
+              _paymentDetail('Payment identifier', method.accountIdentifier),
+            if (method.additionalDetails.isNotEmpty)
+              _paymentDetail('Details', method.additionalDetails),
+            if (method.instructions.isNotEmpty) ...[
+              if (method.providerName.isNotEmpty ||
+                  method.accountIdentifier.isNotEmpty)
+                const SizedBox(height: 6),
+              Text(
+                method.instructions,
+                style: const TextStyle(color: MarketPalette.muted, height: 1.4),
+              ),
+            ],
+            Text(
+              method.requiresProof
+                  ? 'A payment receipt is required.'
+                  : 'No payment receipt is required.',
+              style: const TextStyle(color: MarketPalette.muted, fontSize: 11),
+            ),
+          ],
+        ),
+      );
 
   Widget _paymentDetail(String label, String value) => Padding(
-    padding: const EdgeInsets.only(bottom: 5),
-    child: Text(
-      '$label: $value',
-      style: const TextStyle(
-        color: MarketPalette.ink,
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-  );
+        padding: const EdgeInsets.only(bottom: 5),
+        child: Text(
+          '$label: $value',
+          style: const TextStyle(
+            color: MarketPalette.ink,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
 
   Widget _proofStep(
     CartProvider cart,
@@ -620,8 +620,7 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         .where((method) => method.code == cart.selectedPaymentOption)
         .firstOrNull;
     final paymentInstructions = selectedMethod?.instructions;
-    final hasProof =
-        cart.paymentProofImage != null ||
+    final hasProof = cart.paymentProofImage != null ||
         (cart.paymentProofRecordId?.isNotEmpty ?? false);
     return Column(
       key: const ValueKey('proof'),
@@ -660,9 +659,8 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         ),
         const SizedBox(height: 15),
         InkWell(
-          onTap: cart.isUploadingPaymentProof
-              ? null
-              : cart.pickPaymentProofImage,
+          onTap:
+              cart.isUploadingPaymentProof ? null : cart.pickPaymentProofImage,
           borderRadius: BorderRadius.circular(16),
           child: Container(
             height: 210,
@@ -720,25 +718,25 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
   }
 
   Widget _summaryRow(String label, String value, {bool strong = false}) => Row(
-    children: [
-      Text(
-        label,
-        style: TextStyle(
-          color: strong ? MarketPalette.ink : MarketPalette.muted,
-          fontWeight: strong ? FontWeight.w700 : FontWeight.w500,
-        ),
-      ),
-      const Spacer(),
-      Text(
-        value,
-        style: TextStyle(
-          color: MarketPalette.ink,
-          fontSize: strong ? 16 : 13,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-    ],
-  );
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: strong ? MarketPalette.ink : MarketPalette.muted,
+              fontWeight: strong ? FontWeight.w700 : FontWeight.w500,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            value,
+            style: TextStyle(
+              color: MarketPalette.ink,
+              fontSize: strong ? 16 : 13,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      );
 
   Widget _footer(
     CartProvider cart,
@@ -747,18 +745,17 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
     final label = switch (_step) {
       0 => context.l10n.continue_to_review,
       1 => context.l10n.continue_to_payment,
-      2 =>
-        configuredMethods
-                    .where(
-                      (method) =>
-                          method.enabled &&
-                          method.code == cart.selectedPaymentOption,
-                    )
-                    .firstOrNull
-                    ?.requiresProof ==
-                true
-            ? context.l10n.continue_to_payment_proof
-            : context.l10n.place_order,
+      2 => configuredMethods
+                  .where(
+                    (method) =>
+                        method.enabled &&
+                        method.code == cart.selectedPaymentOption,
+                  )
+                  .firstOrNull
+                  ?.requiresProof ==
+              true
+          ? context.l10n.continue_to_payment_proof
+          : context.l10n.place_order,
       _ => context.l10n.place_order,
     };
     final selectedMethod = configuredMethods
@@ -768,14 +765,12 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         )
         .firstOrNull;
     final proofNeeded = _step == 3 && selectedMethod?.requiresProof == true;
-    final paymentUnavailable =
-        _step == 2 &&
+    final paymentUnavailable = _step == 2 &&
         !configuredMethods.any(
           (method) =>
               method.enabled && method.code == cart.selectedPaymentOption,
         );
-    final disabled =
-        cart.isProcessingPayment ||
+    final disabled = cart.isProcessingPayment ||
         cart.isUploadingPaymentProof ||
         paymentUnavailable ||
         (proofNeeded && !cart.isPaymentProofReady);
@@ -791,9 +786,8 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
           width: double.infinity,
           height: 48,
           child: ElevatedButton(
-            onPressed: disabled
-                ? null
-                : () => _continue(cart, configuredMethods),
+            onPressed:
+                disabled ? null : () => _continue(cart, configuredMethods),
             style: ElevatedButton.styleFrom(
               backgroundColor: MarketPalette.blueDeep,
               disabledBackgroundColor: MarketPalette.blue.withValues(alpha: .5),
