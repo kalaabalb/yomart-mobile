@@ -4,6 +4,7 @@ import 'package:e_commerce_flutter/screen/product_cart_screen/provider/cart_prov
 import 'package:e_commerce_flutter/models/store_settings.dart';
 import 'package:e_commerce_flutter/screen/product_cart_screen/location_picker_screen.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:e_commerce_flutter/utility/preview_catalog.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:e_commerce_flutter/widget/custom_text_field.dart';
 import 'package:e_commerce_flutter/widget/custom_network_image.dart';
@@ -72,6 +73,56 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (isPreviewCatalog) {
+      return Scaffold(
+        backgroundColor: MarketPalette.pageCanvas(context),
+        body: MarketBackdrop(
+          child: SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(28),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.info_outline_rounded,
+                      color: MarketPalette.blue,
+                      size: 38,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Checkout is not available yet',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: MarketPalette.ink,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 9),
+                    Text(
+                      'YoMart is confirming product prices and availability. No orders or payments can be submitted during this preview.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: MarketPalette.muted,
+                        fontSize: 13,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton.icon(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.arrow_back_rounded),
+                      label: const Text('Return to cart'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: MarketPalette.pageCanvas(context),
       body: MarketBackdrop(
