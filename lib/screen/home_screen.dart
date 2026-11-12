@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           Row(children: [
             Image.asset('assets/images/yomart_gold_mark.png',
-                width: 38, height: 38),
+                width: 44, height: 44),
             const SizedBox(width: 9),
             Text('YoMart',
                 style: TextStyle(
