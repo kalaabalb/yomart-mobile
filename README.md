@@ -194,3 +194,8 @@ MIT License. See [`LICENSE`](LICENSE).
 ## Author
 
 Yonas Ambelu
+
+
+## GitHub Android test build
+
+Every push to `main` and pull request runs the Flutter format check for changed Dart files, static analysis, tests, and an Android debug APK build. Successful runs upload `yomart-android-debug-apk` as a short-lived GitHub Actions artifact for device testing. This APK is a debug/test build only; it is not signed for Google Play and must not be distributed as a production release.
