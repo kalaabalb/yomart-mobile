@@ -2,6 +2,7 @@ import 'package:e_commerce_flutter/models/brand.dart';
 import 'package:e_commerce_flutter/models/product.dart';
 import 'package:e_commerce_flutter/screen/product_details_screen/product_detail_screen.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:e_commerce_flutter/utility/preview_catalog.dart';
 import 'package:e_commerce_flutter/utility/responsive_layout.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:e_commerce_flutter/widget/custom_network_image.dart';
@@ -192,7 +193,7 @@ class _BrandProductCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      'Birr ${price.toStringAsFixed(0)}',
+                      isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${price.toStringAsFixed(0)}',
                       style: const TextStyle(
                         color: MarketPalette.ink,
                         fontWeight: FontWeight.w700,
