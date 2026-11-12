@@ -148,6 +148,8 @@ const _productionSiteOrigins =
     String.fromEnvironment('YOMART_PRODUCTION_SITE_ORIGINS');
 const _stagingSiteOrigins =
     String.fromEnvironment('YOMART_STAGING_SITE_ORIGINS');
+const _noStagingApi = bool.fromEnvironment('YOMART_NO_STAGING_API');
+const _noStagingSite = bool.fromEnvironment('YOMART_NO_STAGING_SITE');
 const _notificationPromptedKey = 'notification_permission_prompted';
 const _notificationGrantedKey = 'notification_permission_granted';
 
@@ -188,32 +190,44 @@ void _validateReleaseApiTarget(Uri? apiUri) {
         'Staging and production releases require a non-local HTTPS API.');
   }
 
-  const oppositeEnvironmentOrigins = _buildEnvironment == 'staging'
-      ? _productionApiOrigins
-      : _stagingApiOrigins;
-  final denylistEntries = oppositeEnvironmentOrigins.split(',');
-  final denylistUris = denylistEntries
-      .map((origin) => Uri.tryParse(origin.trim()))
-      .toList(growable: false);
-  if (denylistEntries.isEmpty ||
-      denylistUris.any((uri) =>
-          uri == null ||
-          !uri.hasAuthority ||
-          uri.scheme != 'https' ||
-          (uri.path.isNotEmpty && uri.path != '/') ||
-          uri.query.isNotEmpty ||
-          uri.fragment.isNotEmpty ||
-          uri.userInfo.isNotEmpty ||
-          _isPlaceholderApiHost(uri.host))) {
-    throw StateError(
-        'Release build is missing the opposite-environment API denylist.');
-  }
-  final blockedOrigins = denylistUris.map((uri) => uri!.origin).toSet();
-  if (_buildEnvironment == 'staging') {
+  final blockedOrigins = <String>{};
+  if (_buildEnvironment == 'production' && _noStagingApi) {
+    if (_stagingApiOrigins.trim().isNotEmpty) {
+      throw StateError(
+          'YOMART_NO_STAGING_API=true cannot be combined with staging API origins.');
+    }
+    // The former staging API was converted to the production service. Keep
+    // known retired API hosts blocked even when no separate staging service exists.
     blockedOrigins.addAll(const {
       'https://yonasmarketplace-backend.onrender.com',
       'https://ecommerce-backend-api-jet.vercel.app',
     });
+  } else {
+    if (_noStagingApi) {
+      throw StateError(
+          'YOMART_NO_STAGING_API is valid only for a production build.');
+    }
+    const oppositeEnvironmentOrigins = _buildEnvironment == 'staging'
+        ? _productionApiOrigins
+        : _stagingApiOrigins;
+    final denylistEntries = oppositeEnvironmentOrigins.split(',');
+    final denylistUris = denylistEntries
+        .map((origin) => Uri.tryParse(origin.trim()))
+        .toList(growable: false);
+    if (denylistEntries.isEmpty ||
+        denylistUris.any((uri) =>
+            uri == null ||
+            !uri.hasAuthority ||
+            uri.scheme != 'https' ||
+            (uri.path.isNotEmpty && uri.path != '/') ||
+            uri.query.isNotEmpty ||
+            uri.fragment.isNotEmpty ||
+            uri.userInfo.isNotEmpty ||
+            _isPlaceholderApiHost(uri.host))) {
+      throw StateError(
+          'Release build is missing the opposite-environment API denylist.');
+    }
+    blockedOrigins.addAll(denylistUris.map((uri) => uri!.origin));
   }
   if (blockedOrigins.contains(apiUri.origin)) {
     throw StateError('Release API origin belongs to the opposite environment.');
@@ -229,6 +243,17 @@ void _validateReleaseSiteTarget(Uri? policyUri) {
   if (kIsWeb && Uri.base.origin != siteOrigin) {
     throw StateError(
         'The hosted YoMart web origin does not match its compiled storefront origin.');
+  }
+  if (_buildEnvironment == 'production' && _noStagingSite) {
+    if (_stagingSiteOrigins.trim().isNotEmpty) {
+      throw StateError(
+          'YOMART_NO_STAGING_SITE=true cannot be combined with staging site origins.');
+    }
+    return;
+  }
+  if (_noStagingSite) {
+    throw StateError(
+        'YOMART_NO_STAGING_SITE is valid only for a production build.');
   }
   const oppositeEnvironmentOrigins = _buildEnvironment == 'staging'
       ? _productionSiteOrigins
