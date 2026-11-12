@@ -4,6 +4,7 @@ import 'package:e_commerce_flutter/screen/product_details_screen/product_detail_
 import 'package:e_commerce_flutter/screen/product_favorite_screen/provider/favorite_provider.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:e_commerce_flutter/utility/preview_catalog.dart';
 import 'package:e_commerce_flutter/widget/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -118,7 +119,7 @@ class MarketplaceProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  'Birr ${_formatPrice(product.offerPrice ?? product.price ?? 0)}',
+                  isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatPrice(product.offerPrice ?? product.price ?? 0)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
