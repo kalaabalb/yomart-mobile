@@ -782,7 +782,8 @@ class CartProvider extends ChangeNotifier {
         'productID': cartItem.productId,
         'productName': cartItem.productName,
         'quantity': cartItem.quantity,
-        'price': cartItem.variants.first.price,
+        if (cartItem.variants.isNotEmpty)
+          'price': cartItem.variants.first.price,
         'variant': variant?.isNotEmpty == true ? variant : 'Default',
       };
     }).toList();
