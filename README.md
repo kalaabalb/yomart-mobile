@@ -178,3 +178,10 @@ MIT License. See [`LICENSE`](LICENSE).
 ## Author
 
 Yonas Ambelu
+
+
+## Verified checkout fix and current CI evidence
+
+The older persisted-cart checkout crash fix is merged into `main` at `69c91510c4b26d5c976a46727f28252319e7a109`. The post-merge main workflow passed changed-file formatting, `flutter analyze`, `flutter test`, Android debug APK build, and artifact upload. [Open the main-branch CI run and download its debug APK artifact](https://github.com/kalaabalb/yomart-mobile/actions/runs/43207373086).
+
+This is a debug APK only. It is not signed for Play upload and must not be used as the closed-test release. The repository does not contain current real-device screenshots; capture the actual app on physical Android devices or a verified emulator and record device/OS/build details. See [Play Store and web release checklist](docs/PLAY_STORE_AND_WEB_RELEASE.md) and the [shared staging screenshot evidence guide](https://github.com/kalaabalb/yomart-docs/blob/main/docs/launch/staging-catalog-and-screenshot-evidence.md).
