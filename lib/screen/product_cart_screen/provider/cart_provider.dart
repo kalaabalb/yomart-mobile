@@ -122,13 +122,19 @@ class CartProvider extends ChangeNotifier {
       }
 
       getCartItems();
-      SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(
+      SnackBarHelper.showSuccessSnackBar(
+        SnackBarHelper.localized(
           (s) => s.item_added_to_cart,
-          fallback: 'Item added to cart'));
+          fallback: 'Item added to cart',
+        ),
+      );
     } catch (e) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
           (s) => s.failed_add_item,
-          fallback: 'Failed to add item to cart'));
+          fallback: 'Failed to add item to cart',
+        ),
+      );
     }
   }
 
@@ -138,9 +144,12 @@ class CartProvider extends ChangeNotifier {
 
       if (newQuantity <= 0) {
         flutterCart.removeItem(cartItem.productId, cartItem.variants);
-        SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(
+        SnackBarHelper.showSuccessSnackBar(
+          SnackBarHelper.localized(
             (s) => s.item_removed,
-            fallback: 'Item removed from cart'));
+            fallback: 'Item removed from cart',
+          ),
+        );
       } else {
         flutterCart.updateQuantity(
           cartItem.productId,
@@ -151,9 +160,12 @@ class CartProvider extends ChangeNotifier {
 
       getCartItems();
     } catch (e) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
           (s) => s.failed_update_cart,
-          fallback: 'Could not update the cart. Please try again.'));
+          fallback: 'Could not update the cart. Please try again.',
+        ),
+      );
     }
   }
 
@@ -179,9 +191,9 @@ class CartProvider extends ChangeNotifier {
   void clearCartItems() {
     flutterCart.clearCart();
     getCartItems();
-    SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(
-        (s) => s.cart_cleared,
-        fallback: 'Cart cleared'));
+    SnackBarHelper.showSuccessSnackBar(
+      SnackBarHelper.localized((s) => s.cart_cleared, fallback: 'Cart cleared'),
+    );
   }
 
   double getGrandTotal() {
@@ -203,17 +215,22 @@ class CartProvider extends ChangeNotifier {
         _paymentProofImage = File(image.path);
         _paymentProofRecordId = null;
         notifyListeners();
-        SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(
+        SnackBarHelper.showSuccessSnackBar(
+          SnackBarHelper.localized(
             (s) => s.payment_proof_selected,
-            fallback: 'Payment proof image selected'));
+            fallback: 'Payment proof image selected',
+          ),
+        );
 
         await uploadPaymentProof();
       }
     } catch (e) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
-        (s) => s.an_error_occurred,
-        fallback: 'Could not select the image. Please try again.',
-      ));
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
+          (s) => s.an_error_occurred,
+          fallback: 'Could not select the image. Please try again.',
+        ),
+      );
     }
   }
 
@@ -222,16 +239,22 @@ class CartProvider extends ChangeNotifier {
     _paymentProofRecordId = null;
 
     notifyListeners();
-    SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(
+    SnackBarHelper.showSuccessSnackBar(
+      SnackBarHelper.localized(
         (s) => s.payment_proof_removed,
-        fallback: 'Payment proof removed'));
+        fallback: 'Payment proof removed',
+      ),
+    );
   }
 
   Future<bool> uploadPaymentProof() async {
     if (_paymentProofImage == null) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
           (s) => s.payment_proof_required,
-          fallback: 'Please select a payment proof image.'));
+          fallback: 'Please select a payment proof image.',
+        ),
+      );
       return false;
     }
 
@@ -276,15 +299,20 @@ class CartProvider extends ChangeNotifier {
         }
       }
 
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
           (s) => s.upload_failed,
-          fallback: 'Could not upload the payment proof. Please try again.'));
+          fallback: 'Could not upload the payment proof. Please try again.',
+        ),
+      );
       return false;
     } catch (e) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
-        (s) => s.upload_failed,
-        fallback: 'Could not upload the payment proof. Please try again.',
-      ));
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
+          (s) => s.upload_failed,
+          fallback: 'Could not upload the payment proof. Please try again.',
+        ),
+      );
       return false;
     } finally {
       _isUploadingPaymentProof = false;
@@ -298,14 +326,19 @@ class CartProvider extends ChangeNotifier {
       notifyListeners();
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      final profileProvider =
-          Provider.of<ProfileProvider>(context, listen: false);
+      final profileProvider = Provider.of<ProfileProvider>(
+        context,
+        listen: false,
+      );
       final user = userProvider.getLoginUsr();
 
       if (user == null) {
-        SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
+        SnackBarHelper.showErrorSnackBar(
+          SnackBarHelper.localized(
             (s) => s.login_required,
-            fallback: 'Please sign in to place an order.'));
+            fallback: 'Please sign in to place an order.',
+          ),
+        );
         return;
       }
 
@@ -313,17 +346,24 @@ class CartProvider extends ChangeNotifier {
           .read<DataProvider>()
           .storeSettings
           .paymentMethods
-          .where((method) => method.enabled && method.code == selectedPaymentOption)
+          .where(
+            (method) => method.enabled && method.code == selectedPaymentOption,
+          )
           .firstOrNull;
       if (selectedMethod == null) {
-        SnackBarHelper.showErrorSnackBar('This payment method is unavailable. Refresh checkout and try again.');
+        SnackBarHelper.showErrorSnackBar(
+          'This payment method is unavailable. Refresh checkout and try again.',
+        );
         return;
       }
       if (selectedMethod.requiresProof && !isPaymentProofReady) {
-        SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
-          (s) => s.payment_proof_required,
-          fallback: 'Upload payment proof for this method before placing the order.',
-        ));
+        SnackBarHelper.showErrorSnackBar(
+          SnackBarHelper.localized(
+            (s) => s.payment_proof_required,
+            fallback:
+                'Upload payment proof for this method before placing the order.',
+          ),
+        );
         return;
       }
       if (!selectedMethod.requiresProof) {
@@ -386,9 +426,12 @@ class CartProvider extends ChangeNotifier {
       if (response.isOk) {
         ApiResponse apiResponse = ApiResponse.fromJson(response.body, null);
         if (apiResponse.success == true) {
-          SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(
+          SnackBarHelper.showSuccessSnackBar(
+            SnackBarHelper.localized(
               (s) => s.order_created,
-              fallback: 'Order created successfully!'));
+              fallback: 'Order created successfully!',
+            ),
+          );
           saveAddress();
           // Synchronize address with ProfileProvider
           _syncAddressWithProfileProvider(profileProvider);
@@ -417,24 +460,31 @@ class CartProvider extends ChangeNotifier {
             ),
           );
         } else {
-          SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
-            (s) => s.order_create_failed,
-            fallback: 'Could not create the order. Please try again.',
-          ));
+          SnackBarHelper.showErrorSnackBar(
+            SnackBarHelper.localized(
+              (s) => s.order_create_failed,
+              fallback: 'Could not create the order. Please try again.',
+            ),
+          );
         }
       } else {
         debugPrint(
-            'ADD ORDER HTTP Error: ${response.statusCode} - ${response.body}');
-        SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
-          (s) => s.order_create_failed,
-          fallback: 'Could not create the order. Please try again.',
-        ));
+          'ADD ORDER HTTP Error: ${response.statusCode} - ${response.body}',
+        );
+        SnackBarHelper.showErrorSnackBar(
+          SnackBarHelper.localized(
+            (s) => s.order_create_failed,
+            fallback: 'Could not create the order. Please try again.',
+          ),
+        );
       }
     } catch (e) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
-        (s) => s.order_create_failed,
-        fallback: 'Could not create the order. Please try again.',
-      ));
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
+          (s) => s.order_create_failed,
+          fallback: 'Could not create the order. Please try again.',
+        ),
+      );
     } finally {
       _isProcessingPayment = false;
       notifyListeners();
@@ -459,9 +509,12 @@ class CartProvider extends ChangeNotifier {
 
   void submitOrder(BuildContext context) async {
     if (!buyNowFormKey.currentState!.validate()) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
+      SnackBarHelper.showErrorSnackBar(
+        SnackBarHelper.localized(
           (s) => s.please_fill_all_fields,
-          fallback: 'Please fill all required fields'));
+          fallback: 'Please fill all required fields',
+        ),
+      );
       return;
     }
 
@@ -470,9 +523,12 @@ class CartProvider extends ChangeNotifier {
     if (isExpanded) {
       if (phoneController.text.trim().isEmpty ||
           cityController.text.trim().isEmpty) {
-        SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
+        SnackBarHelper.showErrorSnackBar(
+          SnackBarHelper.localized(
             (s) => s.address_fields_required,
-            fallback: 'Phone number and destination city are required.'));
+            fallback: 'Phone number and destination city are required.',
+          ),
+        );
         return;
       }
     }
@@ -518,10 +574,14 @@ class CartProvider extends ChangeNotifier {
                 Text(method.instructions.trim()),
                 const SizedBox(height: 15),
               ],
-              if (method.providerName.isNotEmpty) Text('Provider: ${method.providerName}'),
-              if (method.accountHolder.isNotEmpty) Text('Recipient: ${method.accountHolder}'),
-              if (method.accountIdentifier.isNotEmpty) Text('Payment identifier: ${method.accountIdentifier}'),
-              if (method.additionalDetails.isNotEmpty) Text(method.additionalDetails),
+              if (method.providerName.isNotEmpty)
+                Text('Provider: ${method.providerName}'),
+              if (method.accountHolder.isNotEmpty)
+                Text('Recipient: ${method.accountHolder}'),
+              if (method.accountIdentifier.isNotEmpty)
+                Text('Payment identifier: ${method.accountIdentifier}'),
+              if (method.additionalDetails.isNotEmpty)
+                Text(method.additionalDetails),
               if (method.requiresProof) _buildPaymentProofUploadSection(),
             ],
           ),
@@ -533,9 +593,10 @@ class CartProvider extends ChangeNotifier {
           ),
           Consumer<CartProvider>(
             builder: (context, cartProvider, _) => TextButton(
-              onPressed: !method.requiresProof || cartProvider.isPaymentProofReady
-                  ? () => Navigator.of(dialogContext).pop(true)
-                  : null,
+              onPressed:
+                  !method.requiresProof || cartProvider.isPaymentProofReady
+                      ? () => Navigator.of(dialogContext).pop(true)
+                      : null,
               style: TextButton.styleFrom(
                 foregroundColor: MarketPalette.blueDeep,
               ),
@@ -629,10 +690,7 @@ class CartProvider extends ChangeNotifier {
 
   Widget buildProofPreview() {
     if (_paymentProofImage != null) {
-      return Image.file(
-        _paymentProofImage!,
-        fit: BoxFit.cover,
-      );
+      return Image.file(_paymentProofImage!, fit: BoxFit.cover);
     } else if (_paymentProofRecordId != null &&
         _paymentProofRecordId!.isNotEmpty) {
       return const Center(
@@ -652,10 +710,7 @@ class CartProvider extends ChangeNotifier {
           children: [
             Icon(Icons.receipt, size: 40, color: Colors.grey),
             SizedBox(height: 8),
-            Text(
-              'No proof uploaded',
-              style: TextStyle(color: Colors.grey),
-            ),
+            Text('No proof uploaded', style: TextStyle(color: Colors.grey)),
           ],
         ),
       );
@@ -775,14 +830,16 @@ class CartProvider extends ChangeNotifier {
     return cartItems.map((cartItem) {
       final variant = cartItem.variants.isEmpty
           ? null
-          : [cartItem.variants.first.color, cartItem.variants.first.size]
-              .where((value) => value?.isNotEmpty == true)
-              .join(' · ');
+          : [
+              cartItem.variants.first.color,
+              cartItem.variants.first.size,
+            ].where((value) => value?.isNotEmpty == true).join(' · ');
       return {
         'productID': cartItem.productId,
         'productName': cartItem.productName,
         'quantity': cartItem.quantity,
-        'price': cartItem.variants.first.price,
+        if (cartItem.variants.isNotEmpty)
+          'price': cartItem.variants.first.price,
         'variant': variant?.isNotEmpty == true ? variant : 'Default',
       };
     }).toList();
