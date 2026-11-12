@@ -35,7 +35,7 @@ jobs:
               exit 1
             fi
           done
-          node -e 'const u=new URL(process.env.PRIVACY_POLICY_URL); if(u.protocol!=="https:" || u.username || u.password || u.search || u.hash || u.hostname.includes("placeholder") || u.hostname.includes("example")) process.exit(1)' || {
+          node -e 'const u=new URL(process.env.PRIVACY_POLICY_URL); if(u.origin!=="https://yomart.onrender.com" || u.pathname!=="/privacy-policy.html" || u.protocol!=="https:" || u.username || u.password || u.search || u.hash) process.exit(1)' || {
             echo "::error::YOMART_PRIVACY_POLICY_URL must be a final public HTTPS privacy policy URL."
             exit 1
           }
