@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:e_commerce_flutter/screen/home_screen.dart';
 import 'package:e_commerce_flutter/screen/login_screen/login_screen.dart';
 import 'package:e_commerce_flutter/screen/login_screen/provider/user_provider.dart';
-import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
