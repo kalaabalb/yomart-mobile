@@ -1,187 +1,68 @@
 # YoMart Mobile
 
-Flutter customer application for the YoMart marketplace.
+Flutter customer app for YoMart.
 
-This repository contains the customer-facing app used to browse products, manage favorites and cart state, place orders, upload payment proof, and maintain the signed-in user profile.
+## Features
 
-## Who Uses It
+- Customer registration/login and JWT session restore
+- Product/category/brand browsing, search, favorites and cart
+- Product detail, order history, profile and address management
+- Manual cash payment flow and payment-proof support where configured
+- Localized UI and responsive layouts
 
-- shoppers using the mobile client
-- returning users with stored sessions
+## Stack and structure
 
-## Key Features
+- Flutter/Dart, Provider, GetX, GetStorage
+- REST API through shared HTTP services
+- `lib/screen/` feature screens, `lib/models/` API models, `lib/services/` network services, `lib/shared/widgets/` reusable UI
+- Architecture: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- API contract: [docs/API_REFERENCE.md](docs/API_REFERENCE.md)
 
-- user registration and login
-- JWT session restore on startup
-- product catalog browsing
-- category, brand, and sub-category browsing
-- product details and ratings
-- favorites
-- cart management
-- order creation and order history
-- profile editing
-- address storage
-- payment proof upload flow
-- localized UI strings
+## Current production/closed-test boundary — 12 November 2026
 
-## Technology Stack
+- App ID: `com.yomobiles.client`; current version in `pubspec.yaml`: `1.0.0+5`; target SDK 36.
+- Production API: `https://yomart-api.onrender.com`.
+- The API is running on the existing Atlas Free database. No paid infrastructure is used.
+- The production catalogue is a preview. The app's `YOMART_PREVIEW_CATALOG=true` mode shows a clear notice, hides illustrative prices and stock, disables add-to-cart/checkout, and blocks the checkout screen. The production API independently blocks order creation and omits price/stock from public product responses.
+- Debug builds default to local API `http://127.0.0.1:3000`; release builds require explicit validated API/privacy/environment defines.
+- A successful debug APK is not a Play Store release AAB.
 
-- Flutter
-- Provider for state management
-- GetX for navigation, dialogs, and lightweight services
-- GetStorage for local session and preference storage
-- REST API integration through a shared HTTP service
-- `flutter_cart` for cart persistence
-- `cached_network_image` for remote media
+## Release configuration
 
-## Architecture
+The former staging API/site was converted to the production environment and there is no separate staging origin. For a production AAB, the app explicitly requires:
 
-The app follows a feature-oriented Flutter structure:
+- `YOMART_BUILD_ENV=production`
+- `MAIN_URL=https://yomart-api.onrender.com`
+- `YOMART_EXPECTED_API_ORIGIN=https://yomart-api.onrender.com`
+- `YOMART_NO_STAGING_API=true`
+- `YOMART_NO_STAGING_SITE=true`
+- `PRIVACY_POLICY_URL` set to the final public HTTPS privacy-policy URL
+- `YOMART_PREVIEW_CATALOG=true` for closed testing until actual prices/stock are approved; set false for a fully approved public-sales release
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
-- [`docs/FOLDER_STRUCTURE.md`](docs/FOLDER_STRUCTURE.md)
-- [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md)
+If separate staging services are created later, remove the no-staging flags and supply exact staging-origin denylists.
 
-High-level responsibilities:
+A manual signed release workflow is available at [android_signed_release.yml](.github/workflows/android_signed_release.yml). It requires repository Actions secrets `ANDROID_KEYSTORE_BASE64`, `ANDROID_STORE_PASSWORD`, `ANDROID_KEY_PASSWORD`, `ANDROID_KEY_ALIAS`, and repository variable `YOMART_PRIVACY_POLICY_URL`. The workflow produces a signed AAB and signing-certificate fingerprint. Compare that fingerprint with the Play Console upload certificate before upload. Never commit or send private signing material in chat.
 
-- `lib/core/data/` owns translations and app-wide data loading
-- `lib/models/` contains JSON-backed data models
-- `lib/services/` contains the shared HTTP layer
-- `lib/screen/` contains feature screens and providers
-- `lib/shared/widgets/`, `lib/widget/`, and `lib/utility/` contain reusable UI and helpers
-
-## Authentication and Security Model
-
-- The client stores the JWT access token and user payload in `GetStorage`.
-- Stored sessions are validated on startup by calling `/users/profile`.
-- Invalid or expired sessions are cleared automatically.
-- API requests use the `Authorization: Bearer <token>` header for protected routes.
-- Do not commit API keys, backend tokens, or private credentials.
-
-## API and Integration Model
-
-- The API base URL is supplied through the `MAIN_URL` compile-time define.
-- Debug builds default to the local backend at `http://127.0.0.1:3000`.
-- Flutter release builds require explicit `YOMART_BUILD_ENV`, `MAIN_URL`, `YOMART_EXPECTED_API_ORIGIN`, `PRIVACY_POLICY_URL`, and the opposite-environment API and storefront-origin denylists; the app fails on startup when these disagree or target an unsafe host. For web releases, use `node tooling/build_web.mjs`; it validates those values, generates the account-deletion page's API configuration, clears stale output on failure, and scans the artifact for placeholder/localhost endpoints.
-- Build a local web preview against the local API with `YOMART_BUILD_ENV=local MAIN_URL=http://127.0.0.1:3000 YOMART_EXPECTED_API_ORIGIN=http://127.0.0.1:3000 PRIVACY_POLICY_URL=http://127.0.0.1:3000/privacy-policy.html node tooling/build_web.mjs`.
-- Build staging web with `YOMART_BUILD_ENV=staging MAIN_URL=https://<staging-api-origin> YOMART_EXPECTED_API_ORIGIN=https://<staging-api-origin> YOMART_PRODUCTION_API_ORIGINS=https://<current-production-api-origin> YOMART_PRODUCTION_SITE_ORIGINS=https://<current-production-store-origin> PRIVACY_POLICY_URL=https://<staging-store-origin>/privacy-policy.html node tooling/build_web.mjs`. `MAIN_URL` must be the staging API; provide all production API and storefront origins in their corresponding denylists. Keep these public origins in reviewed deployment configuration.
-- After a web build, generate static SEO product pages and a sitemap from the public catalog API with `SEO_API_BASE_URL=https://<api-origin> SEO_SITE_ORIGIN=https://<store-origin> SEO_OUTPUT_DIR=build/web node tooling/generate_seo_catalog.mjs`. The generator checks both origins against `yomart-build-config.json` emitted by the web build wrapper, preventing SEO output from silently using a different API/site. Only products explicitly verified in the admin are included.
-- Verify the SEO generator locally with `node --test tooling/generate_seo_catalog.test.mjs`.
-- Verify web target generation with `node --test tooling/account_deletion_config.test.mjs`.
-- Shared API details are documented in [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md).
-- The backend lives in the sibling repository [YoMart API](https://github.com/kalaabalb/yomart-api).
-- The customer app connects to the YoMart API; the admin dashboard is maintained as a separate application.
-
-## Visual QA and screenshots
-
-The repository does not currently contain the screenshot files referenced by earlier documentation. Do not treat those historical paths as available evidence.
-
-A current release evidence set still needs to be captured from the actual app on physical Android devices or a verified emulator, with the build commit/version and device/OS recorded. Required screens include splash, home, categories/brands, product details, cart, checkout, payment method, proof submission where applicable, order confirmation, order list/details/tracking, profile, and important loading/empty/error states.
-
-For web/admin, capture desktop and narrow mobile/tablet layouts after the live staging journeys have been exercised. Redact names, emails, phone numbers, addresses, order identifiers, receipts, tokens, and other personal information before sharing. See the shared [closed-testing playbook](https://github.com/kalaabalb/yomart-docs/blob/main/docs/launch/closed-testing-playbook.md) for the evidence checklist.
-
-## Local Setup
-
-### Prerequisites
-
-- Flutter SDK 3.0 or newer
-- Dart 3
-- A connected device, emulator, or desktop target
-
-### Setup
+## Build and test
 
 ```bash
-git clone <repo-url>
-cd yomart-mobile
 flutter pub get
-```
-
-### Run
-
-```bash
-flutter run --dart-define=MAIN_URL=http://127.0.0.1:3000
-```
-
-## Configuration
-
-- API base URL is provided through the `MAIN_URL` compile-time define. Release builds have no localhost default.
-- User sessions are stored in `GetStorage` as `auth_token` and `USER_INFO_BOX`.
-- Add `--dart-define=ONE_SIGNAL_APP_ID=<app-id>` using the ID from your OneSignal dashboard to enable push setup and the Android notification permission prompt. The app records the system permission result and prompts at most once.
-- The app expects the backend endpoints documented in [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md).
-
-## Testing
-
-```bash
-flutter test
+dart format --output=none --set-exit-if-changed lib test
 flutter analyze
-flutter build appbundle --release \
-  --dart-define=MAIN_URL=https://<production-api-domain> \
-  --dart-define=PRIVACY_POLICY_URL=https://<web-domain>/privacy-policy.html \
-  --dart-define=YOMART_BUILD_ENV=production \
-  --dart-define=YOMART_EXPECTED_API_ORIGIN=https://<production-api-domain> \
-  --dart-define=YOMART_STAGING_API_ORIGINS=https://<staging-api-domain> \
-  --dart-define=YOMART_STAGING_SITE_ORIGINS=https://<staging-store-domain>
-flutter build linux --release \
-  --dart-define=MAIN_URL=https://<staging-api-domain> \
-  --dart-define=PRIVACY_POLICY_URL=https://<staging-web-domain>/privacy-policy.html \
-  --dart-define=YOMART_BUILD_ENV=staging \
-  --dart-define=YOMART_EXPECTED_API_ORIGIN=https://<staging-api-domain> \
-  --dart-define=YOMART_PRODUCTION_API_ORIGINS=https://<production-api-domain> \
-  --dart-define=YOMART_PRODUCTION_SITE_ORIGINS=https://<production-store-domain>
+flutter test
+flutter build apk --debug --dart-define=YOMART_PREVIEW_CATALOG=true
 ```
 
-The repository currently includes smoke coverage for app startup.
+GitHub Actions also builds a debug APK and captures genuine Android emulator startup/login screenshots. Latest preview-mode CI is tracked in [the Actions page](https://github.com/kalaabalb/yomart-mobile/actions).
 
-## Deployment / Current Status
+## Visual evidence
 
-- Android release signing must be configured locally with gitignored signing files as described in [`android/RELEASE_SIGNING.md`](android/RELEASE_SIGNING.md).
-- Android builds target API 36. Review [`docs/PLAY_STORE_AND_WEB_RELEASE.md`](docs/PLAY_STORE_AND_WEB_RELEASE.md) for production backend, privacy, account-deletion, web hosting, and Play Console requirements before release.
-- Internal launch audits and operational runbooks are maintained separately and are not part of this public client repository.
-- Browser policy resources are available at `/privacy-policy.html` and `/account-deletion.html` after hosting the web build. The web build wrapper generates `account-deletion-config.js` from the validated `MAIN_URL`; do not edit the checked-in fail-closed file.
-- Linux release builds currently pass locally.
-- GitHub Actions runs format, analyze, and test on pushes and pull requests.
+Real deployed React storefront/admin screenshots at desktop and mobile sizes are captured by the web repository's GitHub Actions workflow. Android emulator screenshot capture is part of the current Flutter CI workflow. The admin screenshots currently show sign-in only; authenticated dashboard screens require owner login. Do not treat screenshots of an unauthenticated app as proof that checkout/orders work.
 
-## Known Limitations
+## Owner inputs still required for Play
 
-- The app still depends on the backend being reachable at the configured API base URL.
-- OneSignal and release signing require local environment setup before a production build.
-- The screenshot set is representative rather than exhaustive.
-
-## Future Improvements
-
-- Expand GitHub Actions with device/emulator coverage when the test matrix needs it.
-- Capture additional screenshots as the UI stabilizes.
-- Expand integration tests around order and payment flows.
-
-## Release Notes
-
-- [`CHANGELOG.md`](CHANGELOG.md)
-- [`docs/RELEASE.md`](docs/RELEASE.md)
-- [`docs/RELEASE_NOTES.md`](docs/RELEASE_NOTES.md)
-
-## Contributing
-
-- [`CONTRIBUTING.md`](CONTRIBUTING.md)
-- Keep the feature folders, screenshots, and API docs aligned with any behavior change.
-- GitHub Actions, issue templates, and a pull request template are configured under [`.github/`](.github/).
-
-## Security
-
-- [`SECURITY.md`](SECURITY.md)
-
-Do not commit API keys, tokens, or private backend credentials.
-
-## License
-
-MIT License. See [`LICENSE`](LICENSE).
-
-## Author
-
-Yonas Ambelu
-
-
-## Verified checkout fix and current CI evidence
-
-The older persisted-cart checkout crash fix is merged into `main` at `69c91510c4b26d5c976a46727f28252319e7a109`. The post-merge main workflow passed changed-file formatting, `flutter analyze`, `flutter test`, Android debug APK build, and artifact upload. [Open the main-branch CI run and download its debug APK artifact](https://github.com/kalaabalb/yomart-mobile/actions/runs/43207373086).
-
-This is a debug APK only. It is not signed for Play upload and must not be used as the closed-test release. The repository does not contain current real-device screenshots; capture the actual app on physical Android devices or a verified emulator and record device/OS/build details. See [Play Store and web release checklist](docs/PLAY_STORE_AND_WEB_RELEASE.md) and the [shared staging screenshot evidence guide](https://github.com/kalaabalb/yomart-docs/blob/main/docs/launch/staging-catalog-and-screenshot-evidence.md).
+- Approved ETB price/stock and product specification for each product
+- Final privacy policy and account-deletion URLs with legal publisher/support details
+- Keystore certificate match against the friend's Play Console upload key
+- Play Console package/version availability and developer-account testing eligibility
+- Physical Android device acceptance and final store listing assets
