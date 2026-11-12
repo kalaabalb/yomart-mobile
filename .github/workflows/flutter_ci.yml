@@ -81,9 +81,11 @@ jobs:
           script: |
             adb install -r build/app/outputs/flutter-apk/app-debug.apk
             adb shell monkey -p com.yomobiles.client 1
-            sleep 15
             mkdir -p artifacts/android
+            sleep 1
             adb exec-out screencap -p > artifacts/android/android-app-startup.png
+            sleep 12
+            adb exec-out screencap -p > artifacts/android/android-app-login.png
 
       - name: Upload genuine Android emulator screenshot
         uses: actions/upload-artifact@v4
