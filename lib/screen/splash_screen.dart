@@ -74,51 +74,77 @@ class _SplashScreenState extends State<SplashScreen> {
           fit: StackFit.expand,
           children: [
             SafeArea(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final compact = constraints.maxHeight < 680;
-                  return Column(
-                    children: [
-                      SizedBox(
-                          height:
-                              constraints.maxHeight * (compact ? 0.14 : 0.24)),
-                      Image.asset(
-                        'assets/images/logo_rounded.png',
-                        width: 76,
-                        height: 76,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'YoMart',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: compact ? 36 : 42,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.5,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 82,
+                      height: 82,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF18345B),
+                            Color(0xFF071326),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 7),
-                      Text(
-                        context.l10n.brand_tagline,
-                        style: TextStyle(
-                          color: const Color(0xFFB8C2D0),
-                          fontSize: compact ? 18 : 22,
+                        border: Border.all(
+                          color: const Color(0xFFC9A45C),
+                          width: 1.5,
                         ),
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x553A6CA8),
+                            blurRadius: 26,
+                            spreadRadius: 1,
+                          ),
+                        ],
                       ),
-                      SizedBox(height: constraints.maxHeight * 0.08),
-                      Image.asset(
-                        'assets/images/splash_phones_reference.png',
-                        width: constraints.maxWidth * 0.55,
-                        height: constraints.maxHeight * (compact ? 0.3 : 0.4),
-                        fit: BoxFit.contain,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          const Icon(
+                            Icons.smartphone_rounded,
+                            color: Colors.white,
+                            size: 59,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2),
+                            child: Text(
+                              'Y',
+                              style: TextStyle(
+                                color: const Color(0xFFE2BE75),
+                                fontSize: 25,
+                                fontWeight: FontWeight.w800,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black.withValues(alpha: 0.35),
+                                    blurRadius: 3,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const Spacer(),
-                    ],
-                  );
-                },
+                    ),
+                    const SizedBox(height: 17),
+                    const Text(
+                      'YoMart',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 42,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.8,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),
