@@ -16,7 +16,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final VoidCallback? onSearchTap;
 
   @override
-  Size get preferredSize => const Size.fromHeight(134);
+  Size get preferredSize => const Size.fromHeight(140);
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -73,8 +73,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
     final border = dark ? MarketPalette.homeBorder : const Color(0xFFDCE8F4);
     final muted = dark ? MarketPalette.homeMuted : MarketPalette.muted;
     return Padding(
-      // Keep the children within preferredSize (25 + 38 + 19 + 44 + 8 = 134).
-      padding: const EdgeInsets.fromLTRB(16, 25, 16, 8),
+      // Keep the brand mark and search field comfortably spaced within the app bar.
+      padding: const EdgeInsets.fromLTRB(16, 22, 16, 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -84,8 +84,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 children: [
                   Image.asset(
                     'assets/images/yomart_gold_mark.png',
-                    width: 38,
-                    height: 38,
+                    width: 44,
+                    height: 44,
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(width: 8),
@@ -105,7 +105,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   widget.onCollections, dark),
             ],
           ),
-          const SizedBox(height: 19),
+          const SizedBox(height: 15),
           Consumer2<DataProvider, ProductListProvider>(
             builder: (context, dataProvider, products, child) {
               if (_searchController.text != products.searchQuery &&
