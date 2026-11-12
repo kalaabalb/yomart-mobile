@@ -21,11 +21,11 @@ class CheckoutFlowScreen extends StatefulWidget {
 class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
   int _step = 0;
   List<String> _titles(BuildContext context) => [
-        context.l10n.destination_information,
-        context.l10n.review_order,
-        context.l10n.payment_method,
-        context.l10n.payment_proof,
-      ];
+    context.l10n.destination_information,
+    context.l10n.review_order,
+    context.l10n.payment_method,
+    context.l10n.payment_proof,
+  ];
 
   void _back() {
     if (_step == 0) {
@@ -45,8 +45,9 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
       form.save();
     }
     if (_step == 2) {
-      final selected = configuredMethods.where((method) =>
-          method.enabled && method.code == cart.selectedPaymentOption);
+      final selected = configuredMethods.where(
+        (method) => method.enabled && method.code == cart.selectedPaymentOption,
+      );
       if (selected.isEmpty) return;
       if (!selected.first.requiresProof) {
         cart.addOrder(context);
@@ -56,9 +57,12 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
       return;
     }
     if (_step == 3) {
-      final selected = configuredMethods.where((method) =>
-          method.enabled && method.code == cart.selectedPaymentOption);
-      if (selected.isEmpty || (selected.first.requiresProof && !cart.isPaymentProofReady)) return;
+      final selected = configuredMethods.where(
+        (method) => method.enabled && method.code == cart.selectedPaymentOption,
+      );
+      if (selected.isEmpty ||
+          (selected.first.requiresProof && !cart.isPaymentProofReady))
+        return;
       cart.addOrder(context);
       return;
     }
@@ -86,9 +90,13 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
                           0 => _deliveryStep(cart),
                           1 => _reviewStep(cart, data.hasLoadedStoreSettings),
                           2 => _paymentStep(
-                              cart, data.storeSettings.paymentMethods),
-                          _ =>
-                            _proofStep(cart, data.storeSettings.paymentMethods),
+                            cart,
+                            data.storeSettings.paymentMethods,
+                          ),
+                          _ => _proofStep(
+                            cart,
+                            data.storeSettings.paymentMethods,
+                          ),
                         },
                       ),
                     ),
@@ -144,10 +152,7 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
                   ),
                   boxShadow: active
                       ? const [
-                          BoxShadow(
-                            color: Color(0x443A8DF0),
-                            blurRadius: 9,
-                          ),
+                          BoxShadow(color: Color(0x443A8DF0), blurRadius: 9),
                         ]
                       : null,
                 ),
@@ -196,11 +201,14 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         Row(
           children: [
             Expanded(
-              child: Text(context.l10n.destination_city,
-                  style: const TextStyle(
-                      color: MarketPalette.muted,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600)),
+              child: Text(
+                context.l10n.destination_city,
+                style: const TextStyle(
+                  color: MarketPalette.muted,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
             TextButton.icon(
               onPressed: () => Navigator.push(
@@ -210,8 +218,9 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
               icon: const Icon(Icons.location_on_outlined, size: 17),
               label: Text(context.l10n.choose_on_map),
               style: TextButton.styleFrom(
-                  foregroundColor: MarketPalette.blueDeep,
-                  visualDensity: VisualDensity.compact),
+                foregroundColor: MarketPalette.blueDeep,
+                visualDensity: VisualDensity.compact,
+              ),
             ),
           ],
         ),
@@ -227,21 +236,33 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         ),
         if (cart.latitude != null && cart.longitude != null) ...[
           const SizedBox(height: 5),
-          Row(children: [
-            const Icon(Icons.check_circle,
-                size: 14, color: MarketPalette.success),
-            const SizedBox(width: 5),
-            Expanded(
+          Row(
+            children: [
+              const Icon(
+                Icons.check_circle,
+                size: 14,
+                color: MarketPalette.success,
+              ),
+              const SizedBox(width: 5),
+              Expanded(
                 child: Text(
-                    context.l10n.map_location_selected(
-                        '${cart.latitude!.toStringAsFixed(4)}, ${cart.longitude!.toStringAsFixed(4)}'),
-                    style: const TextStyle(
-                        fontSize: 11, color: MarketPalette.muted))),
-          ]),
+                  context.l10n.map_location_selected(
+                    '${cart.latitude!.toStringAsFixed(4)}, ${cart.longitude!.toStringAsFixed(4)}',
+                  ),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: MarketPalette.muted,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
         const SizedBox(height: 8),
-        Text(context.l10n.collection_explanation,
-            style: const TextStyle(color: MarketPalette.muted, fontSize: 12)),
+        Text(
+          context.l10n.collection_explanation,
+          style: const TextStyle(color: MarketPalette.muted, fontSize: 12),
+        ),
       ],
     );
   }
@@ -251,40 +272,38 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
     required TextEditingController controller,
     TextInputType keyboardType = TextInputType.text,
     bool required = true,
-  }) =>
-      CustomTextField(
-        controller: controller,
-        labelText: label,
-        inputType: keyboardType,
-        marketStyle: true,
-        validator: (value) =>
-            required && (value == null || value.trim().isEmpty)
-                ? context.l10n.please_enter_field(label)
-                : null,
-      );
+  }) => CustomTextField(
+    controller: controller,
+    labelText: label,
+    inputType: keyboardType,
+    marketStyle: true,
+    validator: (value) => required && (value == null || value.trim().isEmpty)
+        ? context.l10n.please_enter_field(label)
+        : null,
+  );
 
   Widget _fieldLabel(String label) => Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: MarketPalette.muted,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
+    padding: const EdgeInsets.only(bottom: 5),
+    child: Text(
+      label,
+      style: const TextStyle(
+        color: MarketPalette.muted,
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  );
 
   Widget _readOnlyField(String value) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: .65),
-          borderRadius: BorderRadius.circular(13),
-          border: Border.all(color: MarketPalette.border),
-        ),
-        child: Text(value, style: const TextStyle(color: MarketPalette.ink)),
-      );
+    width: double.infinity,
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+    decoration: BoxDecoration(
+      color: Colors.white.withValues(alpha: .65),
+      borderRadius: BorderRadius.circular(13),
+      border: Border.all(color: MarketPalette.border),
+    ),
+    child: Text(value, style: const TextStyle(color: MarketPalette.ink)),
+  );
 
   Widget _reviewStep(CartProvider cart, bool hasLoadedStoreSettings) {
     final subtotal = cart.getCartSubTotal();
@@ -325,17 +344,18 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
 
   Widget _reviewItem(CartModel item, List products) {
     final catalogProduct = products.where((p) => p.sId == item.productId);
-    final image = item.productImages?.firstOrNull ??
+    final image =
+        item.productImages?.firstOrNull ??
         (catalogProduct.isEmpty
             ? ''
             : catalogProduct.first.images?.firstOrNull?.url ?? '');
     final variant = item.variants.isEmpty
         ? ''
-        : [item.variants.first.color, item.variants.first.size]
-            .where((value) => value?.isNotEmpty == true)
-            .join(' · ');
-    final unitPrice =
-        item.variants.isEmpty ? null : item.variants.first.price;
+        : [
+            item.variants.first.color,
+            item.variants.first.size,
+          ].where((value) => value?.isNotEmpty == true).join(' · ');
+    final unitPrice = item.variants.isEmpty ? null : item.variants.first.price;
     return Container(
       margin: const EdgeInsets.only(bottom: 9),
       padding: const EdgeInsets.all(10),
@@ -361,18 +381,25 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.productName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: MarketPalette.ink,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600)),
+                Text(
+                  item.productName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: MarketPalette.ink,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 if (variant.isNotEmpty) ...[
                   const SizedBox(height: 4),
-                  Text(variant,
-                      style: const TextStyle(
-                          color: MarketPalette.muted, fontSize: 11)),
+                  Text(
+                    variant,
+                    style: const TextStyle(
+                      color: MarketPalette.muted,
+                      fontSize: 11,
+                    ),
+                  ),
                 ],
                 const SizedBox(height: 5),
                 Text(
@@ -388,9 +415,13 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
               ],
             ),
           ),
-          Text('×${item.quantity}',
-              style: const TextStyle(
-                  color: MarketPalette.muted, fontWeight: FontWeight.w700)),
+          Text(
+            '×${item.quantity}',
+            style: const TextStyle(
+              color: MarketPalette.muted,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
           const SizedBox(width: 3),
           const Icon(Icons.chevron_right_rounded, color: Color(0xFF9EB2C8)),
         ],
@@ -399,15 +430,20 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
   }
 
   Widget _paymentStep(
-      CartProvider cart, List<StorePaymentMethod> settingsMethods) {
+    CartProvider cart,
+    List<StorePaymentMethod> settingsMethods,
+  ) {
     final methods = settingsMethods.where((method) => method.enabled).toList();
-    final selectedMethod = methods.where((method) => method.code == cart.selectedPaymentOption).firstOrNull;
+    final selectedMethod = methods
+        .where((method) => method.code == cart.selectedPaymentOption)
+        .firstOrNull;
     if (methods.isNotEmpty &&
         !methods.any((method) => method.code == cart.selectedPaymentOption)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted &&
-            !methods
-                .any((method) => method.code == cart.selectedPaymentOption)) {
+            !methods.any(
+              (method) => method.code == cart.selectedPaymentOption,
+            )) {
           cart.setPaymentOption(methods.first.code);
         }
       });
@@ -439,25 +475,32 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
             ],
           )
         else
-          ...methods.map((method) => _paymentOption(
-                cart,
-                method.code,
-                method.title,
-                method.subtitle,
-                switch (method.category) {
-                  'bank_transfer' => Icons.account_balance_rounded,
-                  'mobile_wallet' => Icons.phone_android_rounded,
-                  'cash_collection' => Icons.payments_outlined,
-                  _ => Icons.account_balance_wallet_outlined,
-                },
-              )),
+          ...methods.map(
+            (method) => _paymentOption(
+              cart,
+              method.code,
+              method.title,
+              method.subtitle,
+              switch (method.category) {
+                'bank_transfer' => Icons.account_balance_rounded,
+                'mobile_wallet' => Icons.phone_android_rounded,
+                'cash_collection' => Icons.payments_outlined,
+                _ => Icons.account_balance_wallet_outlined,
+              },
+            ),
+          ),
         if (selectedMethod != null) _paymentMethodDetails(selectedMethod),
       ],
     );
   }
 
-  Widget _paymentOption(CartProvider cart, String value, String title,
-      String subtitle, IconData icon) {
+  Widget _paymentOption(
+    CartProvider cart,
+    String value,
+    String title,
+    String subtitle,
+    IconData icon,
+  ) {
     final selected = cart.selectedPaymentOption == value;
     return GestureDetector(
       onTap: () => cart.setPaymentOption(value),
@@ -478,7 +521,9 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
               width: 34,
               height: 34,
               decoration: const BoxDecoration(
-                  color: Color(0xFFE8F2FE), shape: BoxShape.circle),
+                color: Color(0xFFE8F2FE),
+                shape: BoxShape.circle,
+              ),
               child: Icon(icon, color: MarketPalette.blueDeep, size: 18),
             ),
             const SizedBox(width: 11),
@@ -486,15 +531,22 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
-                      style: const TextStyle(
-                          color: MarketPalette.ink,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13)),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: MarketPalette.ink,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                  ),
                   const SizedBox(height: 3),
-                  Text(subtitle,
-                      style: const TextStyle(
-                          color: MarketPalette.muted, fontSize: 11)),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      color: MarketPalette.muted,
+                      fontSize: 11,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -510,32 +562,54 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
   }
 
   Widget _paymentMethodDetails(StorePaymentMethod method) => Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(top: 4),
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: .5),
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: MarketPalette.border),
+    width: double.infinity,
+    margin: const EdgeInsets.only(top: 4),
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: Colors.white.withValues(alpha: .5),
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: MarketPalette.border),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (method.providerName.isNotEmpty)
+          _paymentDetail('Provider', method.providerName),
+        if (method.accountHolder.isNotEmpty)
+          _paymentDetail('Recipient', method.accountHolder),
+        if (method.accountIdentifier.isNotEmpty)
+          _paymentDetail('Payment identifier', method.accountIdentifier),
+        if (method.additionalDetails.isNotEmpty)
+          _paymentDetail('Details', method.additionalDetails),
+        if (method.instructions.isNotEmpty) ...[
+          if (method.providerName.isNotEmpty ||
+              method.accountIdentifier.isNotEmpty)
+            const SizedBox(height: 6),
+          Text(
+            method.instructions,
+            style: const TextStyle(color: MarketPalette.muted, height: 1.4),
+          ),
+        ],
+        Text(
+          method.requiresProof
+              ? 'A payment receipt is required.'
+              : 'No payment receipt is required.',
+          style: const TextStyle(color: MarketPalette.muted, fontSize: 11),
         ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          if (method.providerName.isNotEmpty) _paymentDetail('Provider', method.providerName),
-          if (method.accountHolder.isNotEmpty) _paymentDetail('Recipient', method.accountHolder),
-          if (method.accountIdentifier.isNotEmpty) _paymentDetail('Payment identifier', method.accountIdentifier),
-          if (method.additionalDetails.isNotEmpty) _paymentDetail('Details', method.additionalDetails),
-          if (method.instructions.isNotEmpty) ...[
-            if (method.providerName.isNotEmpty || method.accountIdentifier.isNotEmpty) const SizedBox(height: 6),
-            Text(method.instructions, style: const TextStyle(color: MarketPalette.muted, height: 1.4)),
-          ],
-          Text(method.requiresProof ? 'A payment receipt is required.' : 'No payment receipt is required.',
-              style: const TextStyle(color: MarketPalette.muted, fontSize: 11)),
-        ]),
-      );
+      ],
+    ),
+  );
 
   Widget _paymentDetail(String label, String value) => Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: Text('$label: $value', style: const TextStyle(color: MarketPalette.ink, fontWeight: FontWeight.w600)),
-      );
+    padding: const EdgeInsets.only(bottom: 5),
+    child: Text(
+      '$label: $value',
+      style: const TextStyle(
+        color: MarketPalette.ink,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  );
 
   Widget _proofStep(
     CartProvider cart,
@@ -545,16 +619,24 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         .where((method) => method.code == cart.selectedPaymentOption)
         .firstOrNull;
     final paymentInstructions = selectedMethod?.instructions;
-    final hasProof = cart.paymentProofImage != null ||
+    final hasProof =
+        cart.paymentProofImage != null ||
         (cart.paymentProofRecordId?.isNotEmpty ?? false);
     return Column(
       key: const ValueKey('proof'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (selectedMethod?.providerName.isNotEmpty == true) _paymentDetail('Provider', selectedMethod!.providerName),
-        if (selectedMethod?.accountHolder.isNotEmpty == true) _paymentDetail('Recipient', selectedMethod!.accountHolder),
-        if (selectedMethod?.accountIdentifier.isNotEmpty == true) _paymentDetail('Payment identifier', selectedMethod!.accountIdentifier),
-        if (selectedMethod?.additionalDetails.isNotEmpty == true) _paymentDetail('Details', selectedMethod!.additionalDetails),
+        if (selectedMethod?.providerName.isNotEmpty == true)
+          _paymentDetail('Provider', selectedMethod!.providerName),
+        if (selectedMethod?.accountHolder.isNotEmpty == true)
+          _paymentDetail('Recipient', selectedMethod!.accountHolder),
+        if (selectedMethod?.accountIdentifier.isNotEmpty == true)
+          _paymentDetail(
+            'Payment identifier',
+            selectedMethod!.accountIdentifier,
+          ),
+        if (selectedMethod?.additionalDetails.isNotEmpty == true)
+          _paymentDetail('Details', selectedMethod!.additionalDetails),
         if (paymentInstructions?.isNotEmpty == true) ...[
           Text(
             paymentInstructions!,
@@ -577,8 +659,9 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
         ),
         const SizedBox(height: 15),
         InkWell(
-          onTap:
-              cart.isUploadingPaymentProof ? null : cart.pickPaymentProofImage,
+          onTap: cart.isUploadingPaymentProof
+              ? null
+              : cart.pickPaymentProofImage,
           borderRadius: BorderRadius.circular(16),
           child: Container(
             height: 210,
@@ -596,21 +679,29 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.cloud_upload_outlined,
-                          color: MarketPalette.blue, size: 39),
+                      const Icon(
+                        Icons.cloud_upload_outlined,
+                        color: MarketPalette.blue,
+                        size: 39,
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         cart.isUploadingPaymentProof
                             ? context.l10n.uploading
                             : context.l10n.tap_to_upload,
                         style: const TextStyle(
-                            color: MarketPalette.blue,
-                            fontWeight: FontWeight.w700),
+                          color: MarketPalette.blue,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       const SizedBox(height: 4),
-                      Text(context.l10n.image_format_limit,
-                          style: const TextStyle(
-                              color: MarketPalette.muted, fontSize: 11)),
+                      Text(
+                        context.l10n.image_format_limit,
+                        style: const TextStyle(
+                          color: MarketPalette.muted,
+                          fontSize: 11,
+                        ),
+                      ),
                     ],
                   ),
           ),
@@ -628,19 +719,25 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
   }
 
   Widget _summaryRow(String label, String value, {bool strong = false}) => Row(
-        children: [
-          Text(label,
-              style: TextStyle(
-                  color: strong ? MarketPalette.ink : MarketPalette.muted,
-                  fontWeight: strong ? FontWeight.w700 : FontWeight.w500)),
-          const Spacer(),
-          Text(value,
-              style: TextStyle(
-                  color: MarketPalette.ink,
-                  fontSize: strong ? 16 : 13,
-                  fontWeight: FontWeight.w700)),
-        ],
-      );
+    children: [
+      Text(
+        label,
+        style: TextStyle(
+          color: strong ? MarketPalette.ink : MarketPalette.muted,
+          fontWeight: strong ? FontWeight.w700 : FontWeight.w500,
+        ),
+      ),
+      const Spacer(),
+      Text(
+        value,
+        style: TextStyle(
+          color: MarketPalette.ink,
+          fontSize: strong ? 16 : 13,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ],
+  );
 
   Widget _footer(
     CartProvider cart,
@@ -649,17 +746,35 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
     final label = switch (_step) {
       0 => context.l10n.continue_to_review,
       1 => context.l10n.continue_to_payment,
-      2 => configuredMethods.where((method) => method.enabled && method.code == cart.selectedPaymentOption).firstOrNull?.requiresProof == true
-          ? context.l10n.continue_to_payment_proof
-          : context.l10n.place_order,
+      2 =>
+        configuredMethods
+                    .where(
+                      (method) =>
+                          method.enabled &&
+                          method.code == cart.selectedPaymentOption,
+                    )
+                    .firstOrNull
+                    ?.requiresProof ==
+                true
+            ? context.l10n.continue_to_payment_proof
+            : context.l10n.place_order,
       _ => context.l10n.place_order,
     };
-    final selectedMethod = configuredMethods.where((method) => method.enabled && method.code == cart.selectedPaymentOption).firstOrNull;
+    final selectedMethod = configuredMethods
+        .where(
+          (method) =>
+              method.enabled && method.code == cart.selectedPaymentOption,
+        )
+        .firstOrNull;
     final proofNeeded = _step == 3 && selectedMethod?.requiresProof == true;
-    final paymentUnavailable = _step == 2 &&
-        !configuredMethods.any((method) =>
-            method.enabled && method.code == cart.selectedPaymentOption);
-    final disabled = cart.isProcessingPayment ||
+    final paymentUnavailable =
+        _step == 2 &&
+        !configuredMethods.any(
+          (method) =>
+              method.enabled && method.code == cart.selectedPaymentOption,
+        );
+    final disabled =
+        cart.isProcessingPayment ||
         cart.isUploadingPaymentProof ||
         paymentUnavailable ||
         (proofNeeded && !cart.isPaymentProofReady);
@@ -675,8 +790,9 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
           width: double.infinity,
           height: 48,
           child: ElevatedButton(
-            onPressed:
-                disabled ? null : () => _continue(cart, configuredMethods),
+            onPressed: disabled
+                ? null
+                : () => _continue(cart, configuredMethods),
             style: ElevatedButton.styleFrom(
               backgroundColor: MarketPalette.blueDeep,
               disabledBackgroundColor: MarketPalette.blue.withValues(alpha: .5),
@@ -693,8 +809,10 @@ class _CheckoutFlowScreenState extends State<CheckoutFlowScreen> {
                       color: Colors.white,
                     ),
                   )
-                : Text(label,
-                    style: const TextStyle(fontWeight: FontWeight.w700)),
+                : Text(
+                    label,
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
           ),
         ),
       ),
