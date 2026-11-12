@@ -26,6 +26,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           PRIVACY_POLICY_URL: ${{ vars.YOMART_PRIVACY_POLICY_URL }}
+          ACCOUNT_DELETION_URL: https://yomart.onrender.com/account-deletion.html
         run: |
           set -euo pipefail
           for value in KEYSTORE_BASE64 STORE_PASSWORD KEY_PASSWORD KEY_ALIAS PRIVACY_POLICY_URL; do
@@ -38,6 +39,13 @@ jobs:
             echo "::error::YOMART_PRIVACY_POLICY_URL must be a final public HTTPS privacy policy URL."
             exit 1
           }
+          curl --fail --silent --show-error "$PRIVACY_POLICY_URL" -o /tmp/yomart-privacy-policy.html
+          curl --fail --silent --show-error "$ACCOUNT_DELETION_URL" -o /tmp/yomart-account-deletion.html
+          if grep -Eiq 'REPLACE BEFORE PUBLICATION|<meta name="robots" content="noindex|Draft — not approved|Draft: the owner' /tmp/yomart-privacy-policy.html /tmp/yomart-account-deletion.html; then
+            echo "::error::Privacy or account-deletion page is still a draft or marked noindex."
+            exit 1
+          fi
+          grep -q 'YOMART_API_BASE_URL' <(curl --fail --silent --show-error https://yomart.onrender.com/account-deletion-config.js)
 
       - name: Set up Java
         uses: actions/setup-java@v4
