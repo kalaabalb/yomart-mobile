@@ -193,7 +193,9 @@ class _BrandProductCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${price.toStringAsFixed(0)}',
+                      isPreviewCatalog
+                          ? 'Price to be confirmed'
+                          : 'Birr ${price.toStringAsFixed(0)}',
                       style: const TextStyle(
                         color: MarketPalette.ink,
                         fontWeight: FontWeight.w700,
