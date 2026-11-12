@@ -17,6 +17,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+const _previewCatalogNotice = bool.fromEnvironment(
+  'YOMART_PREVIEW_CATALOG',
+  defaultValue: true,
+);
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -90,35 +95,82 @@ class _HomeScreenState extends State<HomeScreen>
       ),
       child: Scaffold(
         backgroundColor: MarketPalette.pageCanvas(context),
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            final desktop =
-                constraints.maxWidth >= ResponsiveLayout.desktopBreakpoint;
-            final maxWidth =
-                ResponsiveLayout.contentMaxWidth(constraints.maxWidth);
-            final content = Align(
-              alignment: Alignment.topCenter,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: maxWidth),
-                child:
-                    IndexedStack(index: _currentTab.index, children: _screens),
+        body: Column(
+          children: [
+            if (_previewCatalogNotice) _buildPreviewCatalogNotice(darkSurface),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final desktop =
+                      constraints.maxWidth >= ResponsiveLayout.desktopBreakpoint;
+                  final maxWidth =
+                      ResponsiveLayout.contentMaxWidth(constraints.maxWidth);
+                  final content = Align(
+                    alignment: Alignment.topCenter,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: maxWidth),
+                      child: IndexedStack(
+                        index: _currentTab.index,
+                        children: _screens,
+                      ),
+                    ),
+                  );
+                  if (desktop) {
+                    return Row(
+                      children: [
+                        _buildDesktopNavigation(!darkSurface),
+                        Expanded(child: content),
+                      ],
+                    );
+                  }
+                  return content;
+                },
               ),
-            );
-            if (desktop) {
-              return Row(
-                children: [
-                  _buildDesktopNavigation(!darkSurface),
-                  Expanded(child: content),
-                ],
-              );
-            }
-            return content;
-          },
+            ),
+          ],
         ),
         bottomNavigationBar: MediaQuery.sizeOf(context).width >=
                 ResponsiveLayout.desktopBreakpoint
             ? null
             : _buildBottomNavigationBar(!darkSurface),
+      ),
+    );
+  }
+
+
+  Widget _buildPreviewCatalogNotice(bool dark) {
+    final background =
+        dark ? const Color(0xFF342A17) : const Color(0xFFFFF6E3);
+    final border =
+        dark ? const Color(0xFF6B542B) : const Color(0xFFE7D4A6);
+    final foreground =
+        dark ? const Color(0xFFFFD98A) : const Color(0xFF684C1D);
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(14, 10, 14, 8),
+      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+      decoration: BoxDecoration(
+        color: background,
+        border: Border.all(color: border),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.info_outline_rounded, size: 17, color: foreground),
+          const SizedBox(width: 9),
+          Expanded(
+            child: Text(
+              'Preview catalogue. Prices and availability are being confirmed; ordering is temporarily unavailable.',
+              style: TextStyle(
+                color: foreground,
+                fontSize: 11,
+                height: 1.45,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
