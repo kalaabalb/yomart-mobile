@@ -6,6 +6,7 @@ import 'package:flutter_cart/model/cart_model.dart';
 import 'package:provider/provider.dart';
 import '../provider/cart_provider.dart';
 import '../../../utility/marketplace_design.dart';
+import '../../../utility/preview_catalog.dart';
 import '../../../utility/extensions.dart';
 
 class CartListSection extends StatelessWidget {
@@ -194,7 +195,7 @@ class _CartItemCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            'Birr ${_formatAmount(price)}',
+                            isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatAmount(price)}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
