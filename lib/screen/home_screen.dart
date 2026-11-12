@@ -10,17 +10,13 @@ import 'package:e_commerce_flutter/screen/product_list_screen/product_list_scree
 import 'package:e_commerce_flutter/screen/product_list_screen/provider/product_list_provider.dart';
 import 'package:e_commerce_flutter/screen/profile_screen/profile_screen.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:e_commerce_flutter/utility/preview_catalog.dart';
 import 'package:e_commerce_flutter/utility/responsive_layout.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:e_commerce_flutter/widget/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-const _previewCatalogNotice = bool.fromEnvironment(
-  'YOMART_PREVIEW_CATALOG',
-  defaultValue: false,
-);
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -97,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen>
         backgroundColor: MarketPalette.pageCanvas(context),
         body: Column(
           children: [
-            if (_previewCatalogNotice) _buildPreviewCatalogNotice(darkSurface),
+            if (isPreviewCatalog) _buildPreviewCatalogNotice(darkSurface),
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -952,7 +948,7 @@ class _SearchResultRow extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        'Birr ${_formatSearchPrice(amount)}',
+                        isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatSearchPrice(amount)}',
                         style: TextStyle(
                           color: dark
                               ? MarketPalette.homeMuted
