@@ -4,6 +4,7 @@ import 'package:e_commerce_flutter/screen/product_cart_screen/components/empty_c
 import 'package:e_commerce_flutter/screen/product_cart_screen/provider/cart_provider.dart';
 import 'package:e_commerce_flutter/utility/animation/animated_switcher_wrapper.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:e_commerce_flutter/utility/preview_catalog.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -124,7 +125,7 @@ class _CartScreenState extends State<CartScreen> {
                             const Spacer(),
                             AnimatedSwitcherWrapper(
                               child: Text(
-                                'Birr ${_formatAmount(total)}',
+                                isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatAmount(total)}',
                                 key: ValueKey<double>(total),
                                 style: TextStyle(
                                   color: MarketPalette.isDark(context)
@@ -139,8 +140,8 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                         const SizedBox(height: 15),
                         _CheckoutButton(
-                          label: context.l10n.checkout,
-                          onPressed: () => Navigator.push(
+                          label: isPreviewCatalog ? 'Ordering unavailable' : context.l10n.checkout,
+                          onPressed: isPreviewCatalog ? null : () => Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => const CheckoutFlowScreen(),
@@ -170,7 +171,7 @@ class _CheckoutButton extends StatelessWidget {
   const _CheckoutButton({required this.label, required this.onPressed});
 
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +179,11 @@ class _CheckoutButton extends StatelessWidget {
       height: 48,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        gradient: MarketPalette.primaryGradient,
+        gradient: onPressed == null
+            ? const LinearGradient(
+                colors: [Color(0xFF7B8797), Color(0xFF657184)],
+              )
+            : MarketPalette.primaryGradient,
         boxShadow: const [
           BoxShadow(
             color: Color(0x33065EC9),
