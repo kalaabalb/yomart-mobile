@@ -102,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen>
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final desktop =
-                      constraints.maxWidth >= ResponsiveLayout.desktopBreakpoint;
+                      constraints.maxWidth >=
+                          ResponsiveLayout.desktopBreakpoint;
                   final maxWidth =
                       ResponsiveLayout.contentMaxWidth(constraints.maxWidth);
                   final content = Align(
@@ -136,7 +137,6 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
   }
-
 
   Widget _buildPreviewCatalogNotice(bool dark) {
     final background =
