@@ -59,8 +59,12 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Build Android debug APK
-        run: flutter build apk --debug --dart-define=YOMART_PREVIEW_CATALOG=true
+      - name: Build Android preview APK against production API
+        run: |
+          flutter build apk --debug \
+            --dart-define=MAIN_URL=https://yomart-api.onrender.com \
+            --dart-define=PRIVACY_POLICY_URL=https://yomart.onrender.com/privacy-policy.html \
+            --dart-define=YOMART_PREVIEW_CATALOG=true
 
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
