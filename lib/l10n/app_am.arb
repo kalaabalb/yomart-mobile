@@ -234,6 +234,10 @@
   "update_failed": "ማዘመን አልተሳካም",
   "delivery": "ማድረስ",
   "checkout": "ክፍያ ይፈጽሙ",
+  "checkout_unavailable": "ክፍያ ማድረግ አይቻልም",
+  "check_purchase_availability": "የግዢ አቅርቦትን ይመልከቱ",
+  "preview_purchase_unavailable": "በአሁኑ ጊዜ ግዢ አይገኝም። እባክዎ በኋላ ይመልከቱ።",
+  "out_of_stock": "ከክምችት ውጭ",
   "place_order": "ትዕዛዝ ያስገቡ",
   "order_status": "የትዕዛዝ ሁኔታ",
   "payment_pending": "ክፍያ በመጠባበቅ ላይ",
@@ -569,7 +573,7 @@
       }
     }
   },
-  "support_contact_unavailable": "የድጋፍ መገናኛ መረጃ ገና አልተገኘም።",
+  "support_contact_unavailable": "በአሁኑ ጊዜ የድጋፍ መገናኛዎች የሉም።",
   "destination_information": "የመድረሻ መረጃ",
   "destination_city": "የመድረሻ ከተማ",
   "area_landmark_optional": "አካባቢ ወይም ምልክት (አማራጭ)",

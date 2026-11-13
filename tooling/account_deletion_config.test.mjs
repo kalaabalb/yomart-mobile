@@ -78,9 +78,37 @@ test('release config requires an explicit environment, API, expected origin, and
   assert.throws(() => resolveBuildConfig({ ...stagingEnvironment, MAIN_URL: '' }), /MAIN_URL is required/);
   assert.throws(() => resolveBuildConfig({ ...stagingEnvironment, YOMART_EXPECTED_API_ORIGIN: '' }), /YOMART_EXPECTED_API_ORIGIN is required/);
   assert.throws(() => resolveBuildConfig({ ...stagingEnvironment, PRIVACY_POLICY_URL: '' }), /PRIVACY_POLICY_URL is required/);
-  assert.throws(() => resolveBuildConfig({ ...stagingEnvironment, YOMART_PRODUCTION_API_ORIGINS: '' }), /YOMART_PRODUCTION_API_ORIGINS is required/);
-  assert.throws(() => resolveBuildConfig({ ...stagingEnvironment, YOMART_PRODUCTION_SITE_ORIGINS: '' }), /YOMART_PRODUCTION_SITE_ORIGINS is required/);
-  assert.throws(() => resolveBuildConfig({ ...stagingEnvironment, YOMART_PRODUCTION_SITE_ORIGINS: 'https://bad.example/path' }), /placeholder host/);
+});
+
+test('staging accepts unset or empty production-origin denylists when origins are unconfirmed', () => {
+  for (const env of [
+    { ...stagingEnvironment, YOMART_PRODUCTION_API_ORIGINS: undefined, YOMART_PRODUCTION_SITE_ORIGINS: undefined },
+    { ...stagingEnvironment, YOMART_PRODUCTION_API_ORIGINS: '', YOMART_PRODUCTION_SITE_ORIGINS: '' },
+  ]) {
+    const config = resolveBuildConfig(env);
+    assert.equal(config.productionApiOrigins, '');
+    assert.equal(config.productionSiteOrigins, '');
+  }
+});
+
+test('staging validates every supplied production origin and rejects overlap', () => {
+  assert.doesNotThrow(() => resolveBuildConfig(stagingEnvironment));
+  for (const invalid of [
+    'https://*.production.test',
+    'https://shop.production.example/path',
+    'https://user@shop.production.example',
+    'https://shop.production.example?preview=1',
+    'https://shop.production.example,',
+  ]) {
+    assert.throws(() => resolveBuildConfig({
+      ...stagingEnvironment,
+      YOMART_PRODUCTION_SITE_ORIGINS: invalid,
+    }));
+  }
+  assert.throws(() => resolveBuildConfig({
+    ...stagingEnvironment,
+    YOMART_PRODUCTION_SITE_ORIGINS: 'https://shop.stage.yomart.test',
+  }), /production site origin cannot be used for a staging build/);
 });
 
 test('web build wrapper fails before building when environment configuration is absent', async (t) => {
@@ -142,6 +170,17 @@ test('local mode permits loopback HTTP only for a deliberate local build', () =>
     PRIVACY_POLICY_URL: 'https://shop.yomart.com/privacy-policy.html',
   });
   assert.equal(production.apiOrigin, 'https://api.yomart.com');
+  for (const variable of ['YOMART_STAGING_API_ORIGINS', 'YOMART_STAGING_SITE_ORIGINS']) {
+    assert.throws(() => resolveBuildConfig({
+      YOMART_BUILD_ENV: 'production',
+      MAIN_URL: 'https://api.yomart.com',
+      YOMART_EXPECTED_API_ORIGIN: 'https://api.yomart.com',
+      PRIVACY_POLICY_URL: 'https://shop.yomart.com/privacy-policy.html',
+      YOMART_STAGING_API_ORIGINS: 'https://api.stage.yomart.test',
+      YOMART_STAGING_SITE_ORIGINS: 'https://shop.stage.yomart.test',
+      [variable]: '',
+    }), new RegExp(`${variable} is required`));
+  }
 });
 
 test('site origins are blocked across staging and production and validate URL edge cases', () => {
@@ -172,6 +211,7 @@ test('site origins are blocked across staging and production and validate URL ed
     'https://api.stage.yomart.test?debug=1',
     'https://api.stage.yomart.test#fragment',
     'https://api.yomart.example',
+    'https://*.stage.yomart.test',
   ]) {
     assert.throws(() => resolveBuildConfig({
       ...stagingEnvironment,

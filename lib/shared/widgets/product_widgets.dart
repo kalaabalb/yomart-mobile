@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/product.dart';
 import '../../utility/app_color.dart';
 import '../../utility/marketplace_design.dart';
+import '../../utility/preview_catalog.dart';
 import 'package:provider/provider.dart';
 
 class ProductGridItem extends StatelessWidget {
@@ -51,143 +52,158 @@ class ProductGridItem extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(marketStyle ? 22 : 12),
         child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
+          padding: const EdgeInsets.all(9),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final imageHeight = (constraints.maxHeight * .46)
+                  .clamp(82.0, marketStyle ? 154.0 : 126.0);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: marketStyle
-                        ? (MediaQuery.sizeOf(context).width * .29)
-                            .clamp(96.0, 184.0)
-                        : 120,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(marketStyle ? 16 : 8),
-                      color: marketStyle
-                          ? (isDark
-                              ? MarketPalette.homeSurfaceRaised
-                              : const Color(0x99EAF4FF))
-                          : Colors.grey[100],
-                    ),
-                    child: CustomNetworkImage(
-                      imageUrl: product.images?.isNotEmpty == true
-                          ? product.images!.first.url ?? ''
-                          : '',
-                      fit: marketStyle ? BoxFit.contain : BoxFit.cover,
-                    ),
-                  ),
-                  if (hasDiscount)
-                    Positioned(
-                      top: 8,
-                      left: 8,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color:
-                              marketStyle ? MarketPalette.blueDeep : Colors.red,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          '$discountPercent% OFF',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  Positioned(
-                    top: 4,
-                    right: 4,
-                    child: GestureDetector(
-                      onTap: onFavoriteTap,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? MarketPalette.homeBackground
-                                  .withValues(alpha: .94)
-                              : Colors.white.withValues(alpha: 0.9),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : Colors.grey[600],
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                product.name ?? 'Unknown Product',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: marketStyle ? primaryText : null,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 4),
-              Consumer<FavoriteProvider>(
-                builder: (context, favoriteProvider, child) {
-                  return Row(
+                  Stack(
                     children: [
-                      Flexible(
-                        child: Text(
-                          "Birr ${product.offerPrice ?? product.price}",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: marketStyle
-                                ? (isDark
-                                    ? const Color(0xFF67B4FF)
-                                    : MarketPalette.blueDeep)
-                                : AppColor.darkOrange,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      Container(
+                        height: imageHeight,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(marketStyle ? 16 : 8),
+                          color: marketStyle
+                              ? (isDark
+                                  ? MarketPalette.homeSurfaceRaised
+                                  : const Color(0x99EAF4FF))
+                              : Colors.grey[100],
+                        ),
+                        child: CustomNetworkImage(
+                          imageUrl: product.images?.isNotEmpty == true
+                              ? product.images!.first.url ?? ''
+                              : '',
+                          fit: marketStyle ? BoxFit.contain : BoxFit.cover,
                         ),
                       ),
-                      if (hasDiscount) ...[
-                        const SizedBox(width: 4),
-                        Flexible(
-                          child: Text(
-                            'Birr ${product.price}',
-                            style: const TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              color: Colors.grey,
-                              fontSize: 12,
+                      if (hasDiscount)
+                        Positioned(
+                          top: 8,
+                          left: 8,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: marketStyle
+                                  ? MarketPalette.blueDeep
+                                  : Colors.red,
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            child: Text(
+                              '$discountPercent% OFF',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                      ],
+                      Positioned(
+                        top: 4,
+                        right: 4,
+                        child: GestureDetector(
+                          onTap: onFavoriteTap,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? MarketPalette.homeBackground
+                                      .withValues(alpha: .94)
+                                  : Colors.white.withValues(alpha: 0.9),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: isFavorite ? Colors.red : Colors.grey[600],
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
-                  );
-                },
-              ),
-              const SizedBox(height: 4),
-              Text(
-                product.quantity != 0 ? 'In Stock' : 'Out of Stock',
-                style: TextStyle(
-                  color: product.quantity != 0
-                      ? (marketStyle ? MarketPalette.success : Colors.green)
-                      : (marketStyle ? MarketPalette.error : Colors.red),
-                  fontSize: 12,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    product.name ?? 'Unknown Product',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      color: marketStyle ? primaryText : null,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (canDisplayCatalogPrice(
+                      previewMode: isPreviewCatalog,
+                      price: product.offerPrice ?? product.price)) ...[
+                    const SizedBox(height: 4),
+                    Consumer<FavoriteProvider>(
+                      builder: (context, favoriteProvider, child) {
+                        return Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                "Birr ${product.offerPrice ?? product.price}",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: marketStyle
+                                      ? (isDark
+                                          ? const Color(0xFF67B4FF)
+                                          : MarketPalette.blueDeep)
+                                      : AppColor.darkOrange,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            if (hasDiscount) ...[
+                              const SizedBox(width: 4),
+                              Flexible(
+                                child: Text(
+                                  'Birr ${product.price}',
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                  if (!isPreviewCatalog) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      product.quantity != 0 ? 'In Stock' : 'Out of Stock',
+                      style: TextStyle(
+                        color: product.quantity != 0
+                            ? (marketStyle
+                                ? MarketPalette.success
+                                : Colors.green)
+                            : (marketStyle ? MarketPalette.error : Colors.red),
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ],
+              );
+            },
           ),
         ),
       ),

@@ -82,8 +82,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       child: Scaffold(
         backgroundColor: _background,
-        body: SafeArea(
-          child: MarketBackdrop(
+        body: MarketBackdrop(
+          child: SafeArea(
             child: Column(
               children: [
                 Expanded(
@@ -113,43 +113,36 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               const SizedBox(height: 7),
                               _buildRating(),
                               const SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  Text(
-                                    isPreviewCatalog
-                                        ? 'Price to be confirmed'
-                                        : 'Birr ${_formatPrice(price)}',
-                                    style: const TextStyle(
-                                      color: Color(0xFFFFA34A),
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  if (!isPreviewCatalog && hasDiscount) ...[
-                                    const SizedBox(width: 9),
+                              if (canDisplayCatalogPrice(
+                                  previewMode: isPreviewCatalog,
+                                  price: widget.product.offerPrice ??
+                                      widget.product.price)) ...[
+                                Row(
+                                  children: [
                                     Text(
-                                      'Birr ${_formatPrice(oldPrice)}',
-                                      style: TextStyle(
-                                        color: _muted,
-                                        fontSize: 12,
-                                        decoration: TextDecoration.lineThrough,
-                                        decorationColor: _muted,
+                                      'Birr ${_formatPrice(price)}',
+                                      style: const TextStyle(
+                                        color: Color(0xFFFFA34A),
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 18,
                                       ),
                                     ),
-                                    const SizedBox(width: 9),
-                                    _discountBadge(oldPrice, price),
+                                    if (hasDiscount) ...[
+                                      const SizedBox(width: 9),
+                                      Text(
+                                        'Birr ${_formatPrice(oldPrice)}',
+                                        style: TextStyle(
+                                          color: _muted,
+                                          fontSize: 12,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          decorationColor: _muted,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 9),
+                                      _discountBadge(oldPrice, price),
+                                    ],
                                   ],
-                                ],
-                              ),
-                              if (isPreviewCatalog) ...[
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Preview catalogue. Price and availability are being confirmed; ordering is temporarily unavailable.',
-                                  style: TextStyle(
-                                    color: _muted,
-                                    fontSize: 12,
-                                    height: 1.4,
-                                  ),
                                 ),
                               ],
                               const SizedBox(height: 11),
@@ -500,65 +493,55 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildAddToCart() {
-    final unavailable = isPreviewCatalog || (widget.product.quantity ?? 0) <= 0;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(18, 10, 18, 12),
-      decoration: BoxDecoration(
-        color: _background.withValues(alpha: .96),
-        border: Border(
-            top: BorderSide(
-                color: _isDark
-                    ? const Color(0xFF182438)
-                    : const Color(0x55718AA8))),
-      ),
-      child: SafeArea(
-        top: false,
+    final outOfStock = !isPreviewCatalog && (widget.product.quantity ?? 0) <= 0;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(18, 10, 18, 12),
         child: SizedBox(
-          height: 50,
+          height: 48,
           width: double.infinity,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: unavailable
-                  ? const LinearGradient(
-                      colors: [Color(0xFF374357), Color(0xFF202A3B)],
-                    )
-                  : const LinearGradient(
-                      colors: [Color(0xFF45258C), Color(0xFF0876F9)],
-                    ),
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: unavailable
-                  ? null
-                  : const [
-                      BoxShadow(
-                        color: Color(0x55216DE0),
-                        blurRadius: 14,
-                        offset: Offset(0, 5),
-                      ),
-                    ],
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: unavailable
-                    ? null
+          child: FilledButton.icon(
+            onPressed: outOfStock
+                ? null
+                : isPreviewCatalog
+                    ? () => ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              context.l10n.preview_purchase_unavailable,
+                            ),
+                          ),
+                        )
                     : () => context
                         .read<ProductDetailProvider>()
                         .addToCart(widget.product, context),
-                borderRadius: BorderRadius.circular(15),
-                child: Center(
-                  child: Text(
-                    isPreviewCatalog
-                        ? 'Ordering unavailable'
-                        : unavailable
-                            ? 'Out of stock'
-                            : 'Add to Cart',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
+            icon: const Icon(
+              isPreviewCatalog
+                  ? Icons.info_outline_rounded
+                  : Icons.add_shopping_cart,
+              size: 19,
+            ),
+            label: Text(
+              isPreviewCatalog
+                  ? context.l10n.check_purchase_availability
+                  : outOfStock
+                      ? context.l10n.out_of_stock
+                      : context.l10n.add_to_cart,
+            ),
+            style: FilledButton.styleFrom(
+              backgroundColor: isPreviewCatalog
+                  ? (_isDark
+                      ? const Color(0xFF26354A)
+                      : const Color(0xFFE8EEF5))
+                  : const Color(0xFF1468B9),
+              foregroundColor: isPreviewCatalog
+                  ? (_isDark ? const Color(0xFFDCE8F7) : MarketPalette.ink)
+                  : Colors.white,
+              disabledBackgroundColor:
+                  _isDark ? const Color(0xFF202B3B) : const Color(0xFFE3E8EE),
+              disabledForegroundColor: _muted,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
               ),
             ),
           ),

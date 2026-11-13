@@ -234,6 +234,10 @@
   "update_failed": "Échec de la mise à jour",
   "delivery": "Livraison",
   "checkout": "Commander",
+  "checkout_unavailable": "Achats indisponibles",
+  "check_purchase_availability": "Vérifier la disponibilité d’achat",
+  "preview_purchase_unavailable": "Les achats ne sont pas disponibles actuellement. Veuillez réessayer plus tard.",
+  "out_of_stock": "Épuisé",
   "place_order": "Passer la commande",
   "order_status": "État de la commande",
   "payment_pending": "Paiement en attente",
@@ -569,7 +573,7 @@
       }
     }
   },
-  "support_contact_unavailable": "Les coordonnées du support ne sont pas encore disponibles.",
+  "support_contact_unavailable": "Aucun contact d’assistance n’est disponible actuellement.",
   "destination_information": "Informations sur la destination",
   "destination_city": "Ville de destination",
   "area_landmark_optional": "Quartier ou repère (facultatif)",

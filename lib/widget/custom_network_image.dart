@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_flutter/utility/constants.dart';
+import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String imageUrl;
@@ -36,12 +38,8 @@ class CustomNetworkImage extends StatelessWidget {
       scale: scale,
       width: width,
       height: height,
-      placeholder: (context, url) => _buildLoadingShimmer(),
-      errorWidget: (context, url, error) {
-        debugPrint('Image load error: $error');
-        debugPrint('Image URL: $resolvedUrl');
-        return _buildErrorPlaceholder();
-      },
+      placeholder: (context, url) => _buildLoadingShimmer(context),
+      errorWidget: (context, url, error) => _buildErrorPlaceholder(),
     );
   }
 
@@ -64,19 +62,42 @@ class CustomNetworkImage extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadingShimmer() {
-    return Container(
+  Widget _buildLoadingShimmer(BuildContext context) {
+    final dark = MarketPalette.isDark(context);
+    final base = placeholderColor ??
+        (dark ? const Color(0xFF162840) : const Color(0xFFE8EFF7));
+    final highlight = dark ? const Color(0xFF294465) : Colors.white;
+    final radius = BorderRadius.circular(8);
+    final skeleton = Container(
       width: width,
       height: height,
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child: CircularProgressIndicator(
-          backgroundColor: Colors.grey[200],
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[600]!),
-        ),
+      decoration: BoxDecoration(color: base, borderRadius: radius),
+    );
+
+    return ClipRRect(
+      borderRadius: radius,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          if (MediaQuery.disableAnimationsOf(context))
+            skeleton
+          else
+            Shimmer.fromColors(
+              baseColor: base,
+              highlightColor: highlight,
+              period: const Duration(milliseconds: 1450),
+              child: skeleton,
+            ),
+          Opacity(
+            opacity: dark ? .3 : .38,
+            child: Image.asset(
+              'assets/images/yomart_gold_mark.png',
+              width: 30,
+              height: 30,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -111,15 +132,21 @@ class CustomNetworkImage extends StatelessWidget {
   }
 
   double _getIconSize() {
-    if (width != null && height != null) {
-      return (width! + height!) / 8;
+    if (width != null &&
+        height != null &&
+        width!.isFinite &&
+        height!.isFinite) {
+      return ((width! + height!) / 8).clamp(20.0, 64.0);
     }
     return 40.0;
   }
 
   double _getTextSize() {
-    if (width != null && height != null) {
-      return (width! + height!) / 20;
+    if (width != null &&
+        height != null &&
+        width!.isFinite &&
+        height!.isFinite) {
+      return ((width! + height!) / 20).clamp(10.0, 18.0);
     }
     return 12.0;
   }

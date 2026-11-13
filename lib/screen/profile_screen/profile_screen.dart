@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:e_commerce_flutter/core/data/data_provider.dart';
 import 'package:e_commerce_flutter/utility/snack_bar_helper.dart';
 import '../login_screen/login_screen.dart';
@@ -22,7 +21,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  File? _profileImage;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _currentPasswordController =
@@ -58,19 +56,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final user = context.userProvider.getLoginUsr();
     _nameController.text = user?.name ?? '';
     _emailController.text = user?.email ?? '';
-    _profileImage = context.profileProvider.profileImagePath != null
-        ? File(context.profileProvider.profileImagePath!)
-        : null;
-  }
-
-  Future<void> _pickImage() async {
-    await context.profileProvider.pickProfileImage();
-    if (!mounted) return;
-    setState(() {
-      _profileImage = context.profileProvider.profileImagePath != null
-          ? File(context.profileProvider.profileImagePath!)
-          : null;
-    });
   }
 
   Future<void> _saveProfile() async {
@@ -168,24 +153,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            GestureDetector(
-                              onTap: _isEditing ? _pickImage : null,
-                              child: CircleAvatar(
-                                radius: 27,
-                                backgroundColor: dark
-                                    ? MarketPalette.homeSurfaceRaised
-                                    : Colors.white.withValues(alpha: .72),
-                                backgroundImage: _profileImage != null
-                                    ? FileImage(_profileImage!)
-                                    : null,
-                                child: _profileImage == null
-                                    ? Icon(Icons.person_rounded,
-                                        color: dark
-                                            ? MarketPalette.homeMuted
-                                            : MarketPalette.blueDeep,
-                                        size: 31)
-                                    : null,
-                              ),
+                            CircleAvatar(
+                              radius: 27,
+                              backgroundColor: dark
+                                  ? MarketPalette.homeSurfaceRaised
+                                  : Colors.white.withValues(alpha: .72),
+                              child: Icon(Icons.person_rounded,
+                                  color: dark
+                                      ? MarketPalette.homeMuted
+                                      : MarketPalette.blueDeep,
+                                  size: 31),
                             ),
                             const SizedBox(width: 14),
                             Expanded(
@@ -693,8 +670,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${context.l10n.logout}?'),
-          content: Text(context.l10n.logout_confirmation),
+          insetPadding: const EdgeInsets.symmetric(horizontal: 28),
+          titlePadding: const EdgeInsets.fromLTRB(26, 24, 26, 8),
+          contentPadding: const EdgeInsets.fromLTRB(26, 8, 26, 14),
+          actionsPadding: const EdgeInsets.fromLTRB(20, 4, 20, 18),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          title: Text(
+            '${context.l10n.logout}?',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
+          content: Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              context.l10n.logout_confirmation,
+              style: const TextStyle(fontSize: 14, height: 1.45),
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),

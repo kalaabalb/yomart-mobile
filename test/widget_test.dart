@@ -104,4 +104,21 @@ void main() {
     await tester.pump(const Duration(seconds: 4));
     await tester.pumpAndSettle();
   });
+
+  testWidgets('dark mode palette changes through the single app theme wrapper',
+      (WidgetTester tester) async {
+    final data = DataProvider(loadInitialData: false);
+    await tester.pumpWidget(
+      ChangeNotifierProvider.value(value: data, child: const MyApp()),
+    );
+
+    Theme appTheme() => tester.widget<Theme>(
+          find.byKey(const ValueKey('yomart-app-theme')),
+        );
+
+    expect(appTheme().data.brightness, Brightness.light);
+    data.toggleDarkMode();
+    await tester.pump();
+    expect(appTheme().data.brightness, Brightness.dark);
+  });
 }

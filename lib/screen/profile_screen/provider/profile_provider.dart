@@ -1,14 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../utility/constants.dart';
 import '../../../utility/snack_bar_helper.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final GetStorage box = GetStorage();
-  static const String _profileImagePathKey = 'profileImagePath';
   static const String _savedAddressesKey = 'savedDeliveryAddresses';
   static const String _selectedAddressKey = 'selectedDeliveryAddress';
 
@@ -27,55 +23,8 @@ class ProfileProvider extends ChangeNotifier {
   double? get latitude => _latitude;
   double? get longitude => _longitude;
 
-  String? _profileImagePath;
-
-  String? get profileImagePath => _profileImagePath;
-
   ProfileProvider() {
-    _loadProfileImage();
     retrieveSavedAddress();
-  }
-
-  void _loadProfileImage() {
-    _profileImagePath = box.read(_profileImagePathKey);
-  }
-
-  Future<void> pickProfileImage() async {
-    try {
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 80,
-      );
-
-      if (image != null) {
-        final Directory appDir = await getApplicationDocumentsDirectory();
-        final String fileName =
-            'profile_image_${DateTime.now().millisecondsSinceEpoch}.jpg';
-        final String savePath = '${appDir.path}/$fileName';
-
-        final File savedImage = File(image.path).copySync(savePath);
-        _profileImagePath = savedImage.path;
-        box.write(_profileImagePathKey, _profileImagePath);
-
-        notifyListeners();
-        SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(
-          (s) => s.profile_picture_updated,
-          fallback: 'Profile picture updated successfully',
-        ));
-      }
-    } catch (e) {
-      SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
-        (s) => s.profile_image_failed,
-        fallback: 'Could not update the profile picture. Please try again.',
-      ));
-    }
-  }
-
-  void clearProfileData() {
-    _profileImagePath = null;
-    box.remove(_profileImagePathKey);
-    notifyListeners();
   }
 
   void storeAddress() {

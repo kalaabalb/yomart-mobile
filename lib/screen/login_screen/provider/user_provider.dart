@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:e_commerce_flutter/screen/home_screen.dart';
-import 'package:e_commerce_flutter/screen/profile_screen/provider/profile_provider.dart';
 import 'package:e_commerce_flutter/utility/snack_bar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cart/cart.dart';
@@ -299,8 +297,6 @@ class UserProvider extends ChangeNotifier {
       box.remove('LATITUDE_KEY');
       box.remove('LONGITUDE_KEY');
 
-      box.remove('profileImagePath');
-
       notifyListeners();
     } catch (e) {
       debugPrint('Error clearing user data: $e');
@@ -309,11 +305,6 @@ class UserProvider extends ChangeNotifier {
 
   void logOutUser() {
     try {
-      if (Get.isRegistered<ProfileProvider>()) {
-        final profileProvider = Get.find<ProfileProvider>();
-        profileProvider.clearProfileData();
-      }
-
       clearAllUserData();
       Get.offAll(const LoginScreen());
       SnackBarHelper.showInfoSnackBar(SnackBarHelper.localized(
@@ -340,14 +331,6 @@ class UserProvider extends ChangeNotifier {
         throw Exception(message ?? 'We could not delete your account.');
       }
 
-      if (Get.isRegistered<ProfileProvider>()) {
-        final profileProvider = Get.find<ProfileProvider>();
-        final imagePath = profileProvider.profileImagePath;
-        profileProvider.clearProfileData();
-        if (imagePath != null) {
-          await File(imagePath).delete().catchError((_) => File(imagePath));
-        }
-      }
       clearAllUserData();
       Get.offAll(const LoginScreen());
       SnackBarHelper.showSuccessSnackBar(SnackBarHelper.localized(

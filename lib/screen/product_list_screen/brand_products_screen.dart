@@ -191,17 +191,19 @@ class _BrandProductCard extends StatelessWidget {
                         fontSize: 13,
                       ),
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      isPreviewCatalog
-                          ? 'Price to be confirmed'
-                          : 'Birr ${price.toStringAsFixed(0)}',
-                      style: const TextStyle(
-                        color: MarketPalette.ink,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 13,
+                    if (canDisplayCatalogPrice(
+                        previewMode: isPreviewCatalog,
+                        price: product.offerPrice ?? product.price)) ...[
+                      const SizedBox(height: 5),
+                      Text(
+                        'Birr ${price.toStringAsFixed(0)}',
+                        style: const TextStyle(
+                          color: MarketPalette.ink,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),

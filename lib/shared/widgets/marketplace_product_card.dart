@@ -117,18 +117,23 @@ class MarketplaceProductCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 3),
-                Text(
-                  isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatPrice(product.offerPrice ?? product.price ?? 0)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color:
-                        dark ? const Color(0xFFE7F3FF) : MarketPalette.blueDeep,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                if (canDisplayCatalogPrice(
+                    previewMode: isPreviewCatalog,
+                    price: product.offerPrice ?? product.price)) ...[
+                  const SizedBox(height: 3),
+                  Text(
+                    'Birr ${_formatPrice(product.offerPrice ?? product.price!)}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: dark
+                          ? const Color(0xFFE7F3FF)
+                          : MarketPalette.blueDeep,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

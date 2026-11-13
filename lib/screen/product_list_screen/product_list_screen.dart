@@ -6,6 +6,7 @@ import 'package:e_commerce_flutter/screen/product_list_screen/components/poster_
 import 'package:e_commerce_flutter/screen/product_list_screen/provider/product_list_provider.dart';
 import 'package:e_commerce_flutter/shared/widgets/marketplace_product_card.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
+import 'package:e_commerce_flutter/utility/catalog_navigation.dart';
 import 'package:e_commerce_flutter/utility/responsive_layout.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:e_commerce_flutter/utility/snack_bar_helper.dart';
@@ -25,10 +26,28 @@ class ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey _productsSectionKey = GlobalKey();
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _browseProductSection() {
+    browseCatalogFromPoster(
+      productList: context.read<ProductListProvider>(),
+      products: context.read<DataProvider>().allProducts,
+      revealProducts: () {
+        final sectionContext = _productsSectionKey.currentContext;
+        if (sectionContext == null) return;
+        Scrollable.ensureVisible(
+          sectionContext,
+          duration: const Duration(milliseconds: 320),
+          curve: Curves.easeOutCubic,
+          alignment: .05,
+        );
+      },
+    );
   }
 
   @override
@@ -85,19 +104,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   Widget _buildContent(BuildContext context, DataProvider dataProvider) {
     final products = context.watch<ProductListProvider>();
+    final samsungBrand = dataProvider.brands
+        .where((brand) => brand.name?.trim().toLowerCase() == 'samsung')
+        .firstOrNull;
     final samsungProducts = dataProvider.allProducts
         .where((product) =>
-            product.name?.toLowerCase().contains('samsung') == true)
+            product.proBrandId?.name?.trim().toLowerCase() == 'samsung')
         .toList();
-    final samsungPhone = samsungProducts.isEmpty
-        ? null
-        : samsungProducts.firstWhere(
-            (product) => product.name?.contains('S24') == true,
-            orElse: () => samsungProducts.first,
-          );
-    final samsungImageUrl = samsungPhone?.images?.isNotEmpty == true
-        ? samsungPhone!.images!.first.url
-        : null;
     final visibleProducts = List<Product>.of(products.searchQuery.isEmpty
         ? dataProvider.allProducts
         : products.filteredProducts);
@@ -110,24 +123,25 @@ class _ProductListScreenState extends State<ProductListScreen> {
         children: [
           dataProvider.isPostersLoading && dataProvider.posters.isEmpty
               ? _buildPostersLoadingSkeleton()
-              : PosterSection(onBrowse: () => widget.onSearch?.call()),
+              : PosterSection(onBrowse: _browseProductSection),
           const SizedBox(height: 15),
           dataProvider.isCategoriesLoading && dataProvider.categories.isEmpty
               ? _buildCategoriesLoadingSkeleton()
               : CategorySelector(
                   categories: dataProvider.categories,
                   brands: dataProvider.brands,
-                  samsungImageUrl: samsungImageUrl,
-                  onSamsungTap: () {
-                    context.read<ProductListProvider>().searchProducts(
-                          'Samsung',
-                          dataProvider.allProducts,
-                        );
-                    widget.onSearch?.call();
-                  },
+                  samsungImageUrl: samsungBrand?.logoUrl,
+                  onSamsungTap: samsungBrand == null
+                      ? null
+                      : () => openBrandProducts(
+                            context,
+                            brand: samsungBrand,
+                            products: samsungProducts,
+                          ),
                 ),
           const SizedBox(height: 9),
           Text(
+            key: _productsSectionKey,
             context.l10n.products_heading,
             style: TextStyle(
               color: MarketPalette.isDark(context)

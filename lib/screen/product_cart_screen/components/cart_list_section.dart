@@ -193,19 +193,22 @@ class _CartItemCard extends StatelessWidget {
                     const Spacer(),
                     Row(
                       children: [
-                        Expanded(
-                          child: Text(
-                            isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatAmount(price)}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: MarketPalette.ink,
-                              fontSize: 13,
-                              height: 1,
-                              fontWeight: FontWeight.w800,
+                        if (!isPreviewCatalog)
+                          Expanded(
+                            child: Text(
+                              'Birr ${_formatAmount(price)}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: MarketPalette.ink,
+                                fontSize: 13,
+                                height: 1,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
-                          ),
-                        ),
+                          )
+                        else
+                          const Spacer(),
                         _QuantityButton(
                           icon: Icons.remove_rounded,
                           onTap: () => context

@@ -42,7 +42,7 @@ function parseUrl(value, name) {
   }
   const rawValue = value.toLowerCase();
   const hostname = parsed.hostname.toLowerCase();
-  if (/[<>]/.test(value) || rawValue.includes('replace-with') ||
+  if (hostname.includes('*') || /[<>]/.test(value) || rawValue.includes('replace-with') ||
       hostname === 'example' || hostname.endsWith('.example') ||
       PLACEHOLDER_HOST_PARTS.some((part) => hostname.includes(part))) {
     throw new Error(`${name} contains a placeholder host.`);
@@ -74,12 +74,20 @@ function parsePolicyUrl(value, buildEnv) {
   return parsed.href;
 }
 
-function parseOriginList(value, name) {
-  if (typeof value !== 'string' || !value.trim()) {
+function parseOriginList(value, name, { allowEmpty = false, allowUnset = false } = {}) {
+  if (value === undefined && allowUnset) return new Set();
+  if (typeof value !== 'string') {
     throw new Error(`${name} is required for environment separation.`);
   }
-  const origins = value.split(',').map((entry) => parseOrigin(entry.trim(), name).origin);
-  return new Set(origins);
+  if (!value.trim()) {
+    if (allowEmpty) return new Set();
+    throw new Error(`${name} is required for environment separation.`);
+  }
+  const entries = value.split(',').map((entry) => entry.trim());
+  if (entries.some((entry) => !entry)) {
+    throw new Error(`${name} must contain only valid comma-separated origins.`);
+  }
+  return new Set(entries.map((entry) => parseOrigin(entry, name).origin));
 }
 
 export function resolveBuildConfig(env) {
@@ -108,7 +116,10 @@ export function resolveBuildConfig(env) {
     throw new Error('A known production API host cannot be used for a staging build.');
   }
   if (buildEnv === 'staging') {
-    const productionOrigins = parseOriginList(env.YOMART_PRODUCTION_API_ORIGINS, 'YOMART_PRODUCTION_API_ORIGINS');
+    const productionOrigins = parseOriginList(env.YOMART_PRODUCTION_API_ORIGINS, 'YOMART_PRODUCTION_API_ORIGINS', {
+      allowEmpty: true,
+      allowUnset: true,
+    });
     for (const productionHost of KNOWN_PRODUCTION_API_HOSTS) {
       productionOrigins.add(`https://${productionHost}`);
     }
@@ -125,7 +136,10 @@ export function resolveBuildConfig(env) {
   const privacyPolicyUrl = parsePolicyUrl(env.PRIVACY_POLICY_URL, buildEnv);
   const siteOrigin = new URL(privacyPolicyUrl).origin;
   if (buildEnv === 'staging') {
-    const productionSites = parseOriginList(env.YOMART_PRODUCTION_SITE_ORIGINS, 'YOMART_PRODUCTION_SITE_ORIGINS');
+    const productionSites = parseOriginList(env.YOMART_PRODUCTION_SITE_ORIGINS, 'YOMART_PRODUCTION_SITE_ORIGINS', {
+      allowEmpty: true,
+      allowUnset: true,
+    });
     if (productionSites.has(siteOrigin)) {
       throw new Error('A production site origin cannot be used for a staging build.');
     }
@@ -142,9 +156,9 @@ export function resolveBuildConfig(env) {
     apiOrigin: api.origin,
     privacyPolicyUrl,
     allowInsecureLocalApi: buildEnv === 'local' && api.origin.startsWith('http:'),
-    productionApiOrigins: buildEnv === 'staging' ? env.YOMART_PRODUCTION_API_ORIGINS : '',
+    productionApiOrigins: buildEnv === 'staging' ? (env.YOMART_PRODUCTION_API_ORIGINS ?? '') : '',
     stagingApiOrigins: buildEnv === 'production' ? env.YOMART_STAGING_API_ORIGINS : '',
-    productionSiteOrigins: buildEnv === 'staging' ? env.YOMART_PRODUCTION_SITE_ORIGINS : '',
+    productionSiteOrigins: buildEnv === 'staging' ? (env.YOMART_PRODUCTION_SITE_ORIGINS ?? '') : '',
     stagingSiteOrigins: buildEnv === 'production' ? env.YOMART_STAGING_SITE_ORIGINS : '',
   });
 }

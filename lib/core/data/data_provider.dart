@@ -88,9 +88,9 @@ class DataProvider extends ChangeNotifier {
   bool _isPostersLoading = true;
   bool get isPostersLoading => _isPostersLoading;
 
-  DataProvider() {
+  DataProvider({bool loadInitialData = true}) {
     _loadPreferences();
-    _initializeData();
+    if (loadInitialData) _initializeData();
   }
 
   Future<void> _initializeData() async {

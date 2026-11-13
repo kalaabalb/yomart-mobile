@@ -40,7 +40,27 @@ class RetailerContactList extends StatelessWidget {
         .map((contact) => (contact, retailerContactUri(contact)))
         .where((item) => item.$2 != null)
         .toList();
-    if (actionable.isEmpty) return Text(emptyMessage);
+    if (actionable.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.support_agent_outlined,
+              size: 26,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              emptyMessage,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
+        ),
+      );
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,

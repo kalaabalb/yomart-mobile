@@ -234,6 +234,10 @@
   "update_failed": "Update failed",
   "delivery": "Delivery",
   "checkout": "Checkout",
+  "checkout_unavailable": "Checkout unavailable",
+  "check_purchase_availability": "Check purchase availability",
+  "preview_purchase_unavailable": "Purchasing is not available right now. Please check back later.",
+  "out_of_stock": "Out of stock",
   "place_order": "Place Order",
   "order_status": "Order Status",
   "payment_pending": "Payment Pending",
@@ -569,7 +573,7 @@
       }
     }
   },
-  "support_contact_unavailable": "Support contact details are not available yet.",
+  "support_contact_unavailable": "No support contacts are available right now.",
   "destination_information": "Destination Information",
   "destination_city": "Destination city",
   "area_landmark_optional": "Area or landmark (optional)",

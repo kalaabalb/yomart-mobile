@@ -725,6 +725,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkout => 'Checkout';
 
   @override
+  String get checkout_unavailable => 'Checkout unavailable';
+
+  @override
+  String get check_purchase_availability => 'Check purchase availability';
+
+  @override
+  String get preview_purchase_unavailable =>
+      'Purchasing is not available right now. Please check back later.';
+
+  @override
+  String get out_of_stock => 'Out of stock';
+
+  @override
   String get place_order => 'Place Order';
 
   @override
@@ -1336,7 +1349,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get support_contact_unavailable =>
-      'Support contact details are not available yet.';
+      'No support contacts are available right now.';
 
   @override
   String get destination_information => 'Destination Information';

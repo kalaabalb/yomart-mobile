@@ -13,6 +13,7 @@ import 'package:e_commerce_flutter/utility/marketplace_design.dart';
 import 'package:e_commerce_flutter/utility/preview_catalog.dart';
 import 'package:e_commerce_flutter/utility/responsive_layout.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
+import 'package:e_commerce_flutter/utility/first_frame_animation.dart';
 import 'package:e_commerce_flutter/widget/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen>
       vsync: this,
       duration: const Duration(milliseconds: 900),
     );
+    startAnimationAfterFirstFrame(_waterAnimation, isMounted: () => mounted);
   }
 
   @override
@@ -93,13 +95,11 @@ class _HomeScreenState extends State<HomeScreen>
         backgroundColor: MarketPalette.pageCanvas(context),
         body: Column(
           children: [
-            if (isPreviewCatalog) _buildPreviewCatalogNotice(darkSurface),
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final desktop =
-                      constraints.maxWidth >=
-                          ResponsiveLayout.desktopBreakpoint;
+                  final desktop = constraints.maxWidth >=
+                      ResponsiveLayout.desktopBreakpoint;
                   final maxWidth =
                       ResponsiveLayout.contentMaxWidth(constraints.maxWidth);
                   final content = Align(
@@ -130,43 +130,6 @@ class _HomeScreenState extends State<HomeScreen>
                 ResponsiveLayout.desktopBreakpoint
             ? null
             : _buildBottomNavigationBar(!darkSurface),
-      ),
-    );
-  }
-
-  Widget _buildPreviewCatalogNotice(bool dark) {
-    final background =
-        dark ? const Color(0xFF342A17) : const Color(0xFFFFF6E3);
-    final border =
-        dark ? const Color(0xFF6B542B) : const Color(0xFFE7D4A6);
-    final foreground =
-        dark ? const Color(0xFFFFD98A) : const Color(0xFF684C1D);
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(14, 10, 14, 8),
-      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-      decoration: BoxDecoration(
-        color: background,
-        border: Border.all(color: border),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(Icons.info_outline_rounded, size: 17, color: foreground),
-          const SizedBox(width: 9),
-          Expanded(
-            child: Text(
-              'Preview catalogue. Prices and availability are being confirmed; ordering is temporarily unavailable.',
-              style: TextStyle(
-                color: foreground,
-                fontSize: 11,
-                height: 1.45,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -946,17 +909,20 @@ class _SearchResultRow extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      Text(
-                        isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatSearchPrice(amount)}',
-                        style: TextStyle(
-                          color: dark
-                              ? MarketPalette.homeMuted
-                              : MarketPalette.muted,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                      if (canDisplayCatalogPrice(
+                          previewMode: isPreviewCatalog, price: amount)) ...[
+                        const SizedBox(height: 5),
+                        Text(
+                          'Birr ${_formatSearchPrice(amount)}',
+                          style: TextStyle(
+                            color: dark
+                                ? MarketPalette.homeMuted
+                                : MarketPalette.muted,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
+                      ],
                       const SizedBox(height: 6),
                       Row(
                         children: [

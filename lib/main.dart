@@ -14,6 +14,7 @@ import 'screen/product_list_screen/provider/product_list_provider.dart';
 import 'screen/profile_screen/provider/profile_provider.dart';
 import 'utility/app_theme.dart';
 import 'utility/constants.dart';
+import 'utility/release_origin_policy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_cart/cart.dart';
@@ -207,27 +208,22 @@ void _validateReleaseApiTarget(Uri? apiUri) {
       throw StateError(
           'YOMART_NO_STAGING_API is valid only for a production build.');
     }
-    const oppositeEnvironmentOrigins = _buildEnvironment == 'staging'
-        ? _productionApiOrigins
-        : _stagingApiOrigins;
-    final denylistEntries = oppositeEnvironmentOrigins.split(',');
-    final denylistUris = denylistEntries
-        .map((origin) => Uri.tryParse(origin.trim()))
-        .toList(growable: false);
-    if (denylistEntries.isEmpty ||
-        denylistUris.any((uri) =>
-            uri == null ||
-            !uri.hasAuthority ||
-            uri.scheme != 'https' ||
-            (uri.path.isNotEmpty && uri.path != '/') ||
-            uri.query.isNotEmpty ||
-            uri.fragment.isNotEmpty ||
-            uri.userInfo.isNotEmpty ||
-            _isPlaceholderApiHost(uri.host))) {
-      throw StateError(
-          'Release build is missing the opposite-environment API denylist.');
+    const isStaging = _buildEnvironment == 'staging';
+    blockedOrigins.addAll(validateReleaseOriginDenylist(
+      isStaging ? _productionApiOrigins : _stagingApiOrigins,
+      name: isStaging
+          ? 'YOMART_PRODUCTION_API_ORIGINS'
+          : 'YOMART_STAGING_API_ORIGINS',
+      allowEmpty: isStaging,
+    ));
+    if (isStaging) {
+      // Keep retired production API hosts blocked even when the current
+      // production API origin is not yet separately configured.
+      blockedOrigins.addAll(const {
+        'https://yonasmarketplace-backend.onrender.com',
+        'https://ecommerce-backend-api-jet.vercel.app',
+      });
     }
-    blockedOrigins.addAll(denylistUris.map((uri) => uri!.origin));
   }
   if (blockedOrigins.contains(apiUri.origin)) {
     throw StateError('Release API origin belongs to the opposite environment.');
@@ -255,25 +251,15 @@ void _validateReleaseSiteTarget(Uri? policyUri) {
     throw StateError(
         'YOMART_NO_STAGING_SITE is valid only for a production build.');
   }
-  const oppositeEnvironmentOrigins = _buildEnvironment == 'staging'
-      ? _productionSiteOrigins
-      : _stagingSiteOrigins;
-  final entries = oppositeEnvironmentOrigins.split(',');
-  final uris = entries.map((origin) => Uri.tryParse(origin.trim())).toList();
-  if (entries.isEmpty ||
-      uris.any((uri) =>
-          uri == null ||
-          !uri.hasAuthority ||
-          uri.scheme != 'https' ||
-          (uri.path.isNotEmpty && uri.path != '/') ||
-          uri.query.isNotEmpty ||
-          uri.fragment.isNotEmpty ||
-          uri.userInfo.isNotEmpty ||
-          _isPlaceholderApiHost(uri.host))) {
-    throw StateError(
-        'Release build is missing the opposite-environment site denylist.');
-  }
-  if (uris.any((uri) => uri!.origin == siteOrigin)) {
+  const isStaging = _buildEnvironment == 'staging';
+  final blockedOrigins = validateReleaseOriginDenylist(
+    isStaging ? _productionSiteOrigins : _stagingSiteOrigins,
+    name: isStaging
+        ? 'YOMART_PRODUCTION_SITE_ORIGINS'
+        : 'YOMART_STAGING_SITE_ORIGINS',
+    allowEmpty: isStaging,
+  );
+  if (blockedOrigins.contains(siteOrigin)) {
     throw StateError(
         'Release site origin belongs to the opposite environment.');
   }
@@ -352,7 +338,16 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: AppLocalizations.supportedLocales,
         fallbackLocale: const Locale('en'),
-        builder: (context, child) => child!,
+        // Override MaterialApp's internally animated Theme in one place. This
+        // applies the selected palette to the full navigator subtree at once,
+        // instead of letting individual widgets visibly drift between themes.
+        builder: (context, child) => Theme(
+          key: const ValueKey('yomart-app-theme'),
+          data: context.watch<DataProvider>().isDarkMode
+              ? AppTheme.darkAppTheme
+              : AppTheme.lightAppTheme,
+          child: child ?? const SizedBox.shrink(),
+        ),
       ),
     );
   }

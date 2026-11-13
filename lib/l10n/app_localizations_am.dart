@@ -718,6 +718,19 @@ class AppLocalizationsAm extends AppLocalizations {
   String get checkout => 'ክፍያ ይፈጽሙ';
 
   @override
+  String get checkout_unavailable => 'ክፍያ ማድረግ አይቻልም';
+
+  @override
+  String get check_purchase_availability => 'የግዢ አቅርቦትን ይመልከቱ';
+
+  @override
+  String get preview_purchase_unavailable =>
+      'በአሁኑ ጊዜ ግዢ አይገኝም። እባክዎ በኋላ ይመልከቱ።';
+
+  @override
+  String get out_of_stock => 'ከክምችት ውጭ';
+
+  @override
   String get place_order => 'ትዕዛዝ ያስገቡ';
 
   @override
@@ -1298,7 +1311,7 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get support_contact_unavailable => 'የድጋፍ መገናኛ መረጃ ገና አልተገኘም።';
+  String get support_contact_unavailable => 'በአሁኑ ጊዜ የድጋፍ መገናኛዎች የሉም።';
 
   @override
   String get destination_information => 'የመድረሻ መረጃ';

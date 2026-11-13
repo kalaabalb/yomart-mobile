@@ -404,9 +404,13 @@ class _MyAddressPageState extends State<MyAddressPage> {
     );
   }
 
-  Widget _addAddressAction(BuildContext context, ProfileProvider profile) =>
+  Widget _addAddressAction(
+    BuildContext context,
+    ProfileProvider profile, {
+    bool centered = false,
+  }) =>
       Align(
-        alignment: Alignment.centerLeft,
+        alignment: centered ? Alignment.center : Alignment.centerLeft,
         child: TextButton.icon(
           onPressed: () => _startAdd(profile),
           icon: const Icon(Icons.add_circle_rounded, size: 21),
@@ -438,7 +442,7 @@ class _MyAddressPageState extends State<MyAddressPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              _addAddressAction(context, profile),
+              _addAddressAction(context, profile, centered: true),
             ],
           ),
         ),

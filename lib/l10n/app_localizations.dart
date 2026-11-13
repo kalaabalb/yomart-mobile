@@ -1512,6 +1512,30 @@ abstract class AppLocalizations {
   /// **'Checkout'**
   String get checkout;
 
+  /// No description provided for @checkout_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout unavailable'**
+  String get checkout_unavailable;
+
+  /// No description provided for @check_purchase_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Check purchase availability'**
+  String get check_purchase_availability;
+
+  /// No description provided for @preview_purchase_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchasing is not available right now. Please check back later.'**
+  String get preview_purchase_unavailable;
+
+  /// No description provided for @out_of_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get out_of_stock;
+
   /// No description provided for @place_order.
   ///
   /// In en, this message translates to:
@@ -2559,7 +2583,7 @@ abstract class AppLocalizations {
   /// No description provided for @support_contact_unavailable.
   ///
   /// In en, this message translates to:
-  /// **'Support contact details are not available yet.'**
+  /// **'No support contacts are available right now.'**
   String get support_contact_unavailable;
 
   /// No description provided for @destination_information.

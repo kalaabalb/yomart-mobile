@@ -41,6 +41,8 @@ The former staging API/site was converted to the production environment and ther
 
 If separate staging services are created later, remove the no-staging flags and supply exact staging-origin denylists.
 
+When staging is configured, production-origin denylists may remain unset or empty until those origins are confirmed. Any supplied API/site denylist values are comma-separated exact HTTPS origins; paths, credentials, queries, fragments, wildcard hosts, and placeholder domains are rejected. Production with explicit staging denylists requires non-empty valid lists and rejects overlap with the configured production target.
+
 A manual signed release workflow is available at [android_signed_release.yml](.github/workflows/android_signed_release.yml). It requires repository Actions secrets ANDROID_KEYSTORE_BASE64, ANDROID_STORE_PASSWORD, ANDROID_KEY_PASSWORD, ANDROID_KEY_ALIAS, and repository variable YOMART_PRIVACY_POLICY_URL. The workflow produces a signed AAB and signing-certificate fingerprint. Compare that fingerprint with the Play Console upload certificate before upload. Never commit or send private signing material in chat.
 
 ## Build and test

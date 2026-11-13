@@ -37,7 +37,9 @@ class ProductGridView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: ResponsiveLayout.productGridDelegate(
         maxCardWidth: 280,
-        aspectRatio: .82,
+        // Extra vertical room keeps product cards within the short viewport
+        // grid rows on compact Android phones such as the Galaxy A32.
+        aspectRatio: .74,
       ),
       itemBuilder: (context, index) {
         final product = items[index];

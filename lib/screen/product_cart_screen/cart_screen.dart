@@ -110,43 +110,63 @@ class _CartScreenState extends State<CartScreen> {
                     padding: const EdgeInsets.fromLTRB(22, 7, 22, 13),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              context.l10n.subtotal,
+                        if (isPreviewCatalog)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              context.l10n.preview_purchase_unavailable,
                               style: TextStyle(
                                 color: MarketPalette.isDark(context)
                                     ? MarketPalette.homeMuted
                                     : MarketPalette.muted,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                height: 1.35,
                               ),
                             ),
-                            const Spacer(),
-                            AnimatedSwitcherWrapper(
-                              child: Text(
-                                isPreviewCatalog ? 'Price to be confirmed' : 'Birr ${_formatAmount(total)}',
-                                key: ValueKey<double>(total),
+                          )
+                        else
+                          Row(
+                            children: [
+                              Text(
+                                context.l10n.subtotal,
                                 style: TextStyle(
                                   color: MarketPalette.isDark(context)
-                                      ? Colors.white
-                                      : MarketPalette.ink,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
+                                      ? MarketPalette.homeMuted
+                                      : MarketPalette.muted,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                              const Spacer(),
+                              AnimatedSwitcherWrapper(
+                                child: Text(
+                                  'Birr ${_formatAmount(total)}',
+                                  key: ValueKey<double>(total),
+                                  style: TextStyle(
+                                    color: MarketPalette.isDark(context)
+                                        ? Colors.white
+                                        : MarketPalette.ink,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         const SizedBox(height: 15),
                         _CheckoutButton(
-                          label: isPreviewCatalog ? 'Ordering unavailable' : context.l10n.checkout,
-                          onPressed: isPreviewCatalog ? null : () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const CheckoutFlowScreen(),
-                            ),
-                          ),
+                          label: isPreviewCatalog
+                              ? context.l10n.checkout_unavailable
+                              : context.l10n.checkout,
+                          onPressed: isPreviewCatalog
+                              ? null
+                              : () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const CheckoutFlowScreen(),
+                                    ),
+                                  ),
                         ),
                       ],
                     ),

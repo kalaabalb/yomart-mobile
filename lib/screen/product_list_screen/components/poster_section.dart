@@ -1,7 +1,6 @@
 import 'package:e_commerce_flutter/core/data/data_provider.dart';
 import 'package:e_commerce_flutter/models/story.dart';
 import 'package:e_commerce_flutter/screen/product_list_screen/story_viewer_screen.dart';
-import 'package:e_commerce_flutter/screen/product_list_screen/provider/product_list_provider.dart';
 import 'package:e_commerce_flutter/utility/extensions.dart';
 import 'package:e_commerce_flutter/utility/marketplace_design.dart';
 import 'package:e_commerce_flutter/widget/custom_network_image.dart';
@@ -47,8 +46,10 @@ class _PosterSectionState extends State<PosterSection> {
         final totalCards = slides.length + stories.length;
         if (totalCards == 0) return const SizedBox.shrink();
 
+        final availableWidth = MediaQuery.sizeOf(context).width - 32;
+        final posterHeight = (availableWidth / 2.2).clamp(164.0, 236.0);
         return SizedBox(
-          height: 164,
+          height: posterHeight,
           child: PageView.builder(
             controller: _pageController,
             itemCount: totalCards,
@@ -69,13 +70,10 @@ class _PosterSectionState extends State<PosterSection> {
                   context,
                   poster,
                   slideCount: totalCards,
-                  onTap: () {
-                    context.read<ProductListProvider>().searchProducts(
-                          poster.title,
-                          dataProvider.allProducts,
-                        );
-                    widget.onBrowse();
-                  },
+                  // The API has no poster destination field. The configured
+                  // Browse products action therefore opens the catalog without
+                  // turning promotional copy into a search query.
+                  onTap: widget.onBrowse,
                 ),
               );
             },
