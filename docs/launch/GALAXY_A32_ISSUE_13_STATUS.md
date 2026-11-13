@@ -1,41 +1,47 @@
-# Galaxy A32 Issue 13 — implementation and verification status
+# Galaxy A32 issue 13 — implementation and verification
 
-This document records the local implementation prepared on the `main` branch for GitHub issue #13. It does not claim physical Galaxy A32 validation.
+This records the local implementation prepared on the existing `main` branch. It does not claim physical Galaxy A32 verification.
 
-## Changes implemented
+## Implemented
 
-- Preview mode is now the safe source default. Preview catalog UI omits unapproved prices and stock, removes the repeated page banners, and keeps add-to-cart, checkout, and order submission unavailable. The production API remains responsible for enforcing its own order restrictions.
-- Product image loading uses a YoMart gold-mark shimmer, with a static branded treatment when reduced motion is enabled. Image errors no longer log raw URLs or error details, and placeholder sizing is bounded for compact cards.
-- Poster images use a responsive height and contain fit. Poster navigation clears search and opens the catalog rather than interpreting promotional copy as a query. The Samsung shortcut opens its real brand catalog route.
-- Registration navigation aligns to the established edge; logout confirmation spacing and hierarchy are improved; the empty Saved Destinations action is centered; and product cards use a more compact grid ratio and bounded image area.
-- Product detail background begins above the safe area to remove the top seam.
-- The app applies light/dark palette changes through one immediate root theme wrapper. Home entry animation starts after its first frame without requiring another route change.
-- The support empty state is intentional and uses configured retailer contacts only. No fallback phone number, email, or social account was added.
-- Removed the local-only profile-photo picker and its saved-file behavior. The current backend user model and profile routes expose no profile-image field or upload endpoint, so there is no approved server-backed storage path to implement. The UI no longer claims that a device-local image was saved as the account profile image.
-- The privacy link remains externally configured. The app does not embed or present an unapproved legal draft as final.
-- The existing launcher foreground measured 432×432 pixels and its visible mark is horizontally centered within the image and adaptive-icon safe region. No icon asset change was justified by the source measurement.
+- **Privacy & Security:** the configured HTTPS `PRIVACY_POLICY_URL` opens in the external browser. Missing or invalid configuration, and launch failures, produce an explicit customer-facing message. No policy URL is embedded in the app. The current legal page is still an unapproved draft and must not be treated as a production policy.
+- **Help & Support:** the screen fetches active help content and retailer contacts from the API whenever opened, with loading, refresh, error, empty, and unavailable states. No support contacts or business details are hardcoded. The API and admin changes are documented in their respective repositories; this flow is end-to-end only after those revisions are deployed and approved records are published.
+- **Profile editing and picture:** supported profile fields continue through the existing authenticated profile flow. Customers can select an image with Android's system gallery/photo picker, upload, replace, or remove it. The app stores only the API's availability state and retrieves the image through the authenticated profile endpoint. Upload UI validates file type/size and shows progress/errors. Local automated route tests use mock persistence and isolated private local storage; no live database or Cloudinary upload was made. Server-backed persistence in a deployed environment remains to be verified after API deployment.
+- **Poster artwork:** home poster artwork uses a responsive reserved image area and `BoxFit.contain`, with text/action outside the image frame to avoid cropping and distortion. The backend does not provide poster destination metadata, so the CTA opens the catalog rather than inventing a destination. No separate poster-detail route exists in this app.
+- **Favorites:** the redundant back arrow is hidden when Favorites is a bottom-navigation root; normal pushed-route back navigation remains.
+- **Samsung category:** brand-first navigation now enters the shared category catalog, including category selection, sort, brand filter, and shared loading/empty/error behavior.
+- **Registration arrow:** its horizontal offset accounts for the containing card and outer page gutters so it aligns with the auth screen edge.
+- The existing preview/sales-disabled safeguards remain in place; no products, prices, stock, contacts, or support content were fabricated.
 
-## Regression checks
-
-New tests cover safe preview defaults and price suppression, poster search/navigation behavior, the Samsung brand route, first-frame animation start, compact product-card overflow/price suppression, root dark-mode switching, and release-origin denylist validation. Existing Flutter behavior tests remain in the suite.
-
-## Local validation
+## Automated verification
 
 - `flutter analyze --no-pub`: passed with no issues.
-- `flutter test --no-pub`: passed, 31 tests.
-- `node --test tooling/account_deletion_config.test.mjs`: passed, 11 tests.
-- `git diff --check`: passed.
-- Android debug APK build: passed with preview catalog mode enabled and API origin set to `https://yomart-api.onrender.com`. Artifact: `build/app/outputs/flutter-apk/app-debug.apk` (183,019,588 bytes; SHA-256 `d0b8c9f7ff76c8ec366c7ffcbdf029f1bfb1ba911b75103e890ae727ab47c171`). It was built for internal manual testing only; it is not a signed production release.
-- APK metadata: application ID `com.yomobiles.client`; version `1.0.0` (code 5); min SDK 24; target SDK 36.
+- `flutter test --no-pub`: **36 passed, 0 failed**.
+- Targeted profile-image/privacy/catalog tests: **4 passed** during fixture debugging; the complete suite above includes them.
+- `dart format --output=none --set-exit-if-changed` on all changed Dart files: passed (16 files, unchanged).
+- API `npm test`: **259 passed, 0 failed, 2 skipped** (261 total); `npm audit --audit-level=low`: zero vulnerabilities.
+- Admin `npm test`: **22 passed, 0 failed**; staging build passed with its documented staging validation variables.
 
-## Device verification and remaining limitations
+These tests do not prove live Cloudinary delivery, a deployed API/Admin revision, or a physical device interaction. API and admin deployment is required before the new cross-application flows can work against the live service.
 
-No physical Samsung Galaxy A32 is connected. The available Android API 36 emulator process terminated with exit code 139 during startup on both configured phone AVD attempts, and no device remained attached. APK installation, runtime log inspection, and device screenshots could not be completed here. The user should install and check the APK on the Galaxy A32 and provide genuine before/after screenshots for the documentation repository. The user should install and check the APK on the Galaxy A32 and provide genuine before/after screenshots for the documentation repository. No screenshot evidence is fabricated or included by this change.
+## Preview APK
 
-The profile-image upload/save/display flow remains blocked until the backend provides an authorized profile-image field and upload/retrieval route backed by the approved storage architecture. No backend change or local-only avatar fallback was introduced.
+The current debug preview APK is generated from this source with:
 
-The APK is a debug preview build; its catalog is read-only and purchasing is disabled. The production policy URL has not been approved, so this artifact must not be treated as a public production release.
+```sh
+flutter build apk --debug --no-pub \
+  --dart-define=MAIN_URL=https://yomart-api.onrender.com \
+  --dart-define=YOMART_PREVIEW_CATALOG=true
+```
 
-## Commit
+No `PRIVACY_POLICY_URL` is supplied because the owner has not approved/published that page. This is an installable debug preview for manual testing, not a production release or signed Play artifact. It is noindex/preview-safe at the app feature level and does not enable order submission.
 
-Implementation commit SHA: `75d5b340a5f8f9355e6a9adbf3c70aa4a8f72bcf` on `main`.
+- Fresh artifact: `/home/kalaab/Career/03_GitHub/yomart-publish-review-followup/artifacts/yomart-mobile-galaxy-a32-preview-2026-11-13.apk` (199,772,391 bytes; SHA-256 `c9d3839043b3fbaa5972e658a3717724f16f19ba54a27c5d7995783ea1211a6e`).
+- APK metadata inspected with Android `aapt`: application ID `com.yomobiles.client`, version `1.0.0` (code 5), min SDK 24, target SDK 36.
+- Flutter reported that Gradle 8.12 / Android Gradle Plugin 8.9.1 will soon fall below its supported build range. The build succeeded; plan a separate toolchain update.
+
+## Device verification and release blockers
+
+No physical Galaxy A32 is attached in this environment (`adb devices -l` returned no devices). The configured Android emulators previously terminated during startup, and no device remains connected; therefore there is no fabricated installation, screenshot, or physical interaction evidence. Install the fresh APK on the Galaxy A32 and check privacy link feedback, profile image selection/upload/replace/remove, support loading/empty/error behavior, Samsung category controls, Favorites navigation, registration-arrow alignment, and complete poster artwork.
+
+The current public privacy/deletion pages remain unapproved drafts. Do not supply a production privacy URL until the owner/legal review and public publication are complete. After committing and deploying the API and admin changes, verify authenticated profile image upload/retrieval and support CRUD against the intended environment. No live database, Cloudinary, or customer records were accessed for this implementation.

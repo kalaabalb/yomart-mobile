@@ -5,6 +5,7 @@ import '../../../models/product.dart';
 import '../../../models/sub_category.dart';
 
 class ProductByCategoryProvider extends ChangeNotifier {
+  List<Category> allCategories = [];
   Category? mySelectedCategory;
   SubCategory? mySelectedSubCategory;
   List<SubCategory> subCategories = [];
@@ -15,32 +16,63 @@ class ProductByCategoryProvider extends ChangeNotifier {
   List<Product> originalProducts = []; // Store original products for filtering
 
   filterInitialProductAndSubCategory(
-    Category selectedCategory,
-    List<Product> allProducts,
-    List<SubCategory> allSubCategories,
-    List<Brand> allBrands,
-  ) {
+      Category? selectedCategory,
+      List<Product> allProducts,
+      List<SubCategory> allSubCategories,
+      List<Brand> allBrands,
+      {Brand? initialBrand,
+      List<Category>? categories}) {
     mySelectedSubCategory = SubCategory(name: 'All');
     mySelectedCategory = selectedCategory;
+    allCategories = List<Category>.from(categories ?? []);
     _allBrands = List<Brand>.from(allBrands);
     selectedBrands.clear();
-    subCategories = allSubCategories
-        .where((element) => element.categoryId?.sId == selectedCategory.sId)
-        .toList();
+    subCategories = selectedCategory == null
+        ? []
+        : allSubCategories
+            .where((element) => element.categoryId?.sId == selectedCategory.sId)
+            .toList();
     subCategories.insert(0, SubCategory(name: 'All'));
 
     // Store original products
-    originalProducts = allProducts
-        .where(
-          (element) => element.proCategoryId?.name == selectedCategory.name,
-        )
-        .toList();
+    originalProducts = selectedCategory == null
+        ? List<Product>.from(allProducts)
+        : allProducts
+            .where((element) =>
+                element.proCategoryId?.sId == selectedCategory.sId ||
+                (selectedCategory.sId == null &&
+                    element.proCategoryId?.name == selectedCategory.name))
+            .toList();
 
     filteredProduct = List.from(originalProducts);
 
     _refreshBrands();
+    if (initialBrand != null) {
+      selectedBrands = brands
+          .where((brand) =>
+              brand.sId == initialBrand.sId ||
+              _normalized(brand.name ?? '') ==
+                  _normalized(initialBrand.name ?? ''))
+          .toList();
+      if (selectedBrands.isEmpty) selectedBrands = [initialBrand];
+      filteredProduct = originalProducts
+          .where((product) => _sameBrand(product.proBrandId, initialBrand))
+          .toList();
+    }
 
     notifyListeners();
+  }
+
+  void setCategories(List<Category> categories) {
+    allCategories = List<Category>.from(categories);
+  }
+
+  void selectCategory(Category? category, List<Product> products,
+      List<SubCategory> subCategories, List<Brand> brands,
+      {Brand? initialBrand, List<Category>? categories}) {
+    filterInitialProductAndSubCategory(
+        category, products, subCategories, brands,
+        initialBrand: initialBrand, categories: categories);
   }
 
   filterProductBySubCategory(
@@ -128,13 +160,19 @@ class ProductByCategoryProvider extends ChangeNotifier {
     filteredProduct = selectedBrands.isEmpty
         ? List<Product>.from(availableProducts)
         : availableProducts
-            .where((product) => selectedBrands.any(
-                  (brand) => product.proBrandId?.sId == brand.sId,
-                ))
+            .where((product) => selectedBrands
+                .any((brand) => _sameBrand(product.proBrandId, brand)))
             .toList();
 
     notifyListeners();
   }
+
+  static bool _sameBrand(ProRef? left, Brand right) =>
+      (left?.sId != null && right.sId != null && left!.sId == right.sId) ||
+      _normalized(left?.name ?? '') == _normalized(right.name ?? '');
+
+  static String _normalized(String value) =>
+      value.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
 
   void sortProducts({required bool ascending}) {
     filteredProduct.sort((a, b) {

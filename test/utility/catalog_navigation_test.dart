@@ -1,9 +1,12 @@
 import 'package:e_commerce_flutter/models/brand.dart';
 import 'package:e_commerce_flutter/models/category.dart';
 import 'package:e_commerce_flutter/models/product.dart';
-import 'package:e_commerce_flutter/screen/product_list_screen/brand_products_screen.dart';
 import 'package:e_commerce_flutter/screen/product_list_screen/components/category_selector.dart';
 import 'package:e_commerce_flutter/screen/product_list_screen/provider/product_list_provider.dart';
+import 'package:e_commerce_flutter/screen/product_by_category_screen/product_by_category_screen.dart';
+import 'package:e_commerce_flutter/screen/product_by_category_screen/provider/product_by_category_provider.dart';
+import 'package:e_commerce_flutter/core/data/data_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:e_commerce_flutter/utility/catalog_navigation.dart';
 import 'package:e_commerce_flutter/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +31,8 @@ void main() {
     expect(revealed, isTrue);
   });
 
-  testWidgets('Samsung category shortcut opens the brand catalog route',
+  testWidgets(
+      'Samsung brand shortcut opens the shared category catalog controls',
       (tester) async {
     final brand = Brand(name: 'Samsung');
     final products = [
@@ -39,23 +43,27 @@ void main() {
       ),
     ];
     await tester.pumpWidget(
-      MaterialApp(
-        supportedLocales: AppLocalizations.supportedLocales,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (_) => DataProvider(loadInitialData: false)),
+          ChangeNotifierProvider(create: (_) => ProductByCategoryProvider()),
         ],
-        home: Builder(
-          builder: (context) => Scaffold(
-            body: CategorySelector(
-              categories: [Category(name: 'Phones')],
-              brands: [brand],
-              onSamsungTap: () => openBrandProducts(
-                context,
-                brand: brand,
-                products: products,
+        child: MaterialApp(
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          home: Builder(
+            builder: (context) => Scaffold(
+              body: CategorySelector(
+                categories: [Category(name: 'Phones')],
+                brands: [brand],
+                onSamsungTap: () => openBrandProducts(context,
+                    brand: brand, products: products),
               ),
             ),
           ),
@@ -65,6 +73,8 @@ void main() {
 
     await tester.tap(find.text('Samsung'));
     await tester.pumpAndSettle();
-    expect(find.byType(BrandProductsScreen), findsOneWidget);
+    expect(find.byType(ProductByCategoryScreen), findsOneWidget);
+    expect(find.text('Sort By Price'), findsOneWidget);
+    expect(find.text('Brands'), findsOneWidget);
   });
 }

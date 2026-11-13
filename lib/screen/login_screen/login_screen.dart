@@ -206,7 +206,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               if (!_isLogin)
                                 Transform.translate(
-                                  offset: const Offset(-9, 0),
+                                  // Outer scroll inset (14) + glass-card inset (22)
+                                  // total 36 px; shift back to the 14 px screen edge.
+                                  offset: const Offset(-22, 0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: IconButton(

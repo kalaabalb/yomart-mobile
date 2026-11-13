@@ -6,6 +6,7 @@ class User {
   String? password;
   bool emailVerified;
   bool phoneVerified;
+  bool profileImageAvailable;
   String? verificationCode;
   String? codeExpires;
   String? recoveryEmail;
@@ -23,6 +24,7 @@ class User {
     this.password,
     this.emailVerified = false,
     this.phoneVerified = false,
+    this.profileImageAvailable = false,
     this.verificationCode,
     this.codeExpires,
     this.recoveryEmail,
@@ -41,6 +43,7 @@ class User {
         password = json['password'],
         emailVerified = json['emailVerified'] ?? false,
         phoneVerified = json['phoneVerified'] ?? false,
+        profileImageAvailable = json['profileImageAvailable'] == true,
         verificationCode = json['verificationCode'],
         codeExpires = json['codeExpires'],
         recoveryEmail = json['recoveryEmail'],
@@ -59,6 +62,7 @@ class User {
     data['password'] = password;
     data['emailVerified'] = emailVerified;
     data['phoneVerified'] = phoneVerified;
+    data['profileImageAvailable'] = profileImageAvailable;
     data['verificationCode'] = verificationCode;
     data['codeExpires'] = codeExpires;
     data['recoveryEmail'] = recoveryEmail;

@@ -61,17 +61,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     children: [
-                      IconButton(
-                        tooltip: context.l10n.back,
-                        visualDensity: VisualDensity.compact,
-                        onPressed: () => Navigator.maybePop(context),
-                        icon: const Icon(Icons.arrow_back_ios_new_rounded,
-                            size: 20),
-                        color: MarketPalette.isDark(context)
-                            ? Colors.white
-                            : MarketPalette.ink,
-                      ),
-                      const SizedBox(width: 2),
+                      if (Navigator.canPop(context))
+                        IconButton(
+                          tooltip: context.l10n.back,
+                          visualDensity: VisualDensity.compact,
+                          onPressed: () => Navigator.maybePop(context),
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                              size: 20),
+                          color: MarketPalette.isDark(context)
+                              ? Colors.white
+                              : MarketPalette.ink,
+                        )
+                      else
+                        const SizedBox(width: 0),
                       Expanded(
                         child: Text(
                           context.l10n.my_favorites,

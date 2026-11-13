@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:e_commerce_flutter/screen/home_screen.dart';
 import 'package:e_commerce_flutter/utility/snack_bar_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +16,118 @@ import '../../../utility/constants.dart';
 class UserProvider extends ChangeNotifier {
   HttpService service = HttpService();
   final box = GetStorage();
+  late final http.Client _imageClient;
+  final bool _ownsImageClient;
 
-  UserProvider();
+  UserProvider({http.Client? imageClient})
+      : _ownsImageClient = imageClient == null {
+    _imageClient = imageClient ?? http.Client();
+  }
+
+  @override
+  void dispose() {
+    if (_ownsImageClient) _imageClient.close();
+    super.dispose();
+  }
+
+  Map<String, String> get profileImageHeaders {
+    final token = box.read('auth_token');
+    return token is String && token.isNotEmpty
+        ? {'Authorization': 'Bearer $token'}
+        : const {};
+  }
+
+  Future<User> uploadProfileImage(String path) async {
+    final file = File(path);
+    final size = await file.length();
+    final extension = path.toLowerCase().split('.').last;
+    if (size <= 0 ||
+        size > 10 * 1024 * 1024 ||
+        !{'jpg', 'jpeg', 'png', 'webp'}.contains(extension)) {
+      throw Exception('Choose a JPG, PNG, or WebP image no larger than 10 MB.');
+    }
+    final token = box.read('auth_token');
+    if (token is! String || token.isEmpty) {
+      throw Exception('Sign in again to update your profile image.');
+    }
+    try {
+      final request = http.MultipartRequest(
+          'POST', Uri.parse('$mainUrl/users/profile/image'))
+        ..headers['Authorization'] = 'Bearer $token'
+        ..files.add(await http.MultipartFile.fromPath('image', path));
+      final response = await http.Response.fromStream(await _imageClient
+          .send(request)
+          .timeout(const Duration(seconds: 45)));
+      final payload = jsonDecode(response.body);
+      if (response.statusCode == 401) {
+        clearAllUserData();
+        throw Exception('Your session expired. Sign in again.');
+      }
+      if (response.statusCode < 200 ||
+          response.statusCode >= 300 ||
+          payload is! Map ||
+          payload['success'] != true ||
+          payload['data'] is! Map) {
+        throw Exception(payload is Map
+            ? payload['message']?.toString() ??
+                'The profile image could not be saved.'
+            : 'The profile image could not be saved.');
+      }
+      final user =
+          User.fromJson(Map<String, dynamic>.from(payload['data'] as Map));
+      await saveLoginInfo(user, token: token);
+      return user;
+    } on TimeoutException {
+      throw Exception(
+          'The profile image upload timed out. Check your connection and try again.');
+    } on SocketException {
+      throw Exception(
+          'Could not reach YoMart. Check your connection and try again.');
+    } on FormatException {
+      throw Exception(
+          'YoMart returned an unreadable response. Please try again.');
+    }
+  }
+
+  Future<User> removeProfileImage() async {
+    final token = box.read('auth_token');
+    if (token is! String || token.isEmpty) {
+      throw Exception('Sign in again to update your profile image.');
+    }
+    try {
+      final response = await _imageClient
+          .delete(Uri.parse('$mainUrl/users/profile/image'), headers: {
+        'Authorization': 'Bearer $token'
+      }).timeout(const Duration(seconds: 30));
+      final payload = jsonDecode(response.body);
+      if (response.statusCode == 401) {
+        clearAllUserData();
+        throw Exception('Your session expired. Sign in again.');
+      }
+      if (response.statusCode < 200 ||
+          response.statusCode >= 300 ||
+          payload is! Map ||
+          payload['success'] != true ||
+          payload['data'] is! Map) {
+        throw Exception(payload is Map
+            ? payload['message']?.toString() ??
+                'The profile image could not be removed.'
+            : 'The profile image could not be removed.');
+      }
+      final user =
+          User.fromJson(Map<String, dynamic>.from(payload['data'] as Map));
+      await saveLoginInfo(user, token: token);
+      return user;
+    } on TimeoutException {
+      throw Exception('The request timed out. Please try again.');
+    } on SocketException {
+      throw Exception(
+          'Could not reach YoMart. Check your connection and try again.');
+    } on FormatException {
+      throw Exception(
+          'YoMart returned an unreadable response. Please try again.');
+    }
+  }
 
   User? getLoginUsr() {
     final token = box.read('auth_token');

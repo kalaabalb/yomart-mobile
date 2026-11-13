@@ -13,9 +13,11 @@ import '../../widget/horizondal_list.dart';
 import '../../widget/product_grid_view.dart';
 
 class ProductByCategoryScreen extends StatefulWidget {
-  final Category selectedCategory;
+  final Category? selectedCategory;
+  final Brand? initialBrand;
 
-  const ProductByCategoryScreen({super.key, required this.selectedCategory});
+  const ProductByCategoryScreen(
+      {super.key, this.selectedCategory, this.initialBrand});
 
   @override
   State<ProductByCategoryScreen> createState() =>
@@ -38,6 +40,8 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
         dataProvider.allProducts,
         dataProvider.subCategories,
         dataProvider.brands,
+        initialBrand: widget.initialBrand,
+        categories: dataProvider.categories,
       );
     });
   }
@@ -63,7 +67,9 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
                 title: Text(
                   localizeCategoryName(
                     context.l10n,
-                    widget.selectedCategory.name,
+                    widget.selectedCategory?.name ??
+                        widget.initialBrand?.name ??
+                        context.l10n.products_heading,
                   ),
                   style: TextStyle(
                     fontSize: 22,
@@ -71,7 +77,7 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
                     color: dark ? Colors.white : MarketPalette.ink,
                   ),
                 ),
-                expandedHeight: 212,
+                expandedHeight: 270,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Padding(
                     padding: const EdgeInsets.fromLTRB(16, 68, 16, 12),
@@ -81,6 +87,19 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(
+                            height: 40,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                _categoryChip(context, null,
+                                    dataProvider.categories, proByCProvider),
+                                for (final category in dataProvider.categories)
+                                  _categoryChip(context, category,
+                                      dataProvider.categories, proByCProvider),
+                              ],
+                            ),
+                          ),
                           Consumer<ProductByCategoryProvider>(
                             builder: (context, proByCatProvider, child) {
                               if (proByCatProvider.subCategories.isEmpty) {
@@ -206,6 +225,30 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _categoryChip(BuildContext context, Category? category,
+      List<Category> categories, ProductByCategoryProvider provider) {
+    final selected = category == null
+        ? provider.mySelectedCategory == null
+        : provider.mySelectedCategory?.sId == category.sId;
+    final label = category == null
+        ? context.l10n.all_filter
+        : localizeCategoryName(context.l10n, category.name ?? '');
+    return Padding(
+      padding: const EdgeInsets.only(right: 7),
+      child: ChoiceChip(
+        label: Text(label),
+        selected: selected,
+        onSelected: (_) => provider.selectCategory(
+            category,
+            context.dataProvider.allProducts,
+            context.dataProvider.subCategories,
+            context.dataProvider.brands,
+            initialBrand: widget.initialBrand,
+            categories: categories),
       ),
     );
   }

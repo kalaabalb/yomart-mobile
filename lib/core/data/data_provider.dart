@@ -13,6 +13,7 @@ import '../../models/sub_category.dart';
 import '../../models/store_settings.dart';
 import '../../models/story.dart';
 import '../../models/retailer_contact.dart';
+import '../../models/support_content.dart';
 import '../../services/http_services.dart';
 import '../../utility/constants.dart';
 import '../../utility/snack_bar_helper.dart';
@@ -64,6 +65,12 @@ class DataProvider extends ChangeNotifier {
   bool get isRetailerContactsLoading => _isRetailerContactsLoading;
   String? _retailerContactsError;
   String? get retailerContactsError => _retailerContactsError;
+  List<SupportContent> _supportContent = [];
+  List<SupportContent> get supportContent => _supportContent;
+  bool _isSupportContentLoading = false;
+  bool get isSupportContentLoading => _isSupportContentLoading;
+  String? _supportContentError;
+  String? get supportContentError => _supportContentError;
 
   List<Order> _allOrders = [];
   List<Order> _filteredOrders = [];
@@ -84,6 +91,8 @@ class DataProvider extends ChangeNotifier {
 
   bool _isProductsLoading = true;
   bool get isProductsLoading => _isProductsLoading;
+  String? _productsError;
+  String? get productsError => _productsError;
 
   bool _isPostersLoading = true;
   bool get isPostersLoading => _isPostersLoading;
@@ -109,6 +118,7 @@ class DataProvider extends ChangeNotifier {
         _loadAtStartup('posters', getAllPosters),
         _loadAtStartup('store settings', getStoreSettings),
         _loadAtStartup('retailer contacts', getRetailerContacts),
+        _loadAtStartup('help and support', getSupportContent),
         _loadAtStartup('video stories', getPublishedStories),
       ]);
     } finally {
@@ -262,10 +272,37 @@ class DataProvider extends ChangeNotifier {
     }
   }
 
+  Future<List<SupportContent>> getSupportContent() async {
+    _isSupportContentLoading = true;
+    _supportContentError = null;
+    notifyListeners();
+    try {
+      final response = await service.getItems(endpointUrl: 'support-content');
+      final apiResponse = ApiResponse<List<SupportContent>>.fromJson(
+        response.body,
+        (json) => (json as List)
+            .whereType<Map>()
+            .map((item) =>
+                SupportContent.fromJson(Map<String, dynamic>.from(item)))
+            .toList(),
+      );
+      _throwIfRequestFailed(response, apiResponse);
+      _supportContent = apiResponse.data ?? [];
+      return _supportContent;
+    } catch (_) {
+      _supportContentError = 'Help information is temporarily unavailable.';
+      return _supportContent;
+    } finally {
+      _isSupportContentLoading = false;
+      notifyListeners();
+    }
+  }
+
   // API methods with loading states
   Future<List<Product>> getAllProduct({bool showSnack = false}) async {
     try {
       _isProductsLoading = true;
+      _productsError = null;
       notifyListeners();
 
       Response response = await service.getItems(endpointUrl: 'products');
@@ -296,6 +333,7 @@ class DataProvider extends ChangeNotifier {
             fallback: apiResponse.message));
       }
     } catch (e) {
+      _productsError = 'Products are temporarily unavailable.';
       if (showSnack) {
         SnackBarHelper.showErrorSnackBar(SnackBarHelper.localized(
             (s) => s.general_retry,
@@ -611,6 +649,7 @@ class DataProvider extends ChangeNotifier {
         getAllPosters(),
         getStoreSettings(),
         getRetailerContacts(),
+        getSupportContent(),
         getPublishedStories(),
       ]);
     } finally {

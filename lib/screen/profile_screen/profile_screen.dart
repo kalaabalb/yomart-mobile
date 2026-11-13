@@ -11,6 +11,9 @@ import '../my_order_screen/my_order_screen.dart';
 import '../../widget/custom_text_field.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../utility/privacy_policy_link.dart';
+import '../../models/user.dart';
 import '../../widget/retailer_contact_list.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -34,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isEditing = false;
   bool _isChangingPassword = false;
   bool _isLoading = false;
+  bool _isProfileImageBusy = false;
 
   @override
   void initState() {
@@ -153,17 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius: 27,
-                              backgroundColor: dark
-                                  ? MarketPalette.homeSurfaceRaised
-                                  : Colors.white.withValues(alpha: .72),
-                              child: Icon(Icons.person_rounded,
-                                  color: dark
-                                      ? MarketPalette.homeMuted
-                                      : MarketPalette.blueDeep,
-                                  size: 31),
-                            ),
+                            _profileAvatar(user, dark),
                             const SizedBox(width: 14),
                             Expanded(
                               child: Column(
@@ -403,17 +397,135 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _openPrivacyPolicy() async {
-    final uri = Uri.tryParse(privacyPolicyUrl);
-    if (uri == null ||
-        !uri.hasAuthority ||
-        !{'https', 'http'}.contains(uri.scheme)) {
+    final uri = configuredPrivacyPolicyUri(privacyPolicyUrl);
+    if (uri == null) {
       SnackBarHelper.showErrorSnackBar(
           context.l10n.privacy_policy_not_configured);
       return;
     }
-    final opened = await launchUrl(uri, mode: LaunchMode.platformDefault);
-    if (!opened && mounted) {
-      SnackBarHelper.showErrorSnackBar(context.l10n.privacy_policy_open_failed);
+    try {
+      final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (!opened && mounted) {
+        SnackBarHelper.showErrorSnackBar(
+            context.l10n.privacy_policy_open_failed);
+      }
+    } catch (_) {
+      if (mounted) {
+        SnackBarHelper.showErrorSnackBar(
+            context.l10n.privacy_policy_open_failed);
+      }
+    }
+  }
+
+  Widget _profileAvatar(User? user, bool dark) {
+    final userProvider = context.userProvider;
+    final imageUrl = user?.profileImageAvailable == true
+        ? Uri.parse('$mainUrl/users/profile/image').replace(queryParameters: {
+            if (user?.updatedAt != null) 'updated': user!.updatedAt!,
+          }).toString()
+        : null;
+    return PopupMenuButton<String>(
+      tooltip: 'Profile picture options',
+      onSelected: (value) =>
+          value == 'remove' ? _removeProfileImage() : _pickProfileImage(),
+      itemBuilder: (context) => [
+        const PopupMenuItem(
+            value: 'change', child: Text('Choose profile picture')),
+        if (user?.profileImageAvailable == true)
+          const PopupMenuItem(
+              value: 'remove', child: Text('Remove profile picture')),
+      ],
+      child: Stack(clipBehavior: Clip.none, children: [
+        CircleAvatar(
+          radius: 27,
+          backgroundColor: dark
+              ? MarketPalette.homeSurfaceRaised
+              : Colors.white.withValues(alpha: .72),
+          backgroundImage: imageUrl == null
+              ? null
+              : NetworkImage(imageUrl,
+                  headers: userProvider.profileImageHeaders),
+          onBackgroundImageError: imageUrl == null ? null : (_, __) {},
+          child: _isProfileImageBusy
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2))
+              : (user?.profileImageAvailable == true
+                  ? null
+                  : Icon(Icons.person_rounded,
+                      color: dark
+                          ? MarketPalette.homeMuted
+                          : MarketPalette.blueDeep,
+                      size: 31)),
+        ),
+        Positioned(
+            right: -2,
+            bottom: -2,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: dark ? MarketPalette.blueDeep : Colors.white,
+                  shape: BoxShape.circle),
+              child: const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Icon(Icons.camera_alt_outlined, size: 13)),
+            )),
+      ]),
+    );
+  }
+
+  Future<void> _pickProfileImage() async {
+    if (_isProfileImageBusy) return;
+    try {
+      final selected =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (selected == null || !mounted) return;
+      setState(() => _isProfileImageBusy = true);
+      await context.userProvider.uploadProfileImage(selected.path);
+      if (mounted) {
+        SnackBarHelper.showSuccessSnackBar('Profile picture updated.');
+      }
+    } catch (error) {
+      if (mounted) {
+        SnackBarHelper.showErrorSnackBar(
+            error.toString().replaceFirst('Exception: ', ''));
+      }
+    } finally {
+      if (mounted) setState(() => _isProfileImageBusy = false);
+    }
+  }
+
+  Future<void> _removeProfileImage() async {
+    if (_isProfileImageBusy) return;
+    final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+              title: const Text('Remove profile picture?'),
+              content: const Text(
+                  'This removes the private picture stored for your account.'),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(dialogContext, false),
+                    child: Text(context.l10n.cancel)),
+                FilledButton(
+                    onPressed: () => Navigator.pop(dialogContext, true),
+                    child: const Text('Remove'))
+              ],
+            ));
+    if (confirmed != true || !mounted) return;
+    setState(() => _isProfileImageBusy = true);
+    try {
+      await context.userProvider.removeProfileImage();
+      if (mounted) {
+        SnackBarHelper.showSuccessSnackBar('Profile picture removed.');
+      }
+    } catch (error) {
+      if (mounted) {
+        SnackBarHelper.showErrorSnackBar(
+            error.toString().replaceFirst('Exception: ', ''));
+      }
+    } finally {
+      if (mounted) setState(() => _isProfileImageBusy = false);
     }
   }
 
@@ -531,40 +643,94 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _showHelpSupportDialog() {
     final dark = MarketPalette.isDark(context);
     final data = context.read<DataProvider>();
+    // Fetch on every opening so admin publications appear without an app release.
+    data.getSupportContent();
+    data.getRetailerContacts();
     showDialog<void>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor:
-            dark ? MarketPalette.homeSurface : const Color(0xFFF2F7FD),
-        surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-          side: BorderSide(
-            color: dark ? MarketPalette.homeBorder : const Color(0xFFDDE8F3),
+      builder: (dialogContext) => Consumer<DataProvider>(
+        builder: (context, current, _) => AlertDialog(
+          backgroundColor:
+              dark ? MarketPalette.homeSurface : const Color(0xFFF2F7FD),
+          surfaceTintColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+              side: BorderSide(
+                  color: dark
+                      ? MarketPalette.homeBorder
+                      : const Color(0xFFDDE8F3))),
+          title: Text(context.l10n.help_support),
+          content: SizedBox(
+            width: 360,
+            child: SingleChildScrollView(
+                child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (current.isSupportContentLoading ||
+                    current.isRetailerContactsLoading)
+                  const LinearProgressIndicator(),
+                if (current.supportContentError != null ||
+                    current.retailerContactsError != null) ...[
+                  Text(
+                      current.supportContentError ??
+                          current.retailerContactsError!,
+                      style: TextStyle(
+                          color: dark ? Colors.white70 : MarketPalette.muted)),
+                  TextButton.icon(
+                      onPressed: () {
+                        current.getSupportContent();
+                        current.getRetailerContacts();
+                      },
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Try again')),
+                ],
+                for (final item in current.supportContent) ...[
+                  Text(item.title,
+                      style: TextStyle(
+                          color: dark ? Colors.white : MarketPalette.ink,
+                          fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 5),
+                  Text(item.body,
+                      style: TextStyle(
+                          color: dark ? Colors.white70 : MarketPalette.muted,
+                          height: 1.4)),
+                  const SizedBox(height: 14),
+                ],
+                if (current.supportContent.isEmpty &&
+                    !current.isSupportContentLoading &&
+                    current.supportContentError == null)
+                  Text('Help information is not available yet.',
+                      style: TextStyle(
+                          color: dark ? Colors.white70 : MarketPalette.muted)),
+                if (current.retailerContacts.isNotEmpty) ...[
+                  const Divider(),
+                  RetailerContactList(
+                      contacts: current.retailerContacts,
+                      placement: 'support_page',
+                      loading: current.isRetailerContactsLoading,
+                      error: current.retailerContactsError,
+                      onRetry: current.getRetailerContacts,
+                      emptyMessage: context.l10n.support_contact_unavailable,
+                      onSelected: _launchSupportUri),
+                ] else if (!current.isRetailerContactsLoading &&
+                    current.retailerContactsError == null)
+                  Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Text(context.l10n.support_contact_unavailable,
+                          style: TextStyle(
+                              color: dark
+                                  ? Colors.white70
+                                  : MarketPalette.muted))),
+              ],
+            )),
           ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(dialogContext),
+                child: Text(context.l10n.close))
+          ],
         ),
-        title: Text(context.l10n.help_support),
-        content: RetailerContactList(
-          contacts: data.retailerContacts,
-          placement: 'support_page',
-          loading: data.isRetailerContactsLoading,
-          error: data.retailerContactsError,
-          onRetry: () {
-            data.getRetailerContacts();
-            Navigator.pop(dialogContext);
-          },
-          emptyMessage: context.l10n.support_contact_unavailable,
-          onSelected: (uri) {
-            _launchSupportUri(uri);
-            Navigator.pop(dialogContext);
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(context.l10n.close),
-          ),
-        ],
       ),
     );
   }

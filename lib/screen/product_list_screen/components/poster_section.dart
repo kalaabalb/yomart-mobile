@@ -47,7 +47,7 @@ class _PosterSectionState extends State<PosterSection> {
         if (totalCards == 0) return const SizedBox.shrink();
 
         final availableWidth = MediaQuery.sizeOf(context).width - 32;
-        final posterHeight = (availableWidth / 2.2).clamp(164.0, 236.0);
+        final posterHeight = (availableWidth / 1.55).clamp(220.0, 300.0);
         return SizedBox(
           height: posterHeight,
           child: PageView.builder(
@@ -226,6 +226,7 @@ class _PosterSectionState extends State<PosterSection> {
   Widget _posterCard(BuildContext context, _PromoPoster poster,
       {required int slideCount, required VoidCallback onTap}) {
     final dark = MarketPalette.isDark(context);
+    final textColor = dark ? Colors.white : MarketPalette.ink;
     return Semantics(
       button: true,
       label: poster.subtitle?.trim().isNotEmpty == true
@@ -237,130 +238,98 @@ class _PosterSectionState extends State<PosterSection> {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final height = constraints.maxHeight;
-              return Stack(
-                fit: StackFit.expand,
-                children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: dark
-                            ? const [
-                                Color(0xFF0B1A31),
-                                Color(0xFF192D53),
-                                Color(0xFF513E83),
-                              ]
-                            : const [
-                                Color(0xFFE5F2FF),
-                                Color(0xFFBFD9F5),
-                                Color(0xFFD8C9F2),
-                              ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: -12,
-                    top: -20,
-                    bottom: -20,
-                    width: constraints.maxWidth * .51,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: (dark ? const Color(0xFF9B6BFF) : Colors.white)
-                            .withValues(alpha: dark ? .25 : .38),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: constraints.maxWidth * .48,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: dark
+                    ? const [
+                        Color(0xFF0B1A31),
+                        Color(0xFF192D53),
+                        Color(0xFF513E83)
+                      ]
+                    : const [
+                        Color(0xFFE5F2FF),
+                        Color(0xFFBFD9F5),
+                        Color(0xFFD8C9F2)
+                      ],
+              ),
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: Center(
                     child: poster.imageUrl?.isNotEmpty == true
-                        ? CustomNetworkImage(
-                            imageUrl: poster.imageUrl!,
-                            fit: BoxFit.contain,
-                            placeholderColor: Colors.transparent,
-                          )
-                        : Icon(
-                            Icons.image_outlined,
+                        ? SizedBox.expand(
+                            child: CustomNetworkImage(
+                                imageUrl: poster.imageUrl!,
+                                fit: BoxFit.contain,
+                                placeholderColor: Colors.transparent))
+                        : Icon(Icons.image_outlined,
                             size: 54,
-                            color: dark ? Colors.white38 : MarketPalette.muted,
-                          ),
+                            color: dark ? Colors.white38 : MarketPalette.muted),
                   ),
-                  Positioned(
-                    left: 17,
-                    top: height * .19,
-                    width: constraints.maxWidth * .48,
-                    child: Text(
-                      poster.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: dark ? Colors.white : MarketPalette.ink,
-                        fontSize: 17,
-                        height: 1.08,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: -.2,
-                      ),
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 4, 14, 11),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                            Text(poster.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15)),
+                            if (poster.subtitle?.trim().isNotEmpty == true)
+                              Text(poster.subtitle!.trim(),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: dark
+                                          ? const Color(0xFFCBD8ED)
+                                          : const Color(0xFF536A87),
+                                      fontSize: 11)),
+                          ])),
+                      const SizedBox(width: 6),
+                      MarketBrowseButton(
+                          text: context.l10n.browse_products,
+                          onPressed: onTap,
+                          compact: true),
+                    ],
                   ),
-                  if (poster.subtitle?.trim().isNotEmpty == true)
-                    Positioned(
-                      left: 17,
-                      top: height * .42,
-                      width: constraints.maxWidth * .48,
-                      child: Text(
-                        poster.subtitle!.trim(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: dark
-                              ? const Color(0xFFCBD8ED)
-                              : const Color(0xFF536A87),
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  Positioned(
-                    left: 17,
-                    bottom: height * .12,
-                    child: MarketBrowseButton(
-                      text: context.l10n.browse_products,
-                      onPressed: onTap,
-                      compact: true,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                        slideCount,
+                        (index) => AnimatedContainer(
+                              duration: const Duration(milliseconds: 180),
+                              width: _activeIndex == index ? 13 : 5,
+                              height: 5,
+                              margin: const EdgeInsets.only(left: 4),
+                              decoration: BoxDecoration(
+                                color: (dark ? Colors.white : MarketPalette.ink)
+                                    .withValues(
+                                        alpha:
+                                            _activeIndex == index ? .85 : .35),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            )),
                   ),
-                  Positioned(
-                    right: 13,
-                    bottom: 10,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(slideCount, (index) {
-                        final active = _activeIndex == index;
-                        return AnimatedContainer(
-                          duration: const Duration(milliseconds: 180),
-                          width: active ? 13 : 5,
-                          height: 5,
-                          margin: const EdgeInsets.only(left: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(
-                              alpha: active ? .95 : .5,
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              );
-            },
+                ),
+              ],
+            ),
           ),
         ),
       ),
