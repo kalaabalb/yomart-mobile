@@ -103,6 +103,8 @@ void main() {
     // deliberate two-second retry timers pending in fake time.
     await tester.pump(const Duration(seconds: 4));
     await tester.pumpAndSettle();
+    await tester.pumpWidget(const SizedBox.shrink());
+    data.dispose();
   });
 
   testWidgets('dark mode palette changes through the single app theme wrapper',

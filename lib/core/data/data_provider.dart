@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,12 +16,22 @@ import '../../models/story.dart';
 import '../../models/retailer_contact.dart';
 import '../../models/support_content.dart';
 import '../../services/http_services.dart';
+import '../../services/catalog_event_subscription.dart';
 import '../../utility/constants.dart';
 import '../../utility/snack_bar_helper.dart';
 
-class DataProvider extends ChangeNotifier {
+class DataProvider extends ChangeNotifier with WidgetsBindingObserver {
   HttpService service = HttpService();
   final box = GetStorage();
+  late final CatalogEventSubscription _catalogEvents = CatalogEventSubscription(
+    onChanged: _refreshPublicCatalog,
+  );
+  bool _disposed = false;
+  bool _catalogRefreshScheduled = false;
+  bool _catalogRefreshInFlight = false;
+  bool _observesAppLifecycle = false;
+  Timer? _catalogRefreshTimer;
+  final Set<String> _pendingCatalogResources = <String>{};
 
   List<Category> _allCategories = [];
   List<Category> _filteredCategories = [];
@@ -98,6 +109,14 @@ class DataProvider extends ChangeNotifier {
   bool get isPostersLoading => _isPostersLoading;
 
   DataProvider({bool loadInitialData = true}) {
+    // DataProvider is also used in non-widget tests and background helpers.
+    // Register only when a Flutter binding already exists.
+    try {
+      WidgetsBinding.instance.addObserver(this);
+      _observesAppLifecycle = true;
+    } on FlutterError {
+      _observesAppLifecycle = false;
+    }
     _loadPreferences();
     if (loadInitialData) _initializeData();
   }
@@ -121,10 +140,72 @@ class DataProvider extends ChangeNotifier {
         _loadAtStartup('help and support', getSupportContent),
         _loadAtStartup('video stories', getPublishedStories),
       ]);
+      if (!_disposed) _catalogEvents.start();
     } finally {
       _isLoading = false;
-      notifyListeners();
+      if (!_disposed) notifyListeners();
     }
+  }
+
+  void _refreshPublicCatalog([List<String> changed = const ['*']]) {
+    if (_disposed) return;
+    _pendingCatalogResources.addAll(catalogResourcesToRefresh(changed));
+    if (_catalogRefreshInFlight || _catalogRefreshScheduled || _pendingCatalogResources.isEmpty) return;
+    _catalogRefreshScheduled = true;
+    _catalogRefreshTimer?.cancel();
+    _catalogRefreshTimer = Timer(const Duration(milliseconds: 200), () {
+      _catalogRefreshTimer = null;
+      _catalogRefreshScheduled = false;
+      if (_disposed) return;
+      final resources = Set<String>.from(_pendingCatalogResources);
+      _pendingCatalogResources.clear();
+      _catalogRefreshInFlight = true;
+      unawaited(_loadPublicCatalogResources(resources).then<void>(
+        (_) => _finishCatalogRefresh(),
+        onError: (Object _, StackTrace __) => _finishCatalogRefresh(),
+      ));
+    });
+  }
+
+  void _finishCatalogRefresh() {
+    _catalogRefreshInFlight = false;
+    if (_pendingCatalogResources.isNotEmpty && !_disposed) {
+      _refreshPublicCatalog(_pendingCatalogResources.toList());
+    }
+  }
+
+  Future<void> _loadPublicCatalogResources(Set<String> resources) {
+    final loads = <String, Future<Object?> Function()>{
+      'categories': getAllCategory,
+      'subCategories': getAllSubCategory,
+      'brands': getAllBrands,
+      'products': getAllProduct,
+      'posters': getAllPosters,
+      'collections': getAllCollections,
+      'store-settings': getStoreSettings,
+      'retailer-contacts': getRetailerContacts,
+      'support-content': getSupportContent,
+      'stories': getPublishedStories,
+    };
+    return Future.wait(resources.map((resource) => loads[resource]?.call() ?? Future<Object?>.value()));
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _catalogEvents.start();
+    } else {
+      unawaited(_catalogEvents.stop());
+    }
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    _catalogRefreshTimer?.cancel();
+    if (_observesAppLifecycle) WidgetsBinding.instance.removeObserver(this);
+    unawaited(_catalogEvents.dispose());
+    super.dispose();
   }
 
   Future<void> _loadAtStartup(
