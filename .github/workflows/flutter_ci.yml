@@ -67,7 +67,7 @@ jobs:
             --dart-define=YOMART_PREVIEW_CATALOG=true
 
       - name: Upload Android preview APKs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: yomart-android-debug-apks
           path: |
@@ -112,7 +112,7 @@ jobs:
 
       - name: Upload genuine Android emulator screenshot
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: yomart-android-emulator-screenshots
           path: artifacts/android/*.png
